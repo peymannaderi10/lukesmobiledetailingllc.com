@@ -22,12 +22,12 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-lg text-gray-600 mb-6">
-                Luke's Mobile Detailing was founded in [Year] with a simple mission: to provide exceptional car 
+                Luke's Mobile Detailing was founded in 2024 with a simple mission: to provide exceptional car 
                 detailing services that come directly to our customers, saving them time without sacrificing quality.
               </p>
               <p className="text-lg text-gray-600 mb-6">
                 What started as a passion for keeping cars in pristine condition has grown into a full-service 
-                mobile detailing business serving [Your Region]. Our attention to detail and commitment to customer 
+                mobile detailing business serving Houston, Texas. Our attention to detail and commitment to customer 
                 satisfaction has made us a trusted name in mobile car care.
               </p>
               <p className="text-lg text-gray-600">
