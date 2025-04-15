@@ -145,7 +145,7 @@ export default function ContactPage() {
                 <div className="flex space-x-4">
                   <a
                     href="#"
-                    className="bg-gray-200 hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
+                    className="bg-black hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
                     aria-label="Facebook"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -158,7 +158,7 @@ export default function ContactPage() {
                   </a>
                   <a
                     href="#"
-                    className="bg-gray-200 hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
+                    className="bg-black hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
                     aria-label="Instagram"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -180,8 +180,8 @@ export default function ContactPage() {
                 
                 {isSuccess ? (
                   <div className="bg-green-50 border border-green-200 text-green-700 p-6 rounded-lg">
-                    <h3 className="font-bold text-xl mb-2">Thank You!</h3>
-                    <p className="mb-4">Your message has been sent successfully. We'll get back to you as soon as possible.</p>
+                    <h3 className="font-bold text-xl mb-2 text-black">Thank You!</h3>
+                    <p className="mb-4 text-black">Your message has been sent successfully. We'll get back to you as soon as possible.</p>
                     <button
                       onClick={() => setIsSuccess(false)}
                       className="btn-primary"
@@ -193,7 +193,7 @@ export default function ContactPage() {
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label htmlFor="name" className="block mb-2 font-medium">
+                        <label htmlFor="name" className="block mb-2 font-medium text-black">
                           Name <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -210,7 +210,7 @@ export default function ContactPage() {
                       </div>
                       
                       <div>
-                        <label htmlFor="email" className="block mb-2 font-medium">
+                        <label htmlFor="email" className="block mb-2 font-medium text-black">
                           Email <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -234,7 +234,7 @@ export default function ContactPage() {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label htmlFor="phone" className="block mb-2 font-medium">
+                        <label htmlFor="phone" className="block mb-2 font-medium text-black">
                           Phone
                         </label>
                         <input
@@ -246,7 +246,7 @@ export default function ContactPage() {
                       </div>
                       
                       <div>
-                        <label htmlFor="subject" className="block mb-2 font-medium">
+                        <label htmlFor="subject" className="block mb-2 font-medium text-black">
                           Subject <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -264,7 +264,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="mb-6">
-                      <label htmlFor="message" className="block mb-2 font-medium">
+                      <label htmlFor="message" className="block mb-2 font-medium text-black">
                         Message <span className="text-red-500">*</span>
                       </label>
                       <textarea
