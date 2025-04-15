@@ -204,7 +204,7 @@ export default function ServicesPage() {
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <PuzzlePieceIcon className="h-10 w-10 text-primary mb-4" />
+              <BeakerIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Pet Hair Removal</h3>
               <p className="mb-2 text-gray-800">Specialized tools to completely remove stubborn pet hair from your vehicle.</p>
               <p className="text-primary font-bold">From $39</p>
