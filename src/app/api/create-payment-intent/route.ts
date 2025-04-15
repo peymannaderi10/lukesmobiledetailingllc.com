@@ -7,18 +7,24 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { bookingData, amount } = body;
+    const { bookingData, amount, amountInCents } = body;
     
-    if (!bookingData || !amount) {
+    if (!bookingData || (!amount && !amountInCents)) {
       return NextResponse.json(
         { error: 'Missing required booking data or amount' },
         { status: 400 }
       );
     }
 
+    // Calculate payment amount - use amountInCents if provided, otherwise calculate from amount
+    const paymentAmount = amountInCents || Math.round(amount * 100);
+    
+    // Log the payment amount for debugging
+    console.log(`Creating payment intent for ${bookingData.paymentType} payment. Amount: $${(paymentAmount/100).toFixed(2)}`);
+
     // Create payment intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // Convert to cents
+      amount: paymentAmount, // Use the calculated amount
       currency: 'usd',
       metadata: {
         bookingType: 'car-detailing',
@@ -29,6 +35,7 @@ export async function POST(request: Request) {
         date: bookingData.date,
         time: bookingData.time,
         vehicle: `${bookingData.vehicleYear} ${bookingData.vehicleMake} ${bookingData.vehicleModel}`,
+        paymentType: bookingData.paymentType || 'full',
       },
       receipt_email: bookingData.email,
       automatic_payment_methods: {

@@ -83,18 +83,44 @@ function PaymentContent() {
   useEffect(() => {
     if (totalAmount === 0) return;
     
-    if (paymentType === 'full') {
-      setAmountToPay(totalAmount);
-    } else {
-      // 10% deposit, rounded to 2 decimal places
-      setAmountToPay(parseFloat((totalAmount * 0.1).toFixed(2)));
-    }
-
-    // Create or update payment intent
+    // Calculate the amount to pay based on payment type
+    const newAmountToPay = calculateAmountToPay(paymentType, totalAmount);
+    setAmountToPay(newAmountToPay);
+    
+    // Create or update payment intent if we have booking data
     if (bookingData) {
       createPaymentIntent();
     }
   }, [paymentType, totalAmount]);
+  
+  // Calculate amount to pay based on payment type and total
+  const calculateAmountToPay = (type: PaymentType, total: number): number => {
+    let amount = 0;
+    if (type === 'full') {
+      amount = total;
+    } else {
+      // 10% deposit, rounded to 2 decimal places
+      amount = parseFloat((total * 0.1).toFixed(2));
+    }
+    console.log(`Payment calculation: type=${type}, total=${total}, amount to pay=${amount}`);
+    return amount;
+  };
+
+  // Handle payment type change
+  const handlePaymentTypeChange = (type: PaymentType) => {
+    // First set the payment type
+    setPaymentType(type);
+    
+    // For immediate UI feedback, also update amount to pay directly
+    const newAmount = calculateAmountToPay(type, totalAmount);
+    setAmountToPay(newAmount);
+    
+    // Then create a new payment intent with the updated amount
+    // (this will be called again by the effect, but we want immediate feedback)
+    if (bookingData) {
+      setTimeout(() => createPaymentIntent(), 0);
+    }
+  };
 
   // Create a payment intent
   const createPaymentIntent = async () => {
@@ -107,6 +133,11 @@ function PaymentContent() {
         paymentType: paymentType
       };
       
+      // Convert to cents for Stripe and ensure we're using the correct amount
+      const amountInCents = Math.round(amountToPay * 100);
+      
+      console.log(`Creating payment intent: paymentType=${paymentType}, amountToPay=${amountToPay}, amountInCents=${amountInCents}`);
+      
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: {
@@ -115,6 +146,7 @@ function PaymentContent() {
         body: JSON.stringify({
           bookingData: updatedBookingData,
           amount: amountToPay, // Use the calculated amount based on payment type
+          amountInCents: amountInCents, // Add explicit amount in cents for Stripe
         }),
       });
 
@@ -133,11 +165,6 @@ function PaymentContent() {
       setError(errorMessage);
       setIsLoading(false);
     }
-  };
-
-  // Handle payment type change
-  const handlePaymentTypeChange = (type: PaymentType) => {
-    setPaymentType(type);
   };
 
   // Format date for display
@@ -170,13 +197,18 @@ function PaymentContent() {
     if (!bookingData) return;
     
     try {
+      // Make sure we've got the current amount to pay
+      const currentAmountToPay = calculateAmountToPay(paymentType, totalAmount);
+      
       // Save booking to database with payment type
       const updatedBookingData = {
         ...bookingData,
         paymentType: paymentType,
-        amountPaid: amountToPay,
-        remainingBalance: paymentType === 'deposit' ? totalAmount - amountToPay : 0
+        amountPaid: currentAmountToPay,
+        remainingBalance: paymentType === 'deposit' ? totalAmount - currentAmountToPay : 0
       };
+      
+      console.log(`Payment success: paymentType=${paymentType}, amountPaid=${currentAmountToPay}, remainingBalance=${paymentType === 'deposit' ? totalAmount - currentAmountToPay : 0}`);
       
       const response = await fetch('/api/save-booking', {
         method: 'POST',

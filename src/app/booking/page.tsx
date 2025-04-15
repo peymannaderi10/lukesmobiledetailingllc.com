@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 function BookingContent() {
@@ -9,9 +9,26 @@ function BookingContent() {
   
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<string>('');
-  const [selectedPackage, setSelectedPackage] = useState<string>(searchParams.get('package') || 'Basic');
+  const [selectedPackage, setSelectedPackage] = useState<string>('Basic');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Set initial package from URL parameter on component mount
+  useEffect(() => {
+    const packageParam = searchParams.get('package');
+    if (packageParam) {
+      // Convert the URL parameter to match the dropdown options
+      const packageMap: Record<string, string> = {
+        'basic': 'Basic',
+        'premium': 'Premium',
+        'ultimate': 'Ultimate'
+      };
+      
+      // Use the mapped value or default to Basic if not found
+      const packageValue = packageMap[packageParam.toLowerCase()] || 'Basic';
+      setSelectedPackage(packageValue);
+    }
+  }, [searchParams]);
   
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
