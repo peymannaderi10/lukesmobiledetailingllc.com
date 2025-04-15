@@ -2,10 +2,13 @@ import Link from "next/link";
 import { 
   CheckCircleIcon,
   ClockIcon,
-  BeakerIcon,
   TruckIcon, 
   BoltIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  LightBulbIcon,
+  CloudIcon,
+  PuzzlePieceIcon,
+  BeakerIcon
 } from "@heroicons/react/24/outline";
 
 export default function ServicesPage() {
@@ -37,31 +40,31 @@ export default function ServicesPage() {
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Exterior hand wash & dry</span>
+                    <span className="text-gray-800">Exterior hand wash & dry</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Wheel cleaning</span>
+                    <span className="text-gray-800">Wheel cleaning</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Tire shine application</span>
+                    <span className="text-gray-800">Tire shine application</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Interior vacuum & dusting</span>
+                    <span className="text-gray-800">Interior vacuum & dusting</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Dashboard & console cleaning</span>
+                    <span className="text-gray-800">Dashboard & console cleaning</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Window cleaning (interior & exterior)</span>
+                    <span className="text-gray-800">Window cleaning (interior & exterior)</span>
                   </li>
                   <li className="flex items-start">
                     <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-500">Approx. 1-2 hours</span>
+                    <span className="text-gray-700">Approx. 1-2 hours</span>
                   </li>
                 </ul>
                 <Link
@@ -87,35 +90,35 @@ export default function ServicesPage() {
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Everything in Basic Package</span>
+                    <span className="text-gray-800">Everything in Basic Package</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Interior deep cleaning</span>
+                    <span className="text-gray-800">Interior deep cleaning</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Leather conditioning</span>
+                    <span className="text-gray-800">Leather conditioning</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Carpet shampooing</span>
+                    <span className="text-gray-800">Carpet shampooing</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Exterior wax protection</span>
+                    <span className="text-gray-800">Exterior wax protection</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Door jamb cleaning</span>
+                    <span className="text-gray-800">Door jamb cleaning</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Air freshener</span>
+                    <span className="text-gray-800">Air freshener</span>
                   </li>
                   <li className="flex items-start">
                     <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-500">Approx. 3-4 hours</span>
+                    <span className="text-gray-700">Approx. 3-4 hours</span>
                   </li>
                 </ul>
                 <Link
@@ -138,35 +141,35 @@ export default function ServicesPage() {
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Everything in Premium Package</span>
+                    <span className="text-gray-800">Everything in Premium Package</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Paint correction</span>
+                    <span className="text-gray-800">Paint correction</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Ceramic coating application</span>
+                    <span className="text-gray-800">Ceramic coating application</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Headlight restoration</span>
+                    <span className="text-gray-800">Headlight restoration</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Engine bay cleaning</span>
+                    <span className="text-gray-800">Engine bay cleaning</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Trim restoration</span>
+                    <span className="text-gray-800">Trim restoration</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span>Paint sealant protection</span>
+                    <span className="text-gray-800">Paint sealant protection</span>
                   </li>
                   <li className="flex items-start">
                     <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-500">Approx. 5-8 hours</span>
+                    <span className="text-gray-700">Approx. 5-8 hours</span>
                   </li>
                 </ul>
                 <Link
@@ -186,7 +189,7 @@ export default function ServicesPage() {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Additional Services</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-800 max-w-3xl mx-auto">
               These specialized services can be added to any package for an additional cost.
               Just let us know what extras you'd like when you book.
             </p>
@@ -194,44 +197,44 @@ export default function ServicesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <BeakerIcon className="h-10 w-10 text-primary mb-4" />
+              <CloudIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Odor Removal</h3>
-              <p className="mb-2">Complete odor elimination using professional-grade products and equipment.</p>
+              <p className="mb-2 text-gray-800">Complete odor elimination using professional-grade products and equipment.</p>
               <p className="text-primary font-bold">From $49</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <ShieldCheckIcon className="h-10 w-10 text-primary mb-4" />
+              <PuzzlePieceIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Pet Hair Removal</h3>
-              <p className="mb-2">Specialized tools to completely remove stubborn pet hair from your vehicle.</p>
+              <p className="mb-2 text-gray-800">Specialized tools to completely remove stubborn pet hair from your vehicle.</p>
               <p className="text-primary font-bold">From $39</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <BoltIcon className="h-10 w-10 text-primary mb-4" />
+              <LightBulbIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Headlight Restoration</h3>
-              <p className="mb-2">Remove oxidation and restore clarity to foggy headlights.</p>
+              <p className="mb-2 text-gray-800">Remove oxidation and restore clarity to foggy headlights.</p>
               <p className="text-primary font-bold">From $79</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <TruckIcon className="h-10 w-10 text-primary mb-4" />
+              <ShieldCheckIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Ceramic Coating</h3>
-              <p className="mb-2">Long-lasting paint protection that adds gloss and repels water and contaminants.</p>
+              <p className="mb-2 text-gray-800">Long-lasting paint protection that adds gloss and repels water and contaminants.</p>
               <p className="text-primary font-bold">From $199</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <BeakerIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Stain Removal</h3>
-              <p className="mb-2">Deep cleaning to remove tough stains from carpets, upholstery, and other surfaces.</p>
+              <p className="mb-2 text-gray-800">Deep cleaning to remove tough stains from carpets, upholstery, and other surfaces.</p>
               <p className="text-primary font-bold">From $49</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <ShieldCheckIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Paint Protection Film</h3>
-              <p className="mb-2">Invisible film to protect high-impact areas from rock chips and scratches.</p>
+              <p className="mb-2 text-gray-800">Invisible film to protect high-impact areas from rock chips and scratches.</p>
               <p className="text-primary font-bold">From $299</p>
             </div>
           </div>
@@ -243,7 +246,7 @@ export default function ServicesPage() {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Detailing Process</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-800 max-w-3xl mx-auto">
               We follow a meticulous process to ensure your vehicle receives the highest quality detailing service.
             </p>
           </div>
@@ -254,7 +257,7 @@ export default function ServicesPage() {
                 <span className="text-2xl font-bold">1</span>
               </div>
               <h3 className="text-xl font-bold mb-2">Assessment</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 We thoroughly inspect your vehicle to identify specific areas that need attention and determine the best approach.
               </p>
             </div>
@@ -264,7 +267,7 @@ export default function ServicesPage() {
                 <span className="text-2xl font-bold">2</span>
               </div>
               <h3 className="text-xl font-bold mb-2">Preparation</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 We prepare the appropriate tools, equipment, and premium products specifically selected for your vehicle.
               </p>
             </div>
@@ -274,7 +277,7 @@ export default function ServicesPage() {
                 <span className="text-2xl font-bold">3</span>
               </div>
               <h3 className="text-xl font-bold mb-2">Execution</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 We carefully perform each step of the detailing process with precision and attention to detail.
               </p>
             </div>
@@ -287,7 +290,7 @@ export default function ServicesPage() {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-800 max-w-3xl mx-auto">
               Have questions about our services? Find answers to common questions below.
             </p>
           </div>
@@ -295,7 +298,7 @@ export default function ServicesPage() {
           <div className="max-w-3xl mx-auto">
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">How long does a typical detailing service take?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 Service times vary based on the package and vehicle condition. Basic packages typically take 1-2 hours, 
                 Premium packages 3-4 hours, and Ultimate packages 5-8 hours.
               </p>
@@ -303,7 +306,7 @@ export default function ServicesPage() {
             
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">Do I need to be present during the service?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 No, you don't need to be present the entire time. We just need access to your vehicle and a water source.
                 Many customers provide access and go about their day while we work.
               </p>
@@ -311,7 +314,7 @@ export default function ServicesPage() {
             
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">What if I'm not satisfied with the service?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 Your satisfaction is our priority. If you're not completely satisfied, please let us know immediately, 
                 and we'll address any concerns to ensure you're happy with the results.
               </p>
@@ -319,7 +322,7 @@ export default function ServicesPage() {
             
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">What areas do you service?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 We service [Your Service Area] and surrounding communities within a 25-mile radius. If you're unsure 
                 if we serve your area, please contact us to check.
               </p>
@@ -327,7 +330,7 @@ export default function ServicesPage() {
             
             <div>
               <h3 className="text-xl font-bold mb-2">What forms of payment do you accept?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 We accept credit cards, debit cards, cash, and mobile payment options like Venmo and Cash App.
               </p>
             </div>

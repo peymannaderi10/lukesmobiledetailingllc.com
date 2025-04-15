@@ -10,12 +10,18 @@
   --primary-dark: #CC0000;
   --secondary: #000000;
   --secondary-light: #333333;
+  --text-on-white: #000000;
+  --text-on-light: #000000;
+  --text-on-dark: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ffffff;
+    --text-on-white: #000000;
+    --text-on-light: #000000;
+    --text-on-dark: #ffffff;
   }
 }
 
@@ -57,10 +63,74 @@ body {
   }
   
   .btn-outline {
-    @apply btn border-2 border-primary text-primary hover:bg-primary hover:text-white;
+    @apply btn border-2 border-primary text-primary hover:bg-primary-light hover:text-white hover:shadow-md;
+  }
+  
+  /* Alternative outline button with dark text on hover */
+  .btn-outline-dark {
+    @apply btn border-2 border-primary text-primary hover:border-primary-dark hover:text-primary-dark hover:shadow-md;
   }
   
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
+}
+
+@layer utilities {
+  .text-on-white {
+    color: var(--text-on-white);
+  }
+  
+  .text-on-light {
+    color: var(--text-on-light);
+  }
+  
+  .text-on-dark {
+    color: var(--text-on-dark);
+  }
+}
+
+/* Add a minimal fix with the lowest specificity possible to fix black text in light backgrounds */
+.bg-white h1:where(:not(.text-white):not(.text-gray-100):not(.text-gray-200):not(.text-gray-300):not(.text-gray-400):not(.text-gray-500):not(.text-gray-600):not(.text-gray-700):not(.text-gray-800):not(.text-gray-900)),
+.bg-white h2:where(:not(.text-white):not(.text-gray-100):not(.text-gray-200):not(.text-gray-300):not(.text-gray-400):not(.text-gray-500):not(.text-gray-600):not(.text-gray-700):not(.text-gray-800):not(.text-gray-900)),
+.bg-white h3:where(:not(.text-white):not(.text-gray-100):not(.text-gray-200):not(.text-gray-300):not(.text-gray-400):not(.text-gray-500):not(.text-gray-600):not(.text-gray-700):not(.text-gray-800):not(.text-gray-900)),
+.bg-white h4:where(:not(.text-white):not(.text-gray-100):not(.text-gray-200):not(.text-gray-300):not(.text-gray-400):not(.text-gray-500):not(.text-gray-600):not(.text-gray-700):not(.text-gray-800):not(.text-gray-900)),
+.bg-white h5:where(:not(.text-white):not(.text-gray-100):not(.text-gray-200):not(.text-gray-300):not(.text-gray-400):not(.text-gray-500):not(.text-gray-600):not(.text-gray-700):not(.text-gray-800):not(.text-gray-900)),
+.bg-white h6:where(:not(.text-white):not(.text-gray-100):not(.text-gray-200):not(.text-gray-300):not(.text-gray-400):not(.text-gray-500):not(.text-gray-600):not(.text-gray-700):not(.text-gray-800):not(.text-gray-900)),
+.bg-white p:where(:not(.text-white):not(.text-gray-100):not(.text-gray-200):not(.text-gray-300):not(.text-gray-400):not(.text-gray-500):not(.text-gray-600):not(.text-gray-700):not(.text-gray-800):not(.text-gray-900)) {
+  color: #000000;
+}
+
+/* Ensure explicit text colors are always respected */
+.text-white { color: #ffffff !important; }
+.text-gray-100 { color: #F5F5F5 !important; }
+.text-gray-200 { color: #EEEEEE !important; }
+.text-gray-300 { color: #E0E0E0 !important; }
+.text-gray-400 { color: #BDBDBD !important; }
+.text-gray-500 { color: #9E9E9E !important; }
+.text-gray-600 { color: #757575 !important; }
+.text-gray-700 { color: #616161 !important; }
+.text-gray-800 { color: #424242 !important; }
+.text-gray-900 { color: #212121 !important; }
+
+/* Dark backgrounds should have white text */
+.bg-primary, .bg-secondary, .bg-black {
+  color: #ffffff !important;
+}
+
+/* Ensure specific components with primary background and white text show properly */
+.bg-primary.text-white, 
+.bg-primary .text-white,
+.bg-secondary.text-white,
+.bg-secondary .text-white,
+.bg-black.text-white,
+.bg-black .text-white {
+  color: #ffffff !important;
+}
+
+/* Add specificity for text elements within primary backgrounds */
+.bg-primary h1, .bg-primary h2, .bg-primary h3, .bg-primary h4, .bg-primary h5, .bg-primary h6, .bg-primary p, .bg-primary span,
+.bg-secondary h1, .bg-secondary h2, .bg-secondary h3, .bg-secondary h4, .bg-secondary h5, .bg-secondary h6, .bg-secondary p, .bg-secondary span,
+.bg-black h1, .bg-black h2, .bg-black h3, .bg-black h4, .bg-black h5, .bg-black h6, .bg-black p, .bg-black span {
+  color: #ffffff !important;
 }

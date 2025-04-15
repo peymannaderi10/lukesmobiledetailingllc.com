@@ -172,46 +172,56 @@ export default function AboutPage() {
             <div>
               <h2 className="text-3xl font-bold mb-6">Our Service Area</h2>
               <p className="text-lg text-gray-600 mb-6">
-                We proudly serve [Your City] and surrounding areas, bringing our premium mobile detailing 
+                We proudly serve Houston, Texas and surrounding areas, bringing our premium mobile detailing 
                 services directly to your location.
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                Our service radius extends approximately 25 miles from [City Center], covering the 
+                Our service radius extends approximately 25 miles from Downtown Houston, covering the 
                 following areas:
               </p>
               <ul className="grid grid-cols-2 gap-2 mb-6">
-                <li className="flex items-center">
+                <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>[City 1]</span>
+                  <span>The Heights</span>
                 </li>
-                <li className="flex items-center">
+                <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>[City 2]</span>
+                  <span>Sugar Land</span>
                 </li>
-                <li className="flex items-center">
+                <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>[City 3]</span>
+                  <span>Katy</span>
                 </li>
-                <li className="flex items-center">
+                <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>[City 4]</span>
+                  <span>The Woodlands</span>
                 </li>
-                <li className="flex items-center">
+                <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>[City 5]</span>
+                  <span>Pearland</span>
                 </li>
-                <li className="flex items-center">
+                <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>[City 6]</span>
+                  <span>Spring</span>
                 </li>
               </ul>
               <p className="text-gray-600">
                 Not sure if we service your area? <Link href="/contact" className="text-primary hover:underline">Contact us</Link> to find out!
               </p>
             </div>
-            <div className="bg-gray-200 rounded-lg p-4 h-96 flex items-center justify-center">
-              {/* Replace with actual map or image */}
-              <p className="text-gray-600">Service Area Map</p>
+            <div className="bg-white rounded-lg p-4 h-96 overflow-hidden shadow-sm">
+              {/* Houston map */}
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d221925.9737018205!2d-95.76824936415143!3d29.817773238610072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1693438071518!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen={false} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Houston Service Area Map"
+                className="rounded-lg"
+              />
             </div>
           </div>
         </div>

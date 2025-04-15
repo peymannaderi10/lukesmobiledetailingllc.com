@@ -152,14 +152,14 @@ export default function ReviewsPage() {
                           <div>
                             <div className="bg-gray-200 rounded-lg overflow-hidden h-48 sm:h-64 flex items-center justify-center">
                               {/* Replace with actual image */}
-                              <p className="text-gray-500">Before Image</p>
+                              <p className="text-gray-700">Before Image</p>
                             </div>
                             <p className="text-center text-sm mt-2 text-gray-500">Before</p>
                           </div>
                           <div>
                             <div className="bg-gray-200 rounded-lg overflow-hidden h-48 sm:h-64 flex items-center justify-center">
                               {/* Replace with actual image */}
-                              <p className="text-gray-500">After Image</p>
+                              <p className="text-gray-700">After Image</p>
                             </div>
                             <p className="text-center text-sm mt-2 text-gray-500">After</p>
                           </div>
@@ -211,7 +211,7 @@ export default function ReviewsPage() {
               <div className="relative pt-[56.25%]">
                 <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
                   {/* Replace with actual image */}
-                  <p className="text-gray-500">Transformation Image</p>
+                  <p className="text-gray-700">Transformation Image</p>
                 </div>
               </div>
               <div className="p-6">
@@ -231,7 +231,7 @@ export default function ReviewsPage() {
               <div className="relative pt-[56.25%]">
                 <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
                   {/* Replace with actual image */}
-                  <p className="text-gray-500">Transformation Image</p>
+                  <p className="text-gray-700">Transformation Image</p>
                 </div>
               </div>
               <div className="p-6">
@@ -251,7 +251,7 @@ export default function ReviewsPage() {
               <div className="relative pt-[56.25%]">
                 <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
                   {/* Replace with actual image */}
-                  <p className="text-gray-500">Transformation Image</p>
+                  <p className="text-gray-700">Transformation Image</p>
                 </div>
               </div>
               <div className="p-6">
@@ -268,7 +268,7 @@ export default function ReviewsPage() {
           </div>
           
           <div className="text-center mt-12">
-            <Link href="/gallery" className="btn-outline px-8 py-3">
+            <Link href="/gallery" className="btn-outline-dark px-8 py-3">
               View Gallery
             </Link>
           </div>
@@ -282,7 +282,7 @@ export default function ReviewsPage() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Experience the same exceptional results our customers rave about. Book your detailing service today!
           </p>
-          <Link href="/booking" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3">
+          <Link href="/booking" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
             Book Now
           </Link>
         </div>

@@ -56,7 +56,7 @@ export default function Footer() {
             </address>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
-                <a key={item.name} href={item.href} className="text-gray-400 hover:text-white">
+                <a key={item.name} href={item.href} className="text-gray-400 hover:text-primary">
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
                 </a>
@@ -101,10 +101,10 @@ export default function Footer() {
         <div className="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between">
           <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Luke's Mobile Detailing. All rights reserved.</p>
           <div className="mt-4 md:mt-0">
-            <Link href="/privacy-policy" className="text-sm text-gray-400 hover:text-white mr-4">
+            <Link href="/privacy-policy" className="text-sm text-gray-400 hover:text-primary mr-4">
               Privacy Policy
             </Link>
-            <Link href="/terms-of-service" className="text-sm text-gray-400 hover:text-white">
+            <Link href="/terms-of-service" className="text-sm text-gray-400 hover:text-primary">
               Terms of Service
             </Link>
           </div>

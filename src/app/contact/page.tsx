@@ -129,7 +129,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-bold mb-2">Service Area</h3>
                       <p className="text-gray-600 mb-2">
-                        We serve [Your City] and surrounding areas within a 25-mile radius.
+                        We serve Houston, Texas and surrounding areas within a 25-mile radius.
                       </p>
                       <Link href="/about#service-area" className="text-primary hover:underline">
                         View Service Area Map
@@ -145,7 +145,7 @@ export default function ContactPage() {
                 <div className="flex space-x-4">
                   <a
                     href="#"
-                    className="bg-gray-200 hover:bg-primary hover:text-white transition-colors rounded-full p-3"
+                    className="bg-gray-200 hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
                     aria-label="Facebook"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -158,7 +158,7 @@ export default function ContactPage() {
                   </a>
                   <a
                     href="#"
-                    className="bg-gray-200 hover:bg-primary hover:text-white transition-colors rounded-full p-3"
+                    className="bg-gray-200 hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
                     aria-label="Instagram"
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -306,15 +306,25 @@ export default function ContactPage() {
         <div className="container-custom">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold mb-4">Our Service Area</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              We provide mobile detailing services throughout [Your City] and surrounding areas within a 25-mile radius.
+            <p className="text-gray-800 max-w-3xl mx-auto">
+              We provide mobile detailing services throughout Houston, Texas and surrounding areas within a 25-mile radius.
             </p>
           </div>
           
           <div className="bg-white rounded-lg p-6 shadow-sm">
-            {/* Here you would integrate a Google Map or another map service */}
-            <div className="bg-gray-200 h-80 rounded-lg flex items-center justify-center">
-              <p className="text-gray-500">Service Area Map</p>
+            {/* Houston Google Map */}
+            <div className="bg-white h-80 rounded-lg overflow-hidden">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d221925.9737018205!2d-95.76824936415143!3d29.817773238610072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1693438071518!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen={false} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Houston Service Area Map"
+                className="rounded-lg"
+              />
             </div>
           </div>
         </div>
@@ -325,7 +335,7 @@ export default function ContactPage() {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
+            <p className="text-gray-800 max-w-3xl mx-auto">
               Still have questions? Here are some common inquiries about our services.
             </p>
           </div>
@@ -333,7 +343,7 @@ export default function ContactPage() {
           <div className="max-w-3xl mx-auto">
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">How quickly can you respond to inquiries?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 We typically respond to all inquiries within 24 hours during business days. 
                 For urgent matters, we recommend calling our business phone.
               </p>
@@ -341,7 +351,7 @@ export default function ContactPage() {
             
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">How do I book a service?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 You can book directly through our online booking system, call us, or send us a message 
                 through this contact form. We'll confirm your appointment within 24 hours.
               </p>
@@ -349,14 +359,14 @@ export default function ContactPage() {
             
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">What payment methods do you accept?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 We accept credit cards, debit cards, cash, and mobile payment options like Venmo and Cash App.
               </p>
             </div>
             
             <div>
               <h3 className="text-xl font-bold mb-2">Do you offer gift certificates?</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 Yes! Gift certificates are available for all our services and make a perfect gift for any car enthusiast. 
                 Contact us for more information.
               </p>

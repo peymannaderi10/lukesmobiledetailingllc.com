@@ -34,6 +34,13 @@ module.exports = {
         sans: ['var(--font-geist-sans)', 'Helvetica', 'Arial', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
+      fontWeight: {
+        normal: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 700,
+        extrabold: 800,
+      },
     },
   },
   plugins: [],
