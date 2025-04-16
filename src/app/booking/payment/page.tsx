@@ -34,8 +34,11 @@ interface BookingData {
   paymentType?: PaymentType;
 }
 
-// Initialize Stripe with the publishable key
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
+// Initialize Stripe with the publishable key// Initialize Stripe with the publishable key
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);
+
 
 function PaymentContent() {
   const router = useRouter();
