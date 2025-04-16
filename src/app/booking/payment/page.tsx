@@ -35,9 +35,7 @@ interface BookingData {
 }
 
 // Initialize Stripe with the publishable key
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
-);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
 function PaymentContent() {
   const router = useRouter();
@@ -133,11 +131,6 @@ function PaymentContent() {
         paymentType: paymentType
       };
       
-      // Convert to cents for Stripe and ensure we're using the correct amount
-      const amountInCents = Math.round(amountToPay * 100);
-      
-      console.log(`Creating payment intent: paymentType=${paymentType}, amountToPay=${amountToPay}, amountInCents=${amountInCents}`);
-      
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: {
@@ -145,8 +138,7 @@ function PaymentContent() {
         },
         body: JSON.stringify({
           bookingData: updatedBookingData,
-          amount: amountToPay, // Use the calculated amount based on payment type
-          amountInCents: amountInCents, // Add explicit amount in cents for Stripe
+          payment_method_type: 'card'
         }),
       });
 
@@ -200,39 +192,24 @@ function PaymentContent() {
       // Make sure we've got the current amount to pay
       const currentAmountToPay = calculateAmountToPay(paymentType, totalAmount);
       
-      // Save booking to database with payment type
+      // Create updated booking data with payment information
       const updatedBookingData = {
         ...bookingData,
         paymentType: paymentType,
         amountPaid: currentAmountToPay,
-        remainingBalance: paymentType === 'deposit' ? totalAmount - currentAmountToPay : 0
+        remainingBalance: paymentType === 'deposit' ? totalAmount - currentAmountToPay : 0,
+        bookingId: `LUKE-${Date.now().toString().slice(-6)}`, // Generate a simple booking ID
+        paymentIntentId: paymentIntentId
       };
       
       console.log(`Payment success: paymentType=${paymentType}, amountPaid=${currentAmountToPay}, remainingBalance=${paymentType === 'deposit' ? totalAmount - currentAmountToPay : 0}`);
       
-      const response = await fetch('/api/save-booking', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          bookingData: updatedBookingData,
-          paymentIntentId,
-        }),
-      });
-      
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to save booking');
-      }
-      
-      // Navigate to confirmation page
+      // Navigate directly to confirmation page with booking data
       router.push(`/booking/confirmation?booking=${encodeURIComponent(JSON.stringify(updatedBookingData))}&payment_intent_id=${paymentIntentId}`);
       
     } catch (err) {
-      console.error('Error saving booking:', err);
-      setError('Payment was successful, but there was an error saving your booking. Please contact us.');
+      console.error('Error handling successful payment:', err);
+      setError('Payment was successful, but there was an error processing your booking. Please contact us.');
     }
   };
 

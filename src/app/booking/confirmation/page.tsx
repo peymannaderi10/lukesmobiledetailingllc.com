@@ -69,32 +69,9 @@ function ConfirmationContent() {
       setBookingData(parsedBookingData);
       setPaymentIntentId(payment_intent_id);
 
-      // Calculate the total for the payment details
-      const total = calculateTotal(parsedBookingData);
-
-      // Fetch the payment intent details if needed
-      // This is optional if you already have all the data you need
-      const fetchPaymentDetails = async () => {
-        try {
-          // You could add an API endpoint to get payment intent details if needed
-          // For now, we'll just use the data we have
-          
-          setPaymentDetails({
-            id: payment_intent_id,
-            status: 'succeeded',
-            amount: total,
-            created: Date.now(),
-          });
-          
-        } catch (error) {
-          console.error('Error fetching payment details:', error);
-          setError('Error retrieving payment information.');
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      fetchPaymentDetails();
+      // Since we're not calling the API, we can directly use the payment information
+      // from the URL parameters and the booking data
+      setIsLoading(false);
     } catch (error) {
       console.error('Error parsing booking data:', error);
       setError('There was an error retrieving your booking information.');
