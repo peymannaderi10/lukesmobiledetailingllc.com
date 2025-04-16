@@ -26,7 +26,7 @@ export default function Navbar() {
             <div className="relative h-10 w-10 bg-primary rounded-full flex items-center justify-center">
               <span className="text-white font-bold">L</span>
             </div>
-            <span className="text-xl font-bold text-black">Luke's <span className="text-primary">Detailing</span></span>
+            <span className="text-xl font-bold text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
           </Link>
         </div>
         
