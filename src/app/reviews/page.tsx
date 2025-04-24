@@ -1,90 +1,67 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
-import { StarIcon as StarOutlineIcon } from "@heroicons/react/24/outline";
+import Script from "next/script";
 
-// Reviews data (in a real app, this would come from a database)
-const reviews = [
-  {
-    id: 1,
-    name: "John Smith",
-    service: "Premium Package",
-    date: "September 15, 2023",
-    rating: 5,
-    review: "Luke did an amazing job on my SUV. It had months of dirt and grime, and now it looks better than when I bought it. The interior detailing was particularly impressive - my kids had done a number on the upholstery, and Luke got out stains I thought would be there forever. Highly recommend his premium package!",
-    vehicle: "BMW X5",
-    beforeImage: "/placeholder-before.jpg",
-    afterImage: "/placeholder-after.jpg",
-  },
-  {
-    id: 2,
-    name: "Sarah Davis",
-    service: "Ultimate Package",
-    date: "August 22, 2023",
-    rating: 5,
-    review: "I was amazed at the transformation of my car. Luke's attention to detail is outstanding. The paint correction removed years of swirl marks, and the ceramic coating has made washing my car so much easier. Water just beads right off! The convenience of having him come to my home made it even better. Worth every penny.",
-    vehicle: "Tesla Model 3",
-    beforeImage: "/placeholder-before.jpg",
-    afterImage: "/placeholder-after.jpg",
-  },
-  {
-    id: 3,
-    name: "Michael Johnson",
-    service: "Basic Package",
-    date: "July 10, 2023",
-    rating: 4,
-    review: "Great service at a reasonable price. Luke arrived on time and was very professional. My car hasn't looked this clean in years. The only reason for 4 stars instead of 5 is that there were a couple of spots on the exterior that could have used a bit more attention, but overall I'm very satisfied and will use the service again.",
-    vehicle: "Honda Accord",
-    beforeImage: "/placeholder-before.jpg",
-    afterImage: "/placeholder-after.jpg",
-  },
-  {
-    id: 4,
-    name: "Emily Rodriguez",
-    service: "Premium Package",
-    date: "June 5, 2023",
-    rating: 5,
-    review: "Luke is a true professional. He spent nearly 4 hours on my vehicle and the results were spectacular. The interior looks and smells brand new, and the exterior is gleaming. He even took care of some minor scratches at no extra charge. I've scheduled another appointment for my husband's truck next month.",
-    vehicle: "Audi Q7",
-    beforeImage: "/placeholder-before.jpg",
-    afterImage: "/placeholder-after.jpg",
-  },
-  {
-    id: 5,
-    name: "David Wilson",
-    service: "Ultimate Package",
-    date: "May 17, 2023",
-    rating: 5,
-    review: "I had Luke perform the Ultimate Package on my Porsche, and I couldn't be happier with the results. The paint correction and ceramic coating made a huge difference - my car looks better than showroom condition. Luke's knowledge and passion for his craft are evident in his work. A bit pricey, but absolutely worth it for a vehicle you care about.",
-    vehicle: "Porsche 911",
-    beforeImage: "/placeholder-before.jpg",
-    afterImage: "/placeholder-after.jpg",
-  },
-  {
-    id: 6,
-    name: "Jennifer Lee",
-    service: "Basic Package",
-    date: "April 30, 2023",
-    rating: 5,
-    review: "As a busy mom of three, I don't have time to keep my minivan clean. Luke came to my house during my kids' naptime and transformed my disaster of a vehicle in just 2 hours. He was quiet, efficient, and the results were amazing. The convenience factor alone is worth it, but the quality of work exceeded my expectations.",
-    vehicle: "Toyota Sienna",
-    beforeImage: "/placeholder-before.jpg",
-    afterImage: "/placeholder-after.jpg",
-  },
-];
+// Create a Reviews component that will use SociableKit
+const GoogleReviews = () => {
+  const reviewsContainerRef = useRef<HTMLDivElement>(null);
+  const isScriptLoaded = useRef(false);
 
-// Generate star rating components
-const StarRating = ({ rating }: { rating: number }) => {
+  useEffect(() => {
+    // Only execute this if the script hasn't been loaded yet
+    if (!isScriptLoaded.current && reviewsContainerRef.current) {
+      isScriptLoaded.current = true;
+      
+      // Clean up any existing widgets before re-initializing
+      if (window.sociablekit) {
+        window.sociablekit.widgets = [];
+      }
+
+      // Initialize SociableKit
+      if (typeof window !== 'undefined' && window.sociablekit) {
+        window.sociablekit.initSocialFeed();
+      }
+    }
+  }, []);
+
   return (
-    <div className="flex">
-      {[...Array(5)].map((_, i) => (
-        i < rating 
-          ? <StarIcon key={i} className="h-5 w-5 text-primary" /> 
-          : <StarOutlineIcon key={i} className="h-5 w-5 text-gray-300" />
-      ))}
-    </div>
+    <>
+      {/* SociableKit Script */}
+      <Script
+        src="https://widgets.sociablekit.com/google-reviews/widget.js"
+        async
+        defer
+        strategy="afterInteractive"
+        onLoad={() => {
+          if (typeof window !== 'undefined' && window.sociablekit) {
+            window.sociablekit.initSocialFeed();
+          }
+        }}
+      />
+      
+      {/* SociableKit Widget Container */}
+      <div 
+        ref={reviewsContainerRef}
+        className="sk-ww-google-reviews" 
+        data-embed-id="25549722"
+      ></div>
+    </>
   );
 };
+
+// Add TypeScript declaration for window.sociablekit
+declare global {
+  interface Window {
+    sociablekit?: {
+      initSocialFeed: () => void;
+      widgets: any[];
+    };
+  }
+}
 
 export default function ReviewsPage() {
   return (
@@ -99,7 +76,7 @@ export default function ReviewsPage() {
             <StarIcon className="h-6 w-6 text-primary" />
             <StarIcon className="h-6 w-6 text-primary" />
             <StarIcon className="h-6 w-6 text-primary" />
-            <span className="ml-2 text-2xl font-bold">4.9/5</span>
+            <span className="ml-2 text-2xl font-bold">4.7/5</span>
           </div>
           <p className="text-lg max-w-2xl mx-auto">
             See what our customers have to say about our detailing services.
@@ -107,69 +84,32 @@ export default function ReviewsPage() {
         </div>
       </div>
 
-      {/* Reviews Section */}
+      {/* Google Reviews Section */}
       <section className="py-12 md:py-20">
         <div className="container-custom">
-          <div className="grid grid-cols-1 gap-8">
-            {reviews.map((review) => (
-              <div key={review.id} className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-                <div className="p-6 md:p-8">
-                  <div className="flex flex-col md:flex-row md:items-start gap-6">
-                    {/* Left column with customer info */}
-                    <div className="md:w-1/4">
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg">
-                          {review.name.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <div>
-                          <h3 className="font-bold">{review.name}</h3>
-                          <p className="text-gray-500 text-sm">{review.date}</p>
-                        </div>
-                      </div>
-                      <div className="mb-4">
-                        <StarRating rating={review.rating} />
-                      </div>
-                      <div className="mb-4">
-                        <p className="text-sm text-gray-500">Service:</p>
-                        <p className="font-medium">{review.service}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500">Vehicle:</p>
-                        <p className="font-medium">{review.vehicle}</p>
-                      </div>
-                    </div>
-                    
-                    {/* Right column with review and images */}
-                    <div className="md:w-3/4">
-                      <div className="mb-6">
-                        <h3 className="font-bold text-lg mb-3">Review</h3>
-                        <p className="text-gray-600">{review.review}</p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="font-bold text-lg mb-3">Before & After</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <div className="bg-gray-200 rounded-lg overflow-hidden h-48 sm:h-64 flex items-center justify-center">
-                              {/* Replace with actual image */}
-                              <p className="text-gray-700">Before Image</p>
-                            </div>
-                            <p className="text-center text-sm mt-2 text-gray-500">Before</p>
-                          </div>
-                          <div>
-                            <div className="bg-gray-200 rounded-lg overflow-hidden h-48 sm:h-64 flex items-center justify-center">
-                              {/* Replace with actual image */}
-                              <p className="text-gray-700">After Image</p>
-                            </div>
-                            <p className="text-center text-sm mt-2 text-gray-500">After</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <GoogleReviews />
+        </div>
+      </section>
+
+      {/* Google Maps Section */}
+      <section className="py-12 md:py-20 bg-gray-100">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Find Us</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Luke's Mobile Detailing serves customers throughout the region. Check our service area and reviews on Google Maps.
+            </p>
+          </div>
+          <div className="w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d787342.9967339623!2d-121.6913194750624!3d39.569559709226795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x44ec67311b15f211%3A0x180b4e6d3cc4a12e!2sLuke%E2%80%99s%20Mobile%20Detailing!5e0!3m2!1sen!2sus!4v1745456581901!5m2!1sen!2sus" 
+              width="100%" 
+              height="450" 
+              style={{ border: 0 }} 
+              allowFullScreen 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </section>
@@ -185,10 +125,12 @@ export default function ReviewsPage() {
             </p>
             <div className="mt-6">
               <Link 
-                href="/contact?subject=Review" 
+                href="https://g.page/r/CRqkNMTJw0l8EAI/review"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-primary px-8 py-3"
               >
-                Submit Your Review
+                Leave a Google Review
               </Link>
             </div>
           </div>
