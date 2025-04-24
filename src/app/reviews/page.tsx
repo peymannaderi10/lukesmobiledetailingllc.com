@@ -10,6 +10,47 @@ const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
   const isScriptLoaded = useRef(false);
 
+  // Function to apply CSS fixes
+  const applyCSSFixes = () => {
+    // Add custom CSS to fix star alignment and container width
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Make container wider */
+      .sk-ww-google-reviews {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+      
+      /* Fix star alignment - more aggressive with !important */
+      .sk-ww-google-reviews .sk-ww-google-review-item .sk-ww-google-review-rating {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+      }
+      
+      .sk-ww-google-reviews .sk-ww-google-review-item .sk-ww-google-review-rating img {
+        display: inline-block !important;
+        margin: 0 2px !important;
+      }
+      
+      /* Improve overall layout */
+      .sk-ww-google-reviews .sk-ww-google-review-item {
+        margin-bottom: 20px !important;
+        width: 100% !important;
+      }
+      
+      /* Make reviews display in a grid */
+      .sk-ww-google-review-items {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+        gap: 20px !important;
+      }
+    `;
+    document.head.appendChild(style);
+  };
+
   useEffect(() => {
     // Only execute this if the script hasn't been loaded yet
     if (!isScriptLoaded.current && reviewsContainerRef.current) {
@@ -25,18 +66,12 @@ const GoogleReviews = () => {
         window.sociablekit.initSocialFeed();
       }
       
-      // Add custom CSS to fix star alignment
-      const style = document.createElement('style');
-      style.textContent = `
-        .sk-ww-google-reviews .sk-ww-google-review-item .sk-ww-google-review-rating {
-          display: flex !important;
-          flex-direction: row !important;
-        }
-        .sk-ww-google-reviews .sk-ww-google-review-item .sk-ww-google-review-rating img {
-          margin: 0 2px !important;
-        }
-      `;
-      document.head.appendChild(style);
+      // Apply CSS fixes immediately
+      applyCSSFixes();
+      
+      // Also apply CSS fixes after a delay to ensure the widget has loaded
+      setTimeout(applyCSSFixes, 1000);
+      setTimeout(applyCSSFixes, 2000);
     }
   }, []);
 
@@ -51,6 +86,8 @@ const GoogleReviews = () => {
         onLoad={() => {
           if (typeof window !== 'undefined' && window.sociablekit) {
             window.sociablekit.initSocialFeed();
+            // Apply CSS fixes after widget loads
+            setTimeout(applyCSSFixes, 500);
           }
         }}
       />
@@ -58,7 +95,7 @@ const GoogleReviews = () => {
       {/* SociableKit Widget Container */}
       <div 
         ref={reviewsContainerRef}
-        className="sk-ww-google-reviews" 
+        className="sk-ww-google-reviews w-full" 
         data-embed-id="25549722"
         data-reviews-count="6"
         data-max-rows="2"
