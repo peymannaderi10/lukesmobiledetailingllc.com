@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Script from "next/script";
@@ -58,7 +57,7 @@ declare global {
   interface Window {
     sociablekit?: {
       initSocialFeed: () => void;
-      widgets: any[];
+      widgets: Array<unknown>;
     };
   }
 }

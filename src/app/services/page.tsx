@@ -2,12 +2,9 @@ import Link from "next/link";
 import { 
   CheckCircleIcon,
   ClockIcon,
-  TruckIcon, 
-  BoltIcon,
   ShieldCheckIcon,
   LightBulbIcon,
   CloudIcon,
-  PuzzlePieceIcon,
   BeakerIcon
 } from "@heroicons/react/24/outline";
 
