@@ -25,6 +25,34 @@ const GoogleReviews = () => {
         window.sociablekit.initSocialFeed();
       }
     }
+
+    // Add custom CSS to fix star display
+    const style = document.createElement('style');
+    style.textContent = `
+      .sk-ww-google-reviews .sk-ww-rating,
+      .sk-ww-google-reviews .sk-ww-stars-rating,
+      .sk-ww-google-reviews .sk-ww-stars-container {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 2px !important;
+      }
+      
+      .sk-ww-google-reviews .sk-ww-card {
+        width: 100% !important;
+        max-width: 400px !important;
+      }
+
+      .sk-ww-google-reviews .sk-ww-cards-container {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+        gap: 20px !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
   }, []);
 
   return (
@@ -85,7 +113,7 @@ export default function ReviewsPage() {
 
       {/* Google Reviews Section */}
       <section className="py-12 md:py-20">
-        <div className="container-fluid max-w-[1400px] mx-auto px-4">
+        <div className="w-full">
           <GoogleReviews />
         </div>
       </section>
