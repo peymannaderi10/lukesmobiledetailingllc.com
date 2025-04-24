@@ -25,14 +25,23 @@ function CustomerInfoContent() {
   const packageParam = searchParams.get('package') || 'Basic';
   const dateParam = searchParams.get('date') || '';
   const timeParam = searchParams.get('time') || '';
+  const packagePriceParam = searchParams.get('packagePrice');
+  const durationParam = searchParams.get('serviceDuration');
   
   // Get price based on package
   const getPackagePrice = (pkg: string) => {
+    // First check if we have a price from the URL
+    if (packagePriceParam) {
+      return parseInt(packagePriceParam, 10);
+    }
+    
+    // Otherwise use our package mapping
     switch(pkg.toLowerCase()) {
-      case 'basic': return 99;
-      case 'premium': return 179;
-      case 'ultimate': return 299;
-      default: return 99;
+      case 'signature': return 255;
+      case 'full-interior': return 195;
+      case 'full-exterior': return 130;
+      case 'basic': return 185;
+      default: return 185;
     }
   };
 
@@ -155,6 +164,7 @@ function CustomerInfoContent() {
         time: timeParam,
         package: packageParam,
         packagePrice: getPackagePrice(packageParam),
+        serviceDuration: durationParam ? parseInt(durationParam, 10) : getServiceDuration(packageParam),
       };
       
       // Encode booking data for URL
@@ -169,6 +179,17 @@ function CustomerInfoContent() {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+    }
+  };
+
+  // Function to get service duration based on package
+  const getServiceDuration = (pkg: string): number => {
+    switch(pkg.toLowerCase()) {
+      case 'signature': return 4;
+      case 'full-interior': return 2;
+      case 'full-exterior': return 2;
+      case 'basic': return 2;
+      default: return 2;
     }
   };
 

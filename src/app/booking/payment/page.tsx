@@ -6,35 +6,15 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Link from 'next/link';
 import PaymentForm from '@/components/PaymentForm';
+import { BookingData, PaymentType } from '@/types/booking';
 
 // Payment types
-type PaymentType = 'full' | 'deposit';
+// type PaymentType = 'full' | 'deposit';  // Remove this line since we now import the type
 
 // Booking data interface
-interface BookingData {
-  date: string;
-  time: string;
-  package: string;
-  packagePrice: number;
-  additionalServices: Array<{name: string, price: number}>;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  vehicleType: string;
-  vehicleYear: string;
-  vehicleMake: string;
-  vehicleModel: string;
-  vehicleColor: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  notes?: string;
-  paymentType?: PaymentType;
-}
+// Remove the entire BookingData interface since we now import it
 
-// Initialize Stripe with the publishable key// Initialize Stripe with the publishable key
+// Initialize Stripe with the publishable key
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
@@ -201,13 +181,37 @@ function PaymentContent() {
         paymentType: paymentType,
         amountPaid: currentAmountToPay,
         remainingBalance: paymentType === 'deposit' ? totalAmount - currentAmountToPay : 0,
-        bookingId: `LUKE-${Date.now().toString().slice(-6)}`, // Generate a simple booking ID
         paymentIntentId: paymentIntentId
       };
       
       console.log(`Payment success: paymentType=${paymentType}, amountPaid=${currentAmountToPay}, remainingBalance=${paymentType === 'deposit' ? totalAmount - currentAmountToPay : 0}`);
       
-      // Navigate directly to confirmation page with booking data
+      // Save booking to DynamoDB
+      try {
+        const saveResponse = await fetch('/api/bookings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedBookingData),
+        });
+        
+        const saveResult = await saveResponse.json();
+        
+        if (!saveResponse.ok) {
+          console.error('Error saving booking:', saveResult);
+          // Continue to confirmation even if DB save fails
+          // We can implement a retry mechanism later
+        } else {
+          // Add the booking ID from the database to our data
+          updatedBookingData.bookingId = saveResult.bookingId;
+        }
+      } catch (saveErr) {
+        console.error('Error saving booking to DB:', saveErr);
+        // Continue anyway to show confirmation
+      }
+      
+      // Navigate to confirmation page with booking data
       router.push(`/booking/confirmation?booking=${encodeURIComponent(JSON.stringify(updatedBookingData))}&payment_intent_id=${paymentIntentId}`);
       
     } catch (err) {
@@ -275,7 +279,7 @@ function PaymentContent() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm text-gray-500">Service Package</p>
-                    <p className="font-medium text-black">{bookingData.package}</p>
+                    <p className="font-medium text-black">{bookingData.package} - {formatCurrency(bookingData.packagePrice)}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Date & Time</p>
@@ -291,16 +295,16 @@ function PaymentContent() {
                     <h3 className="font-semibold mb-2">Price Details</h3>
                     <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span className="text-gray-600">{bookingData.package} Package</span>
-                        <span>{formatCurrency(bookingData.packagePrice)}</span>
+                        <span className="text-black">{bookingData.package}</span>
+                        <span className="text-black">{formatCurrency(bookingData.packagePrice)}</span>
                       </div>
                       
                       {bookingData.additionalServices && bookingData.additionalServices.length > 0 && (
                         <>
                           {bookingData.additionalServices.map((service, index) => (
                             <div key={index} className="flex justify-between">
-                              <span className="text-gray-600">{service.name}</span>
-                              <span>{formatCurrency(service.price)}</span>
+                              <span className="text-black">{service.name}</span>
+                              <span className="text-black">{formatCurrency(service.price)}</span>
                             </div>
                           ))}
                         </>
