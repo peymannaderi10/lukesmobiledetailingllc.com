@@ -75,8 +75,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-bold mb-2">Phone</h3>
-                      <a href="tel:(555)123-4567" className="text-gray-600 hover:text-primary">
-                        (555) 123-4567
+                      <a href="tel:(530)650-3631" className="text-gray-600 hover:text-primary">
+                        (530) 650-3631
                       </a>
                     </div>
                   </div>
@@ -129,7 +129,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-bold mb-2">Service Area</h3>
                       <p className="text-gray-600 mb-2">
-                        We serve Houston, Texas and surrounding areas within a 25-mile radius.
+                        We serve Yuba City, Marysville, and surrounding areas in California.
                       </p>
                       <Link href="/about#service-area" className="text-primary hover:underline">
                         View Service Area Map
@@ -144,7 +144,9 @@ export default function ContactPage() {
                 <h3 className="font-bold mb-4">Follow Us</h3>
                 <div className="flex space-x-4">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/lukemobiledetailing/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-black hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
                     aria-label="Facebook"
                   >
@@ -157,7 +159,9 @@ export default function ContactPage() {
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.instagram.com/lukesmobiledetailingllc/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-black hover:bg-primary hover:text-primary-dark transition-colors rounded-full p-3"
                     aria-label="Instagram"
                   >
@@ -307,22 +311,22 @@ export default function ContactPage() {
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold mb-4">Our Service Area</h2>
             <p className="text-gray-800 max-w-3xl mx-auto">
-              We provide mobile detailing services throughout Houston, Texas and surrounding areas within a 25-mile radius.
+              We provide mobile detailing services throughout Yuba City, Marysville, and surrounding areas in California.
             </p>
           </div>
           
           <div className="bg-white rounded-lg p-6 shadow-sm">
-            {/* Houston Google Map */}
+            {/* Yuba City/Marysville Google Map */}
             <div className="bg-white h-80 rounded-lg overflow-hidden">
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d221925.9737018205!2d-95.76824936415143!3d29.817773238610072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1693438071518!5m2!1sen!2sus" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99439.13782406501!2d-121.68402299442324!3d39.13572971039171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809b51944dffefb7%3A0xaa3f8a1952a72a47!2sYuba%20City%2C%20CA!5e0!3m2!1sen!2sus!4v1693438071518!5m2!1sen!2sus" 
                 width="100%" 
                 height="100%" 
                 style={{ border: 0 }} 
                 allowFullScreen={false} 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Houston Service Area Map"
+                title="Yuba City/Marysville Service Area Map"
                 className="rounded-lg"
               />
             </div>

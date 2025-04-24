@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { 
   CheckCircleIcon, 
@@ -7,8 +9,23 @@ import {
   TruckIcon,
   StarIcon
 } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 export default function Home() {
+  // Track active tab for each package
+  const [activeTab, setActiveTab] = useState({
+    signature: "interior",
+    basic: "interior"
+  });
+
+  // Function to handle tab changes
+  const handleTabChange = (packageName: string, tabName: string) => {
+    setActiveTab(prev => ({
+      ...prev,
+      [packageName]: tabName
+    }));
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -72,81 +89,80 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Basic Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-secondary text-white p-6">
-                <h3 className="text-2xl font-bold mb-2">Basic Package</h3>
-                <p className="text-3xl font-bold">$99<span className="text-sm font-normal"> and up</span></p>
-                <p className="text-sm mt-2">Perfect for routine maintenance</p>
-              </div>
-              <div className="p-6">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Exterior hand wash & dry</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Wheel cleaning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Tire shine application</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Interior vacuum & dusting</span>
-          </li>
-                  <li className="flex items-start">
-                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">Approx. 1-2 hours</span>
-          </li>
-                </ul>
-                <Link 
-                  href="/booking?package=basic" 
-                  className="btn-primary w-full mt-6 text-center block"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </div>
-            
-            {/* Premium Package */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* The Signature Package */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
               <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg font-medium text-sm">
-                POPULAR
+                MOST POPULAR
               </div>
               <div className="bg-primary text-white p-6">
-                <h3 className="text-2xl font-bold mb-2">Premium Package</h3>
-                <p className="text-3xl font-bold">$179<span className="text-sm font-normal"> and up</span></p>
-                <p className="text-sm mt-2">Comprehensive interior & exterior</p>
+                <h3 className="text-2xl font-bold mb-2">The Signature</h3>
+                <p className="text-3xl font-bold">$255</p>
+                <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
               <div className="p-6">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Everything in Basic Package</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Interior deep cleaning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Leather conditioning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Exterior wax protection</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">Approx. 3-4 hours</span>
-                  </li>
-                </ul>
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-200 mb-4">
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.signature === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("signature", "interior")}
+                  >
+                    Interior
+                  </button>
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.signature === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("signature", "exterior")}
+                  >
+                    Exterior
+                  </button>
+                </div>
+                
+                {/* Interior Features */}
+                <div className={activeTab.signature === "interior" ? "block" : "hidden"}>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Full interior deep vacuum</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Wipe down of all surfaces</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Steam cleaning of cracks & crevices</span>
+                    </li>
+                    <li className="flex items-start">
+                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">See full details on services page</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                {/* Exterior Features */}
+                <div className={activeTab.signature === "exterior" ? "block" : "hidden"}>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Full vehicle pre rinse</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Paint decontamination</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">3-5 month sealant</span>
+                    </li>
+                    <li className="flex items-start">
+                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">See full details on services page</span>
+                    </li>
+                  </ul>
+                </div>
+                
                 <Link 
-                  href="/booking?package=premium" 
+                  href="/booking?package=signature" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now
@@ -154,38 +170,154 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Ultimate Package */}
+            {/* Full Interior Package */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="bg-secondary text-white p-6">
-                <h3 className="text-2xl font-bold mb-2">Ultimate Package</h3>
-                <p className="text-3xl font-bold">$299<span className="text-sm font-normal"> and up</span></p>
-                <p className="text-sm mt-2">The complete detailing experience</p>
+                <h3 className="text-2xl font-bold mb-2">The Full Interior</h3>
+                <p className="text-3xl font-bold">$195</p>
+                <p className="text-sm mt-2">Interior Detail</p>
               </div>
               <div className="p-6">
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Everything in Premium Package</span>
+                    <span className="text-gray-800">Full interior deep vacuum</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Paint correction</span>
+                    <span className="text-gray-800">Wipe down of all surfaces</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Ceramic coating application</span>
+                    <span className="text-gray-800">Steam cleaning of cup holders</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Engine bay cleaning</span>
+                    <span className="text-gray-800">Air freshener</span>
                   </li>
                   <li className="flex items-start">
                     <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">Approx. 5-8 hours</span>
+                    <span className="text-gray-700">See full details on services page</span>
                   </li>
                 </ul>
                 <Link 
-                  href="/booking?package=ultimate" 
+                  href="/booking?package=full-interior" 
+                  className="btn-primary w-full mt-6 text-center block"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+
+            {/* Full Exterior Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="bg-secondary text-white p-6">
+                <h3 className="text-2xl font-bold mb-2">The Full Exterior</h3>
+                <p className="text-3xl font-bold">$130</p>
+                <p className="text-sm mt-2">Exterior Detail</p>
+              </div>
+              <div className="p-6">
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                    <span className="text-gray-800">Foam wash</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                    <span className="text-gray-800">Wheels & wheel wells</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                    <span className="text-gray-800">Paint decontamination</span>
+                  </li>
+                  <li className="flex items-start">
+                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                    <span className="text-gray-800">6-8 month sealant</span>
+                  </li>
+                  <li className="flex items-start">
+                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
+                    <span className="text-gray-700">See full details on services page</span>
+                  </li>
+                </ul>
+                <Link 
+                  href="/booking?package=full-exterior" 
+                  className="btn-primary w-full mt-6 text-center block"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+            
+            {/* The Basic Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="bg-secondary text-white p-6">
+                <h3 className="text-2xl font-bold mb-2">The Basic</h3>
+                <p className="text-3xl font-bold">$185</p>
+                <p className="text-sm mt-2">Interior & Exterior Detail</p>
+              </div>
+              <div className="p-6">
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-200 mb-4">
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("basic", "interior")}
+                  >
+                    Interior
+                  </button>
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("basic", "exterior")}
+                  >
+                    Exterior
+                  </button>
+                </div>
+                
+                {/* Interior Features */}
+                <div className={activeTab.basic === "interior" ? "block" : "hidden"}>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Full interior vacuum</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Wipe down of all surfaces</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Air freshener</span>
+                    </li>
+                    <li className="flex items-start">
+                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">See full details on services page</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                {/* Exterior Features */}
+                <div className={activeTab.basic === "exterior" ? "block" : "hidden"}>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Foam wash</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Wheels & tires cleaned</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Tire shine</span>
+                    </li>
+                    <li className="flex items-start">
+                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">See full details on services page</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <Link 
+                  href="/booking?package=basic" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now
@@ -290,33 +422,32 @@ export default function Home() {
             <div className="md:w-1/2">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Service Area</h2>
               <p className="text-lg text-gray-800 mb-6">
-                We provide our mobile detailing services throughout the greater Houston, Texas area, 
-                including these locations and surrounding communities:
+                We provide our mobile detailing services throughout Yuba City, Marysville, and surrounding areas in California.
               </p>
               <ul className="grid grid-cols-2 gap-2">
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>The Heights</span>
+                  <span>Yuba City</span>
                 </li>
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Sugar Land</span>
+                  <span>Marysville</span>
                 </li>
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Katy</span>
+                  <span>Live Oak</span>
                 </li>
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>The Woodlands</span>
+                  <span>Olivehurst</span>
                 </li>
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Pearland</span>
+                  <span>Linda</span>
                 </li>
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Spring</span>
+                  <span>Gridley</span>
                 </li>
               </ul>
               <p className="mt-6 text-gray-700">
@@ -324,16 +455,16 @@ export default function Home() {
               </p>
             </div>
             <div className="md:w-1/2 bg-white rounded-lg p-4 h-80 overflow-hidden shadow-sm">
-              {/* Houston map */}
+              {/* Yuba City/Marysville map */}
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d221925.9737018205!2d-95.76824936415143!3d29.817773238610072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640b8b4488d8501%3A0xca0d02def365053b!2sHouston%2C%20TX!5e0!3m2!1sen!2sus!4v1693438071518!5m2!1sen!2sus" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99439.13782406501!2d-121.68402299442324!3d39.13572971039171!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809b51944dffefb7%3A0xaa3f8a1952a72a47!2sYuba%20City%2C%20CA!5e0!3m2!1sen!2sus!4v1693438071518!5m2!1sen!2sus" 
                 width="100%" 
                 height="100%" 
                 style={{ border: 0 }} 
                 allowFullScreen={false} 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Houston Service Area Map"
+                title="Yuba City/Marysville Service Area Map"
                 className="rounded-lg"
               />
             </div>

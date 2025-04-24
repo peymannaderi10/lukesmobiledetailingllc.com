@@ -1,7 +1,8 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
 import { 
   CheckCircleIcon,
-  ClockIcon,
   ShieldCheckIcon,
   LightBulbIcon,
   CloudIcon,
@@ -9,6 +10,20 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function ServicesPage() {
+  // Track active tab for each package
+  const [activeTab, setActiveTab] = useState({
+    signature: "interior",
+    basic: "interior"
+  });
+
+  // Function to handle tab changes
+  const handleTabChange = (packageName: string, tabName: string) => {
+    setActiveTab(prev => ({
+      ...prev,
+      [packageName]: tabName
+    }));
+  };
+
   return (
     <div className="bg-white">
       {/* Header */}
@@ -25,153 +40,310 @@ export default function ServicesPage() {
       {/* Packages Overview */}
       <section className="py-12 md:py-20">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Basic Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-              <div className="bg-secondary text-white p-6">
-                <h2 className="text-2xl font-bold mb-2">Basic Package</h2>
-                <p className="text-3xl font-bold">$99<span className="text-sm font-normal"> and up</span></p>
-                <p className="text-sm mt-2">Perfect for routine maintenance</p>
-              </div>
-              <div className="p-6">
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Exterior hand wash & dry</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Wheel cleaning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Tire shine application</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Interior vacuum & dusting</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Dashboard & console cleaning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Window cleaning (interior & exterior)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">Approx. 1-2 hours</span>
-                  </li>
-                </ul>
-                <Link
-                  href="/booking?package=basic"
-                  className="btn-primary w-full text-center block"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </div>
-
-            {/* Premium Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative lg:transform lg:scale-105">
-              <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg font-medium text-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            {/* The Signature Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative lg:transform lg:scale-105 flex flex-col">
+              <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg font-medium text-sm z-10">
                 MOST POPULAR
               </div>
               <div className="bg-primary text-white p-6">
-                <h2 className="text-2xl font-bold mb-2">Premium Package</h2>
-                <p className="text-3xl font-bold">$179<span className="text-sm font-normal"> and up</span></p>
-                <p className="text-sm mt-2">Comprehensive interior & exterior</p>
+                <h2 className="text-2xl font-bold mb-2">The Signature</h2>
+                <p className="text-3xl font-bold">$255</p>
+                <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
-              <div className="p-6">
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Everything in Basic Package</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Interior deep cleaning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Leather conditioning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Carpet shampooing</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Exterior wax protection</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Door jamb cleaning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Air freshener</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">Approx. 3-4 hours</span>
-                  </li>
-                </ul>
+              <div className="p-6 flex-1 flex flex-col">
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-200 mb-4">
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.signature === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("signature", "interior")}
+                  >
+                    Interior
+                  </button>
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.signature === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("signature", "exterior")}
+                  >
+                    Exterior
+                  </button>
+                </div>
+                
+                {/* Tab Content */}
+                <div className="flex-1 min-h-[350px]">
+                  {/* Interior Content */}
+                  <div className={activeTab.signature === "interior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full interior deep vacuum</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wipe down of all surfaces</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Steam cleaning of cracks & crevices vinyl</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Inside screens windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Application of P&S interior UV protectant</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Final touch up's & vacuum</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Air freshener</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Exterior Content */}
+                  <div className={activeTab.signature === "exterior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full vehicle pre rinse</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Foam wash</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wheels & wheel wells</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tires</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Paint decontamination</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full dry down & light polish</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tire shine</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">3-5 month sealant</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
                 <Link
-                  href="/booking?package=premium"
-                  className="btn-primary w-full text-center block"
+                  href="/booking?package=signature"
+                  className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
                 </Link>
               </div>
             </div>
 
-            {/* Ultimate Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+            {/* The Full Interior Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-secondary text-white p-6">
-                <h2 className="text-2xl font-bold mb-2">Ultimate Package</h2>
-                <p className="text-3xl font-bold">$299<span className="text-sm font-normal"> and up</span></p>
-                <p className="text-sm mt-2">The complete detailing experience</p>
+                <h2 className="text-2xl font-bold mb-2">The Full Interior</h2>
+                <p className="text-3xl font-bold">$195</p>
+                <p className="text-sm mt-2">Interior Detail</p>
               </div>
-              <div className="p-6">
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Everything in Premium Package</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Paint correction</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Ceramic coating application</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Headlight restoration</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Engine bay cleaning</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Trim restoration</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Paint sealant protection</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">Approx. 5-8 hours</span>
-                  </li>
-                </ul>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex-1 min-h-[350px]">
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Full interior deep vacuum</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Wipe down of all surfaces</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Steam cleaning of cup holders, vinyl, air vents & floor mats</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Inside screens windows</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Application of P&S interior UV protectant</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Final touch up's & double vacuum</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Air freshener & business card to finish it off!</span>
+                    </li>
+                  </ul>
+                </div>
                 <Link
-                  href="/booking?package=ultimate"
-                  className="btn-primary w-full text-center block"
+                  href="/booking?package=full-interior"
+                  className="btn-primary w-full text-center block mt-4"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+
+            {/* The Full Exterior Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
+              <div className="bg-secondary text-white p-6">
+                <h2 className="text-2xl font-bold mb-2">The Full Exterior</h2>
+                <p className="text-3xl font-bold">$130</p>
+                <p className="text-sm mt-2">Exterior Detail</p>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex-1 min-h-[350px]">
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Rinse of entire car/truck</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Foam wash</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Wheels & tires</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Bug/road debris removed</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Paint decontamination</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Drying of entire vehicle</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Windows cleaned</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Steam cleaning of wheel wells & rims</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">6-8 month sealant</span>
+                    </li>
+                  </ul>
+                </div>
+                <Link
+                  href="/booking?package=full-exterior"
+                  className="btn-primary w-full text-center block mt-4"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+
+            {/* The Basic Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
+              <div className="bg-secondary text-white p-6">
+                <h2 className="text-2xl font-bold mb-2">The Basic</h2>
+                <p className="text-3xl font-bold">$185</p>
+                <p className="text-sm mt-2">Interior & Exterior Detail</p>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-200 mb-4">
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("basic", "interior")}
+                  >
+                    Interior
+                  </button>
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("basic", "exterior")}
+                  >
+                    Exterior
+                  </button>
+                </div>
+                
+                {/* Tab Content */}
+                <div className="flex-1 min-h-[350px]">
+                  {/* Interior Content */}
+                  <div className={activeTab.basic === "interior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full interior vacuum</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wipe down of all surfaces</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Inside screens windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Air freshener</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Exterior Content */}
+                  <div className={activeTab.basic === "exterior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Foam wash</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wheels cleaned</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tires</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full dry down</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tire shine</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <Link
+                  href="/booking?package=basic"
+                  className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
                 </Link>
