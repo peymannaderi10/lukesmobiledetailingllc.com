@@ -24,6 +24,19 @@ const GoogleReviews = () => {
       if (typeof window !== 'undefined' && window.sociablekit) {
         window.sociablekit.initSocialFeed();
       }
+      
+      // Add custom CSS to fix star alignment
+      const style = document.createElement('style');
+      style.textContent = `
+        .sk-ww-google-reviews .sk-ww-google-review-item .sk-ww-google-review-rating {
+          display: flex !important;
+          flex-direction: row !important;
+        }
+        .sk-ww-google-reviews .sk-ww-google-review-item .sk-ww-google-review-rating img {
+          margin: 0 2px !important;
+        }
+      `;
+      document.head.appendChild(style);
     }
   }, []);
 
@@ -47,6 +60,9 @@ const GoogleReviews = () => {
         ref={reviewsContainerRef}
         className="sk-ww-google-reviews" 
         data-embed-id="25549722"
+        data-reviews-count="6"
+        data-max-rows="2"
+        data-show-more="false"
       ></div>
     </>
   );
