@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense, useEffect, ReactNode } from 'react';
+import { useState, Suspense, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 function BookingContent() {
@@ -139,38 +139,8 @@ function BookingContent() {
     }
   };
   
-  // Set initial package from URL parameter on component mount
-  useEffect(() => {
-    const packageParam = searchParams.get('package');
-    if (packageParam) {
-      // Convert the URL parameter to match the dropdown options
-      const packageMap: Record<string, string> = {
-        'basic': 'Basic',
-        'signature': 'Signature',
-        'full-interior': 'Full-Interior',
-        'full-exterior': 'Full-Exterior'
-      };
-      
-      // Use the mapped value or default to Basic if not found
-      const packageValue = packageMap[packageParam.toLowerCase()] || 'Basic';
-      setSelectedPackage(packageValue);
-    }
-  }, [searchParams]);
-
-  // Update package details when package selection changes
-  useEffect(() => {
-    setPackageDetails(packageInfo[selectedPackage]?.description || null);
-  }, [selectedPackage]);
-  
-  // Check available times when date changes
-  useEffect(() => {
-    if (selectedDate) {
-      checkAvailableTimes(selectedDate);
-    }
-  }, [selectedDate, selectedPackage]);
-  
   // Function to check available times for a given date
-  const checkAvailableTimes = async (date: string) => {
+  const checkAvailableTimes = useCallback(async (date: string) => {
     setIsCheckingAvailability(true);
     setError(null);
     
@@ -205,7 +175,37 @@ function BookingContent() {
     } finally {
       setIsCheckingAvailability(false);
     }
-  };
+  }, [selectedPackage, selectedTime]);
+  
+  // Set initial package from URL parameter on component mount
+  useEffect(() => {
+    const packageParam = searchParams.get('package');
+    if (packageParam) {
+      // Convert the URL parameter to match the dropdown options
+      const packageMap: Record<string, string> = {
+        'basic': 'Basic',
+        'signature': 'Signature',
+        'full-interior': 'Full-Interior',
+        'full-exterior': 'Full-Exterior'
+      };
+      
+      // Use the mapped value or default to Basic if not found
+      const packageValue = packageMap[packageParam.toLowerCase()] || 'Basic';
+      setSelectedPackage(packageValue);
+    }
+  }, [searchParams]);
+
+  // Update package details when package selection changes
+  useEffect(() => {
+    setPackageDetails(packageInfo[selectedPackage]?.description || null);
+  }, [selectedPackage]);
+  
+  // Check available times when date changes
+  useEffect(() => {
+    if (selectedDate) {
+      checkAvailableTimes(selectedDate);
+    }
+  }, [selectedDate, checkAvailableTimes]);
   
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
@@ -231,49 +231,49 @@ function BookingContent() {
   };
 
   return (
-    <div className="py-12 md:py-20 bg-gray-50 min-h-screen">
-      <div className="container-custom">
+    <div className="py-12 md:py-20 bg-gray-50 min-h-screen w-full overflow-x-hidden">
+      <div className="container-custom px-4 sm:px-6 lg:px-8 max-w-full sm:max-w-7xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Book Your Detailing Service</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Book Your Detailing Service</h1>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Select your preferred date, time, and service package to begin booking your mobile detailing appointment.
           </p>
         </div>
         
-        {/* Booking Steps */}
-        <div className="flex justify-center mb-12">
-          <div className="flex items-center">
+        {/* Booking Steps - Mobile Responsive */}
+        <div className="flex flex-wrap justify-center mb-8 md:mb-12 gap-2 sm:gap-0">
+          <div className="flex items-center mb-2 sm:mb-0">
             <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center">
               <span>1</span>
             </div>
-            <div className="text-primary font-medium mx-2">Select Package</div>
-            <div className="w-16 h-0.5 bg-gray-300"></div>
+            <div className="text-primary font-medium mx-2 text-sm sm:text-base">Select Package</div>
+            <div className="hidden sm:block w-8 sm:w-16 h-0.5 bg-gray-300"></div>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center mb-2 sm:mb-0">
             <div className="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center">
               <span>2</span>
             </div>
-            <div className="text-gray-500 font-medium mx-2">Customer Info</div>
-            <div className="w-16 h-0.5 bg-gray-300"></div>
+            <div className="text-gray-500 font-medium mx-2 text-sm sm:text-base">Customer Info</div>
+            <div className="hidden sm:block w-8 sm:w-16 h-0.5 bg-gray-300"></div>
           </div>
           <div className="flex items-center">
             <div className="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center">
               <span>3</span>
             </div>
-            <div className="text-gray-500 font-medium mx-2">Payment</div>
+            <div className="text-gray-500 font-medium mx-2 text-sm sm:text-base">Payment</div>
           </div>
         </div>
         
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {/* Date and Time Selection */}
-              <div className="space-y-8">
-                <div className="bg-white rounded-xl shadow-md p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Select Date</h2>
+              <div className="space-y-6 sm:space-y-8">
+                <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Select Date</h2>
                   <input
                     type="date"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
+                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                     min={new Date().toISOString().split('T')[0]}
@@ -281,8 +281,8 @@ function BookingContent() {
                   />
                 </div>
                 
-                <div className="bg-white rounded-xl shadow-md p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Select Time</h2>
+                <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Select Time</h2>
                   
                   {isCheckingAvailability ? (
                     <div className="flex justify-center items-center py-4">
@@ -297,7 +297,7 @@ function BookingContent() {
                         <p className="text-gray-500 mb-4">No available times for this date. Please select another date.</p>
                       ) : (
                         <select
-                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
+                          className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
                           value={selectedTime}
                           onChange={(e) => setSelectedTime(e.target.value)}
                           required
@@ -316,10 +316,10 @@ function BookingContent() {
               </div>
               
               {/* Package Selection */}
-              <div className="bg-white rounded-xl shadow-md p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Select Package</h2>
+              <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Select Package</h2>
                 <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
+                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
                   value={selectedPackage}
                   onChange={(e) => setSelectedPackage(e.target.value)}
                   required
@@ -331,7 +331,9 @@ function BookingContent() {
                 </select>
                 
                 {/* Display package details */}
-                {packageDetails}
+                <div className="overflow-y-auto max-h-[50vh] sm:max-h-[400px] pr-1">
+                  {packageDetails}
+                </div>
               </div>
             </div>
             
@@ -344,7 +346,7 @@ function BookingContent() {
             <div className="flex justify-end">
               <button 
                 type="submit" 
-                className="btn-primary"
+                className="btn-primary px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base"
                 disabled={isLoading || !selectedDate || !selectedTime}
               >
                 {isLoading ? 'Processing...' : 'Continue to Customer Info'}
