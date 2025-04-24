@@ -19,6 +19,15 @@ const ALL_TIME_SLOTS = [
   "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
 ];
 
+// Define a BookingRecord type to use instead of any
+interface BookingRecord {
+  displayDate?: string;
+  displayTime?: string;
+  "time#serviceType#customerId"?: string;
+  serviceDuration?: number;
+  [key: string]: unknown;
+}
+
 // Helper function to get time slots that would be occupied by a service
 function getOccupiedTimeSlots(startTime: string, duration: number): string[] {
   const startIndex = ALL_TIME_SLOTS.findIndex(time => time === startTime);
@@ -34,7 +43,7 @@ function getOccupiedTimeSlots(startTime: string, duration: number): string[] {
 // Convert time string to a comparable format (hours since 9am)
 function timeToHours(timeString: string): number {
   const [hourStr, minutesWithAmPm] = timeString.split(':');
-  const [minutesStr, amPm] = minutesWithAmPm.split(' ');
+  const amPm = minutesWithAmPm.split(' ')[1];
   
   let hour = parseInt(hourStr);
   
@@ -50,7 +59,7 @@ function timeToHours(timeString: string): number {
 }
 
 // Function to extract time from the sort key or use the time field from the booking
-function getBookingTime(booking: Record<string, any>): string {
+function getBookingTime(booking: BookingRecord): string {
   // First try to use the stored displayTime value
   if (booking.displayTime && typeof booking.displayTime === 'string') {
     return booking.displayTime;
@@ -111,7 +120,7 @@ export async function GET(request: NextRequest) {
 
     try {
       const response = await docClient.send(command);
-      const bookings = response.Items || [];
+      const bookings = response.Items as BookingRecord[] || [];
 
       console.log(`Found ${bookings.length} bookings for date ${date}`);
 
@@ -119,7 +128,7 @@ export async function GET(request: NextRequest) {
       let occupiedTimeSlots: string[] = [];
 
       // For each booking, find the time slots it will occupy
-      bookings.forEach((booking: Record<string, any>) => {
+      bookings.forEach((booking: BookingRecord) => {
         // Get the booking time from either the displayTime field or by parsing the sort key
         const bookingStartTime = getBookingTime(booking);
         const bookingDuration = booking.serviceDuration || 2; // Default to 2 hours if not specified
