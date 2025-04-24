@@ -29,23 +29,63 @@ const GoogleReviews = () => {
     // Add custom CSS to fix star display
     const style = document.createElement('style');
     style.textContent = `
-      .sk-ww-google-reviews .sk-ww-rating,
-      .sk-ww-google-reviews .sk-ww-stars-rating,
-      .sk-ww-google-reviews .sk-ww-stars-container {
+      /* Fix for star ratings in the overview badge */
+      .sk-badge__stars {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 2px !important;
+        justify-content: center !important;
+      }
+      
+      /* Fix for star ratings in individual reviews */
+      .sk-post__rating {
         display: flex !important;
         flex-direction: row !important;
         gap: 2px !important;
       }
       
-      .sk-ww-google-reviews .sk-ww-card {
-        width: 100% !important;
-        max-width: 400px !important;
+      /* Make SVG stars display properly */
+      .sk-post__rating-icon {
+        display: inline-block !important;
+        width: 20px !important;
+        height: 20px !important;
       }
-
-      .sk-ww-google-reviews .sk-ww-cards-container {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
-        gap: 20px !important;
+      
+      /* Adjust card layout */
+      .sk-masonry-item {
+        width: calc(33.33% - 20px) !important;
+        max-width: 400px !important;
+        position: relative !important;
+        float: left !important;
+        margin: 10px !important;
+      }
+      
+      /* Make the masonry layout flow better */
+      .sk-masonry {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+      }
+      
+      /* Force position to be relative instead of absolute */
+      .js-masonry-item[style*="position: absolute"] {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+      }
+      
+      /* Mobile adjustments */
+      @media (max-width: 768px) {
+        .sk-masonry-item {
+          width: calc(50% - 20px) !important;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .sk-masonry-item {
+          width: 100% !important;
+        }
       }
     `;
     document.head.appendChild(style);
