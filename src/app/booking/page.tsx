@@ -277,9 +277,9 @@ function BookingContent() {
         
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
               {/* Date and Time Selection */}
-              <div className="space-y-6 sm:space-y-8">
+              <div className="space-y-6 sm:space-y-8 self-start">
                 <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
                   <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Select Date</h2>
                   {/* Replace the date input with BookingCalendar */}
@@ -330,10 +330,10 @@ function BookingContent() {
               </div>
               
               {/* Package Selection */}
-              <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+              <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 self-start">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Select Package</h2>
                 <select
-                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
+                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black mb-4"
                   value={selectedPackage}
                   onChange={(e) => setSelectedPackage(e.target.value)}
                   required
@@ -345,9 +345,7 @@ function BookingContent() {
                 </select>
                 
                 {/* Display package details */}
-                <div className="overflow-y-auto max-h-[50vh] sm:max-h-[400px] pr-1">
-                  {packageDetails}
-                </div>
+                {packageDetails}
               </div>
             </div>
             
