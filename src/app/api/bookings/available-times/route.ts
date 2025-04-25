@@ -15,8 +15,8 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 // List of all possible booking times
 const ALL_TIME_SLOTS = [
-  "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
-  "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
+  "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
+  "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
 ];
 
 // Define a BookingRecord type to use instead of any
@@ -40,7 +40,7 @@ function getOccupiedTimeSlots(startTime: string, duration: number): string[] {
   return ALL_TIME_SLOTS.slice(startIndex, startIndex + slotsNeeded);
 }
 
-// Convert time string to a comparable format (hours since 9am)
+// Convert time string to a comparable format (hours since 8am)
 function timeToHours(timeString: string): number {
   const [hourStr, minutesWithAmPm] = timeString.split(':');
   const amPm = minutesWithAmPm.split(' ')[1];
@@ -54,8 +54,8 @@ function timeToHours(timeString: string): number {
     hour = 0;
   }
   
-  // Return hours since 9am (our earliest slot)
-  return hour - 9;
+  // Return hours since 8am (our earliest slot)
+  return hour - 8;
 }
 
 // Function to extract time from the sort key or use the time field from the booking

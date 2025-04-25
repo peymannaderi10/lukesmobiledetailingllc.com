@@ -2,6 +2,7 @@
 
 import { useState, Suspense, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import BookingCalendar from '@/components/BookingCalendar';
 
 function BookingContent() {
   const router = useRouter();
@@ -169,8 +170,8 @@ function BookingContent() {
       setError('Unable to check available times. Please try again.');
       // Default to all times if there's an error
       setAvailableTimes([
-        "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
-        "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"
+        "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
+        "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"
       ]);
     } finally {
       setIsCheckingAvailability(false);
@@ -230,6 +231,16 @@ function BookingContent() {
     }
   };
 
+  // Convert selected date string to Date object for the calendar
+  const selectedDateObj = selectedDate ? new Date(selectedDate) : null;
+
+  // Handle date selection from calendar
+  const handleDateSelect = (date: Date) => {
+    // Format the date as YYYY-MM-DD ensuring it's using the correct date
+    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    setSelectedDate(formattedDate);
+  };
+
   return (
     <div className="py-12 md:py-20 bg-gray-50 min-h-screen w-full overflow-x-hidden">
       <div className="container-custom px-4 sm:px-6 lg:px-8 max-w-full sm:max-w-7xl mx-auto">
@@ -271,12 +282,15 @@ function BookingContent() {
               <div className="space-y-6 sm:space-y-8">
                 <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
                   <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Select Date</h2>
-                  <input
-                    type="date"
-                    className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary text-black"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    min={new Date().toISOString().split('T')[0]}
+                  {/* Replace the date input with BookingCalendar */}
+                  <BookingCalendar 
+                    onDateSelect={handleDateSelect} 
+                    defaultValue={selectedDate || null}
+                  />
+                  {/* Hidden input to maintain form validation */}
+                  <input 
+                    type="hidden" 
+                    value={selectedDate} 
                     required
                   />
                 </div>
