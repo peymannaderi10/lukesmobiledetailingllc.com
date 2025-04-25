@@ -503,7 +503,7 @@ function CustomerInfoContent() {
               </div>
             </div>
             
-            {/* Additional Services Section */}
+            {/* Additional Services Section 
             <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
               <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Additional Services (Optional)</h2>
               
@@ -604,7 +604,7 @@ function CustomerInfoContent() {
                   </label>
                 </div>
               </div>
-            </div>
+            </div>*/}
             
             {/* Special Instructions */}
             <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
