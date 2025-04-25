@@ -355,16 +355,15 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-800 mb-4">
-                "Luke did an amazing job on my SUV. It had months of dirt and grime, 
-                and now it looks better than when I bought it. Highly recommend his premium package!"
+                "I contacted Luke about detailing my plane. We made plans to meet at the airport and he was right on time. He did an excellent job and I was very impressed with how hard he worked and all of the professional products he used. I would highly recommend Luke’s mobile detailing."
               </p>
               <div className="flex items-center">
                 <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
-                  <span className="font-bold text-gray-600">JS</span>
+                  <span className="font-bold text-gray-600">CB</span>
                 </div>
                 <div>
-                  <h4 className="font-bold">John Smith</h4>
-                  <p className="text-sm text-gray-500">Premium Package Customer</p>
+                  <h4 className="font-bold">Carin Batham</h4>
+                  <p className="text-sm text-gray-500">Siganture Package Customer</p>
                 </div>
               </div>
             </div>
@@ -379,16 +378,15 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-800 mb-4">
-                "I was amazed at the transformation of my car. Luke's attention to detail is outstanding.
-                The convenience of having him come to my home made it even better."
+                "First time getting my car detailed by Luke and he showed up on time with a 100 gallon water tank and his own generator to power all his equipment, he was extremely professional and clean, I’m definitely gonna recommend him to my friends and will be using his services in the future!"
               </p>
               <div className="flex items-center">
                 <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
-                  <span className="font-bold text-gray-600">SD</span>
+                  <span className="font-bold text-gray-600">SA</span>
                 </div>
                 <div>
-                  <h4 className="font-bold">Sarah Davis</h4>
-                  <p className="text-sm text-gray-500">Ultimate Package Customer</p>
+                  <h4 className="font-bold">Shahan Ali</h4>
+                  <p className="text-sm text-gray-500">Signature Package Customer</p>
                 </div>
               </div>
             </div>

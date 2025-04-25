@@ -118,8 +118,8 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-            {/* Featured Before & After Transformations */}
-            <section className="py-12 md:py-20">
+    {/* Featured Before & After Transformations 
+      <section className="py-12 md:py-20">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Featured Transformations</h2>
@@ -129,11 +129,11 @@ export default function ReviewsPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Transformation 1 */}
+            //Transformation 1 
             <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
               <div className="relative pt-[56.25%]">
                 <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                  {/* Replace with actual image */}
+                  // Replace with actual image 
                   <p className="text-gray-700">Transformation Image</p>
                 </div>
               </div>
@@ -149,11 +149,11 @@ export default function ReviewsPage() {
               </div>
             </div>
             
-            {/* Transformation 2 */}
+            // Transformation 2 
             <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
               <div className="relative pt-[56.25%]">
                 <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                  {/* Replace with actual image */}
+                  // Replace with actual image 
                   <p className="text-gray-700">Transformation Image</p>
                 </div>
               </div>
@@ -169,11 +169,11 @@ export default function ReviewsPage() {
               </div>
             </div>
             
-            {/* Transformation 3 */}
+            // Transformation 3 
             <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
               <div className="relative pt-[56.25%]">
                 <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                  {/* Replace with actual image */}
+                  // Replace with actual image 
                   <p className="text-gray-700">Transformation Image</p>
                 </div>
               </div>
@@ -196,7 +196,7 @@ export default function ReviewsPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* Google Maps Section */}
       <section className="py-12 md:py-20 bg-gray-100">
