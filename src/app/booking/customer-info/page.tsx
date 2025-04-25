@@ -204,36 +204,36 @@ function CustomerInfoContent() {
         </div>
         
         {/* Booking Steps */}
-        <div className="flex justify-center mb-12">
-          <div className="flex items-center">
+        <div className="flex flex-wrap justify-center mb-8 md:mb-12 gap-2 sm:gap-0">
+          <div className="flex items-center mb-2 sm:mb-0">
             <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center">
               <span>1</span>
             </div>
-            <div className="text-primary font-medium mx-2">Select Package</div>
-            <div className="w-16 h-0.5 bg-gray-300"></div>
+            <div className="text-primary font-medium mx-2 text-sm sm:text-base">Select Package</div>
+            <div className="hidden sm:block w-8 sm:w-16 h-0.5 bg-gray-300"></div>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center mb-2 sm:mb-0">
             <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center">
               <span>2</span>
             </div>
-            <div className="text-primary font-medium mx-2">Customer Info</div>
-            <div className="w-16 h-0.5 bg-gray-300"></div>
+            <div className="text-primary font-medium mx-2 text-sm sm:text-base">Customer Info</div>
+            <div className="hidden sm:block w-8 sm:w-16 h-0.5 bg-gray-300"></div>
           </div>
           <div className="flex items-center">
             <div className="w-8 h-8 bg-gray-300 text-gray-500 rounded-full flex items-center justify-center">
               <span>3</span>
             </div>
-            <div className="text-gray-500 font-medium mx-2">Payment</div>
+            <div className="text-gray-500 font-medium mx-2 text-sm sm:text-base">Payment</div>
           </div>
         </div>
         
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Personal Information Section */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Personal Information</h2>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Personal Information</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-start">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
                     First Name*
@@ -313,10 +313,10 @@ function CustomerInfoContent() {
             </div>
             
             {/* Vehicle Information Section */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Vehicle Information</h2>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Vehicle Information</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-start">
                 <div>
                   <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-1">
                     Vehicle Type*
@@ -419,10 +419,10 @@ function CustomerInfoContent() {
             </div>
             
             {/* Service Location Section */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Service Location</h2>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Service Location</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-start">
                 <div className="md:col-span-2">
                   <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
                     Street Address*
@@ -461,7 +461,7 @@ function CustomerInfoContent() {
                   )}
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
                       State*
@@ -504,10 +504,10 @@ function CustomerInfoContent() {
             </div>
             
             {/* Additional Services Section */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Additional Services (Optional)</h2>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Additional Services (Optional)</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                 <div className="flex items-start p-4 border border-gray-200 rounded-md">
                   <input
                     type="checkbox"
@@ -607,8 +607,8 @@ function CustomerInfoContent() {
             </div>
             
             {/* Special Instructions */}
-            <div className="bg-white rounded-xl shadow-md p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Special Instructions (Optional)</h2>
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">Special Instructions (Optional)</h2>
               
               <div>
                 <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">

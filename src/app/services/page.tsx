@@ -353,7 +353,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Additional Services */}
+      {/* Additional Services 
       <section className="py-12 md:py-20 bg-gray-100">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -408,7 +408,7 @@ export default function ServicesPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* Process Section */}
       <section className="py-12 md:py-20">
