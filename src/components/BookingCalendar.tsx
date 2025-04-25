@@ -29,7 +29,8 @@ function BookingCalendar({ onDateSelect, defaultValue = null }: BookingCalendarP
     return new Date(year, month - 1, day, 12, 0, 0);
   };
 
-  // Let TypeScript infer the correct types from react-calendar
+  // Disable the no-explicit-any rule just for this line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDateSelect = (value: any) => {
     if (value instanceof Date) {
       // Use the date at noon to avoid timezone issues
@@ -46,6 +47,7 @@ function BookingCalendar({ onDateSelect, defaultValue = null }: BookingCalendarP
   };
 
   // Custom tile content to ensure correct display
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tileContent = ({ date, view }: { date: Date; view: string }) => null;
 
   return (

@@ -152,7 +152,7 @@ export async function GET(request: NextRequest) {
         // Check if any of these slots are already occupied
         const conflict = neededSlots.some(slot => occupiedTimeSlots.includes(slot));
         
-        // Also check if this would run past our last time slot (4 PM)
+        // Also check if this would run past our last time slot (5 PM)
         const startHour = timeToHours(startTime);
         const wouldRunPastClosing = startHour + duration > timeToHours(ALL_TIME_SLOTS[ALL_TIME_SLOTS.length - 1]) + 1;
         
