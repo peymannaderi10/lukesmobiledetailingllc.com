@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { 
   CheckCircleIcon, 
   SparklesIcon, 
@@ -29,10 +30,17 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-secondary text-white">
-        <div className="absolute inset-0 z-0 opacity-50">
-          {/* Replace with actual car detailing image */}
-          <div className="w-full h-full bg-gradient-to-r from-secondary to-secondary-light" />
+      <section className="relative text-white">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/Images/webPhotos/Banner.jpg" 
+            alt="Professional car detailing" 
+            fill
+            priority
+            className="object-cover object-center object-position-y-top"
+            style={{ objectPosition: "center `60%" }}
+          />
+          <div className="absolute inset-0 bg-black opacity-50" />
         </div>
         <div className="container-custom relative z-10 py-20 md:py-28">
           <div className="max-w-3xl mx-auto text-center">
@@ -355,7 +363,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-800 mb-4">
-                "I contacted Luke about detailing my plane. We made plans to meet at the airport and he was right on time. He did an excellent job and I was very impressed with how hard he worked and all of the professional products he used. I would highly recommend Luke’s mobile detailing."
+                "I contacted Luke about detailing my plane. We made plans to meet at the airport and he was right on time. He did an excellent job and I was very impressed with how hard he worked and all of the professional products he used. I would highly recommend Luke's mobile detailing."
               </p>
               <div className="flex items-center">
                 <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
@@ -378,7 +386,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-800 mb-4">
-                "First time getting my car detailed by Luke and he showed up on time with a 100 gallon water tank and his own generator to power all his equipment, he was extremely professional and clean, I’m definitely gonna recommend him to my friends and will be using his services in the future!"
+                "First time getting my car detailed by Luke and he showed up on time with a 100 gallon water tank and his own generator to power all his equipment, he was extremely professional and clean, I'm definitely gonna recommend him to my friends and will be using his services in the future!"
               </p>
               <div className="flex items-center">
                 <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
