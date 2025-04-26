@@ -352,58 +352,72 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Testimonial 1 */}
-            <div className="bg-gray-100 p-6 rounded-lg shadow-sm">
-              <div className="flex items-center mb-4">
-                <div className="flex text-primary">
-                  {[...Array(5)].map((_, i) => (
-                    <StarIcon key={i} className="h-5 w-5 fill-current" />
-                  ))}
+          <div className="flex flex-col md:flex-row gap-8 items-stretch">
+            {/* Image on the left */}
+            <div className="md:w-1/2 relative rounded-lg overflow-hidden shadow-md h-auto">
+              <Image 
+                src="/Images/webPhotos/banner2.jpeg" 
+                alt="Professional detailing service" 
+                fill
+                className="object-cover rounded-lg"
+              />
+            </div>
+
+            {/* Testimonials on the right */}
+            <div className="md:w-1/2 space-y-6 flex flex-col">
+              {/* Testimonial 1 */}
+              <div className="bg-gray-100 p-6 rounded-lg shadow-sm flex-1">
+                <div className="flex items-center mb-4">
+                  <div className="flex text-primary">
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className="h-5 w-5 fill-current" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-gray-800 mb-4">
+                  "I contacted Luke about detailing my plane. We made plans to meet at the airport and he was right on time. He did an excellent job and I was very impressed with how hard he worked and all of the professional products he used. I would highly recommend Luke's mobile detailing."
+                </p>
+                <div className="flex items-center">
+                  <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
+                    <span className="font-bold text-gray-600">CB</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold">Carin Batham</h4>
+                    <p className="text-sm text-gray-500">Signature Package Customer</p>
+                  </div>
                 </div>
               </div>
-              <p className="text-gray-800 mb-4">
-                "I contacted Luke about detailing my plane. We made plans to meet at the airport and he was right on time. He did an excellent job and I was very impressed with how hard he worked and all of the professional products he used. I would highly recommend Luke's mobile detailing."
-              </p>
-              <div className="flex items-center">
-                <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
-                  <span className="font-bold text-gray-600">CB</span>
+              
+              {/* Testimonial 2 */}
+              <div className="bg-gray-100 p-6 rounded-lg shadow-sm flex-1">
+                <div className="flex items-center mb-4">
+                  <div className="flex text-primary">
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className="h-5 w-5 fill-current" />
+                    ))}
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold">Carin Batham</h4>
-                  <p className="text-sm text-gray-500">Siganture Package Customer</p>
+                <p className="text-gray-800 mb-4">
+                  "First time getting my car detailed by Luke and he showed up on time with a 100 gallon water tank and his own generator to power all his equipment, he was extremely professional and clean, I'm definitely gonna recommend him to my friends and will be using his services in the future!"
+                </p>
+                <div className="flex items-center">
+                  <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
+                    <span className="font-bold text-gray-600">SA</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold">Shahan Ali</h4>
+                    <p className="text-sm text-gray-500">Signature Package Customer</p>
+                  </div>
                 </div>
+              </div>
+
+              {/* Link to all reviews */}
+              <div className="text-center mt-4">
+                <Link href="/reviews" className="btn-outline">
+                  View All Reviews
+                </Link>
               </div>
             </div>
-            
-            {/* Testimonial 2 */}
-            <div className="bg-gray-100 p-6 rounded-lg shadow-sm">
-              <div className="flex items-center mb-4">
-                <div className="flex text-primary">
-                  {[...Array(5)].map((_, i) => (
-                    <StarIcon key={i} className="h-5 w-5 fill-current" />
-                  ))}
-                </div>
-              </div>
-              <p className="text-gray-800 mb-4">
-                "First time getting my car detailed by Luke and he showed up on time with a 100 gallon water tank and his own generator to power all his equipment, he was extremely professional and clean, I'm definitely gonna recommend him to my friends and will be using his services in the future!"
-              </p>
-              <div className="flex items-center">
-                <div className="mr-4 bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center">
-                  <span className="font-bold text-gray-600">SA</span>
-                </div>
-                <div>
-                  <h4 className="font-bold">Shahan Ali</h4>
-                  <p className="text-sm text-gray-500">Signature Package Customer</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link href="/reviews" className="btn-outline">
-              View All Reviews
-            </Link>
           </div>
         </div>
       </section>

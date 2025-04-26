@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function GalleryPage() {
   // Track which before/after image is being viewed for each comparison
@@ -126,13 +127,8 @@ export default function GalleryPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Before/After Comparison 1 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden mb-4">
-              <div className="p-4 sm:p-6 bg-gray-50 border-b">
-                <h3 className="text-xl font-bold">Exterior Detail - Black SUV</h3>
-                <p className="text-gray-600">Full exterior detail with paint correction and ceramic coating.</p>
-              </div>
-              
+            {/* Before/After Comparison 1 - Honda */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
               <div className="relative">
                 {/* Toggle buttons */}
                 <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
@@ -151,26 +147,29 @@ export default function GalleryPage() {
                 </div>
                 
                 {/* Images */}
-                <div className="relative pt-[56.25%] bg-gray-200">
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison1 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual before image */}
-                    <p className="text-gray-700 font-bold text-xl">Before Image</p>
+                <div className="relative pt-[125%]">
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison1 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/hondaBefore.jpg"
+                      alt="Honda Before Detailing"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison1 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual after image */}
-                    <p className="text-gray-700 font-bold text-xl">After Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison1 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/hondaAfter.jpg"
+                      alt="Honda After Detailing"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Before/After Comparison 2 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden mb-4">
-              <div className="p-4 sm:p-6 bg-gray-50 border-b">
-                <h3 className="text-xl font-bold">Interior Restoration - Family Minivan</h3>
-                <p className="text-gray-600">Deep cleaning of heavily soiled interior with stain removal.</p>
-              </div>
-              
+            {/* Before/After Comparison 2 - Passenger Seat */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
               <div className="relative">
                 {/* Toggle buttons */}
                 <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
@@ -189,26 +188,29 @@ export default function GalleryPage() {
                 </div>
                 
                 {/* Images */}
-                <div className="relative pt-[56.25%] bg-gray-200">
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison2 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual before image */}
-                    <p className="text-gray-700 font-bold text-xl">Before Image</p>
+                <div className="relative pt-[125%]">
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison2 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/passengerBefore.jpg"
+                      alt="Passenger Seat Before Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison2 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual after image */}
-                    <p className="text-gray-700 font-bold text-xl">After Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison2 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/passengerAfter.jpg"
+                      alt="Passenger Seat After Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Before/After Comparison 3 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden mb-4">
-              <div className="p-4 sm:p-6 bg-gray-50 border-b">
-                <h3 className="text-xl font-bold">Headlight Restoration - Sedan</h3>
-                <p className="text-gray-600">Restoration of heavily oxidized and yellowed headlights.</p>
-              </div>
-              
+            {/* Before/After Comparison 3 - Carpet */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
               <div className="relative">
                 {/* Toggle buttons */}
                 <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
@@ -227,26 +229,29 @@ export default function GalleryPage() {
                 </div>
                 
                 {/* Images */}
-                <div className="relative pt-[56.25%] bg-gray-200">
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison3 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual before image */}
-                    <p className="text-gray-700 font-bold text-xl">Before Image</p>
+                <div className="relative pt-[125%]">
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison3 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/carpetBefore.jpg"
+                      alt="Carpet Before Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison3 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual after image */}
-                    <p className="text-gray-700 font-bold text-xl">After Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison3 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/carpetAfter.jpg"
+                      alt="Carpet After Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Before/After Comparison 4 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden mb-4">
-              <div className="p-4 sm:p-6 bg-gray-50 border-b">
-                <h3 className="text-xl font-bold">Leather Conditioning - Luxury Sedan</h3>
-                <p className="text-gray-600">Revitalizing dried and cracked leather surfaces.</p>
-              </div>
-              
+            {/* Before/After Comparison 4 - Car Seat */}
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
               <div className="relative">
                 {/* Toggle buttons */}
                 <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
@@ -265,26 +270,29 @@ export default function GalleryPage() {
                 </div>
                 
                 {/* Images */}
-                <div className="relative pt-[56.25%] bg-gray-200">
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison4 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual before image */}
-                    <p className="text-gray-700 font-bold text-xl">Before Image</p>
+                <div className="relative pt-[125%]">
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison4 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/carseatBefore.jpg"
+                      alt="Car Seat Before Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison4 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual after image */}
-                    <p className="text-gray-700 font-bold text-xl">After Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison4 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/images/beforeAndAfter/carseatAfter.jpg"
+                      alt="Car Seat After Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Before/After Comparison 5 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden mb-4">
-              <div className="p-4 sm:p-6 bg-gray-50 border-b">
-                <h3 className="text-xl font-bold">Engine Bay Detailing - Sports Car</h3>
-                <p className="text-gray-600">Professional cleaning and dressing of engine components.</p>
-              </div>
-              
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <div className="relative">
                 {/* Toggle buttons */}
                 <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
@@ -303,7 +311,7 @@ export default function GalleryPage() {
                 </div>
                 
                 {/* Images */}
-                <div className="relative pt-[56.25%] bg-gray-200">
+                <div className="relative pt-[125%]">
                   <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison5 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
                     {/* Replace with actual before image */}
                     <p className="text-gray-700 font-bold text-xl">Before Image</p>
@@ -317,12 +325,7 @@ export default function GalleryPage() {
             </div>
 
             {/* Before/After Comparison 6 */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden mb-4">
-              <div className="p-4 sm:p-6 bg-gray-50 border-b">
-                <h3 className="text-xl font-bold">Wheel & Caliper Detailing - Performance Car</h3>
-                <p className="text-gray-600">Deep cleaning and protection of wheels and brake components.</p>
-              </div>
-              
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <div className="relative">
                 {/* Toggle buttons */}
                 <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
@@ -341,7 +344,7 @@ export default function GalleryPage() {
                 </div>
                 
                 {/* Images */}
-                <div className="relative pt-[56.25%] bg-gray-200">
+                <div className="relative pt-[125%]">
                   <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison6 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
                     {/* Replace with actual before image */}
                     <p className="text-gray-700 font-bold text-xl">Before Image</p>
@@ -371,4 +374,4 @@ export default function GalleryPage() {
       </section>
     </div>
   );
-} 
+}
