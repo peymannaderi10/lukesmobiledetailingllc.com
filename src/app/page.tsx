@@ -355,12 +355,14 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-8 items-stretch">
             {/* Image on the left */}
             <div className="md:w-1/2 relative rounded-lg overflow-hidden shadow-md h-auto">
-              <Image 
-                src="/Images/webPhotos/banner2.jpeg" 
-                alt="Professional detailing service" 
-                fill
-                className="object-cover rounded-lg"
-              />
+              <div className="w-full h-[300px] md:h-full relative">
+                <Image 
+                  src="/Images/webPhotos/banner2.jpeg" 
+                  alt="Professional detailing service" 
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
             </div>
 
             {/* Testimonials on the right */}
