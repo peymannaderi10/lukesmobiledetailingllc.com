@@ -38,9 +38,9 @@ export default function Home() {
             fill
             priority
             className="object-cover object-center object-position-y-top"
-            style={{ objectPosition: "center `60%" }}
+            style={{ objectPosition: "center 55%" }}
           />
-          <div className="absolute inset-0 bg-black opacity-50" />
+          <div className="absolute inset-0 bg-black opacity-80" />
         </div>
         <div className="container-custom relative z-10 py-20 md:py-28">
           <div className="max-w-3xl mx-auto text-center">
