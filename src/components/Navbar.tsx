@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
@@ -17,15 +18,17 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-md">
-      <nav className="container-custom flex items-center justify-between py-4">
+    <header className="bg-white/95 backdrop-blur-sm shadow-md fixed top-0 left-0 right-0 z-50">
+      <nav className="container-custom flex items-center justify-between py-2">
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
-            {/* Replace with your actual logo */}
-            <div className="relative h-10 w-10 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">L</span>
-            </div>
-            <span className="text-xl font-bold text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
+            <Image 
+              src="/Images/webPhotos/logoblack.png" 
+              alt="Luke's Mobile Detailing Logo"
+              width={100}
+              height={100}
+              className="w-[100px] h-auto object-contain"
+            />
           </Link>
         </div>
         
@@ -70,10 +73,13 @@ export default function Navbar() {
             <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
               <div className="flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2">
-                  {/* Replace with your actual logo */}
-                  <div className="relative h-10 w-10 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">L</span>
-                  </div>
+                  <Image 
+                    src="/Images/webPhotos/logoblack.png"
+                    alt="Luke's Mobile Detailing Logo"
+                    width={100}
+                    height={100}
+                    className="w-[100px] h-auto object-contain"
+                  />
                   <span className="text-xl font-bold text-black">Luke's <span className="text-primary">Detailing</span></span>
                 </Link>
                 <button
