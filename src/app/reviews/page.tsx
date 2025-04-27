@@ -24,6 +24,34 @@ const GoogleReviews = () => {
       if (typeof window !== 'undefined' && window.sociablekit) {
         window.sociablekit.initSocialFeed();
       }
+      
+      // Add custom CSS to fix the vertical stars issue
+      const styleElement = document.createElement('style');
+      styleElement.textContent = `
+        /* Fix for vertical stars in SociableKit widget */
+        .sk-badge__stars {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: center !important;
+          align-items: center !important;
+          margin: 5px auto !important;
+        }
+        
+        /* Individual review stars should be left-aligned */
+        .sk-post__rating {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          margin: 5px 0 !important;
+        }
+        
+        .sk-post__rating-icon {
+          display: inline-block !important;
+          margin: 0 2px !important;
+        }
+      `;
+      document.head.appendChild(styleElement);
     }
   }, []);
 
