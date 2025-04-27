@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Script from "next/script";
@@ -91,6 +91,37 @@ declare global {
 }
 
 export default function ReviewsPage() {
+  const [rating, setRating] = useState<string>("5.0");
+
+  useEffect(() => {
+    // Function to get rating from SociableKit widget
+    const getRating = () => {
+      const ratingElement = document.querySelector('.sk-badge__value');
+      if (ratingElement) {
+        const newRating = ratingElement.textContent || "5.0";
+        setRating(newRating);
+      }
+    };
+
+    // Initial check
+    getRating();
+
+    // Check periodically until we find the rating
+    const interval = setInterval(() => {
+      getRating();
+    }, 1000);
+
+    // Clean up interval after 10 seconds
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
     <div className="bg-white">
       {/* Header */}
@@ -103,7 +134,7 @@ export default function ReviewsPage() {
             <StarIcon className="h-6 w-6 text-primary" />
             <StarIcon className="h-6 w-6 text-primary" />
             <StarIcon className="h-6 w-6 text-primary" />
-            <span className="ml-2 text-2xl font-bold">4.7/5</span>
+            <span className="ml-2 text-2xl font-bold">{rating}/5</span>
           </div>
           <p className="text-lg max-w-2xl mx-auto">
             See what our customers have to say about our detailing services.
