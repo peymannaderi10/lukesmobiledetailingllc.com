@@ -468,31 +468,32 @@ export default function ServicesPage() {
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">How long does a typical detailing service take?</h3>
               <p className="text-gray-800">
-                Service times vary based on the package and vehicle condition. Basic packages typically take 1-2 hours, 
-                Premium packages 3-4 hours, and Ultimate packages 5-8 hours.
+                Service times vary based on the package and vehicle condition. The Basic package typically takes 2-3 hours, 
+                the Premium package 3-4 hours, and the Signature package 4-5 hours. Additional services may extend these times.
+              </p>
+            </div>
+            
+            <div className="mb-6">
+              <h3 className="text-xl font-bold mb-2">What's included in each package?</h3>
+              <p className="text-gray-800">
+                Our Basic package includes exterior wash, tire shine, and basic interior cleaning. The Premium package adds 
+                interior deep cleaning, leather conditioning, and paint decontamination. The Signature package includes everything 
+                plus paint correction, ceramic coating, and premium wax application.
               </p>
             </div>
             
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">Do I need to be present during the service?</h3>
               <p className="text-gray-800">
-                No, you don't need to be present the entire time. We just need access to your vehicle and a water source.
+                No, you don't need to be present during the service. We just need access to your vehicle and a water source.
                 Many customers provide access and go about their day while we work.
-              </p>
-            </div>
-            
-            <div className="mb-6">
-              <h3 className="text-xl font-bold mb-2">What if I'm not satisfied with the service?</h3>
-              <p className="text-gray-800">
-                Your satisfaction is our priority. If you're not completely satisfied, please let us know immediately, 
-                and we'll address any concerns to ensure you're happy with the results.
               </p>
             </div>
             
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">What areas do you service?</h3>
               <p className="text-gray-800">
-                We service [Your Service Area] and surrounding communities within a 25-mile radius. If you're unsure 
+                We service Yuba City, Marysville, and surrounding areas within a 25-mile radius. If you're unsure 
                 if we serve your area, please contact us to check.
               </p>
             </div>
@@ -500,7 +501,8 @@ export default function ServicesPage() {
             <div>
               <h3 className="text-xl font-bold mb-2">What forms of payment do you accept?</h3>
               <p className="text-gray-800">
-                We accept credit cards, debit cards, cash, and mobile payment options like Venmo and Cash App.
+                We accept all major credit cards, debit cards, cash, and mobile payment options like Venmo and Cash App.
+                Payment is required upon completion of service.
               </p>
             </div>
           </div>

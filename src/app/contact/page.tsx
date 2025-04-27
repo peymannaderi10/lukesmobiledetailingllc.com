@@ -346,33 +346,34 @@ export default function ContactPage() {
           
           <div className="max-w-3xl mx-auto">
             <div className="mb-6">
-              <h3 className="text-xl font-bold mb-2">How quickly can you respond to inquiries?</h3>
+              <h3 className="text-xl font-bold mb-2">How do I schedule a detailing service?</h3>
               <p className="text-gray-800">
-                We typically respond to all inquiries within 24 hours during business days. 
-                For urgent matters, we recommend calling our business phone.
+                You can easily book through our online booking system, call us directly, or send us a message 
+                through the contact form above. We'll confirm your appointment within 24 hours.
               </p>
             </div>
             
             <div className="mb-6">
-              <h3 className="text-xl font-bold mb-2">How do I book a service?</h3>
+              <h3 className="text-xl font-bold mb-2">What should I do to prepare for my appointment?</h3>
               <p className="text-gray-800">
-                You can book directly through our online booking system, call us, or send us a message 
-                through this contact form. We'll confirm your appointment within 24 hours.
+                Please remove all personal belongings from your vehicle before the service. We'll need access to 
+                your vehicle and a water source. If possible, park in a shaded area or garage.
               </p>
             </div>
             
             <div className="mb-6">
-              <h3 className="text-xl font-bold mb-2">What payment methods do you accept?</h3>
+              <h3 className="text-xl font-bold mb-2">What if I need to reschedule my appointment?</h3>
               <p className="text-gray-800">
-                We accept credit cards, debit cards, cash, and mobile payment options like Venmo and Cash App.
+                We understand plans can change. Please give us at least 24 hours notice if you need to reschedule. 
+                You can call us or use our online booking system to select a new time.
               </p>
             </div>
             
             <div>
-              <h3 className="text-xl font-bold mb-2">Do you offer gift certificates?</h3>
+              <h3 className="text-xl font-bold mb-2">Do you offer any guarantees?</h3>
               <p className="text-gray-800">
-                Yes! Gift certificates are available for all our services and make a perfect gift for any car enthusiast. 
-                Contact us for more information.
+                Yes! We stand behind our work with a 100% satisfaction guarantee. If you're not completely satisfied 
+                with any aspect of our service, we'll make it right at no additional cost.
               </p>
             </div>
           </div>
