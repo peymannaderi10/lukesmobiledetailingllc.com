@@ -150,7 +150,7 @@ export default function GalleryPage() {
                 <div className="relative pt-[125%]">
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison1 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/hondaBefore.jpg"
+                      src="/Images/beforeAndAfter/hondaBefore.jpg"
                       alt="Honda Before Detailing"
                       fill
                       className="object-cover object-center"
@@ -158,7 +158,7 @@ export default function GalleryPage() {
                   </div>
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison1 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/hondaAfter.jpg"
+                      src="/Images/beforeAndAfter/hondaAfter.jpg"
                       alt="Honda After Detailing"
                       fill
                       className="object-cover object-center"
@@ -191,7 +191,7 @@ export default function GalleryPage() {
                 <div className="relative pt-[125%]">
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison2 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/passengerBefore.jpg"
+                      src="/Images/beforeAndAfter/passengerBefore.jpg"
                       alt="Passenger Seat Before Cleaning"
                       fill
                       className="object-cover object-center"
@@ -199,7 +199,7 @@ export default function GalleryPage() {
                   </div>
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison2 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/passengerAfter.jpg"
+                      src="/Images/beforeAndAfter/passengerAfter.jpg"
                       alt="Passenger Seat After Cleaning"
                       fill
                       className="object-cover object-center"
@@ -232,7 +232,7 @@ export default function GalleryPage() {
                 <div className="relative pt-[125%]">
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison3 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/carpetBefore.jpg"
+                      src="/Images/beforeAndAfter/carpetBefore.jpg"
                       alt="Carpet Before Cleaning"
                       fill
                       className="object-cover object-center"
@@ -240,7 +240,7 @@ export default function GalleryPage() {
                   </div>
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison3 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/carpetAfter.jpg"
+                      src="/Images/beforeAndAfter/carpetAfter.jpg"
                       alt="Carpet After Cleaning"
                       fill
                       className="object-cover object-center"
@@ -273,7 +273,7 @@ export default function GalleryPage() {
                 <div className="relative pt-[125%]">
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison4 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/carseatBefore.jpg"
+                      src="/Images/beforeAndAfter/carseatBefore.jpg"
                       alt="Car Seat Before Cleaning"
                       fill
                       className="object-cover object-center"
@@ -281,7 +281,7 @@ export default function GalleryPage() {
                   </div>
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison4 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/images/beforeAndAfter/carseatAfter.jpg"
+                      src="/Images/beforeAndAfter/carseatAfter.jpg"
                       alt="Car Seat After Cleaning"
                       fill
                       className="object-cover object-center"
