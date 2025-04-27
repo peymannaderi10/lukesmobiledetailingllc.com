@@ -18,7 +18,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white/95 backdrop-blur-sm shadow-md fixed top-0 left-0 right-0 z-50">
+    <header className="bg-white shadow-md">
       <nav className="container-custom flex items-center justify-between py-2">
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
