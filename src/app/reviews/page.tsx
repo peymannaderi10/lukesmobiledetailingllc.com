@@ -5,76 +5,80 @@ import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Script from "next/script";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const styleAdded = useRef(false);
+  const [key, setKey] = useState(Date.now()); // Add a key state to force remount
 
   useEffect(() => {
-    if (!styleAdded.current) {
-      // Add custom CSS to fix the vertical stars issue
-      const styleElement = document.createElement('style');
-      styleElement.textContent = `
-        /* Fix for vertical stars in SociableKit widget */
-        .sk-badge__stars {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: center !important;
-          align-items: center !important;
-          margin: 5px auto !important;
-        }
-        
-        /* Individual review stars should be left-aligned */
-        .sk-post__rating {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: flex-start !important;
-          align-items: center !important;
-          margin: 5px 0 !important;
-        }
-        
-        .sk-post__rating-icon {
-          display: inline-block !important;
-          margin: 0 2px !important;
-        }
-      `;
-      document.head.appendChild(styleElement);
-      styleAdded.current = true;
+    // Clean up any existing widgets
+    if (window.sociablekit) {
+      window.sociablekit.widgets = [];
     }
-  }, []);
 
-  // Store the reviews HTML in localStorage after it loads
+    // Initialize SociableKit
+    if (typeof window !== 'undefined' && window.sociablekit) {
+      window.sociablekit.initSocialFeed();
+    }
+      
+    // Add custom CSS to fix the vertical stars issue
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      /* Fix for vertical stars in SociableKit widget */
+      .sk-badge__stars {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 5px auto !important;
+      }
+      
+      /* Individual review stars should be left-aligned */
+      .sk-post__rating {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        margin: 5px 0 !important;
+      }
+      
+      .sk-post__rating-icon {
+        display: inline-block !important;
+        margin: 0 2px !important;
+      }
+    `;
+    document.head.appendChild(styleElement);
+
+    // Reinitialize after a short delay to ensure DOM is ready
+    const reinitTimer = setTimeout(() => {
+      if (typeof window !== 'undefined' && window.sociablekit) {
+        window.sociablekit.initSocialFeed();
+      }
+    }, 500);
+
+    return () => {
+      // Clean up on unmount
+      clearTimeout(reinitTimer);
+      if (styleElement.parentNode) {
+        styleElement.parentNode.removeChild(styleElement);
+      }
+    };
+  }, [key]); // Dependency on key will ensure this runs when component mounts
+
+  // Force component to remount when it becomes visible
   useEffect(() => {
-    const checkAndStoreReviews = () => {
-      const reviewsElement = document.querySelector('.sk-ww-google-reviews');
-      if (reviewsElement && reviewsElement.children.length > 0) {
-        localStorage.setItem('cachedReviews', reviewsElement.innerHTML);
-        setIsLoaded(true);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        setKey(Date.now()); // Reset key when page becomes visible
       }
     };
 
-    // Check every second for 10 seconds
-    const interval = setInterval(checkAndStoreReviews, 1000);
-    const timeout = setTimeout(() => {
-      clearInterval(interval);
-    }, 10000);
-
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
     return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
-
-  // Try to load cached content first
-  useEffect(() => {
-    const cachedContent = localStorage.getItem('cachedReviews');
-    if (cachedContent && reviewsContainerRef.current) {
-      reviewsContainerRef.current.innerHTML = cachedContent;
-      setIsLoaded(true);
-    }
   }, []);
 
   return (
@@ -86,7 +90,7 @@ const GoogleReviews = () => {
         defer
         strategy="afterInteractive"
         onLoad={() => {
-          if (!isLoaded && typeof window !== 'undefined' && window.sociablekit) {
+          if (typeof window !== 'undefined' && window.sociablekit) {
             window.sociablekit.initSocialFeed();
           }
         }}
@@ -97,6 +101,7 @@ const GoogleReviews = () => {
         ref={reviewsContainerRef}
         className="sk-ww-google-reviews" 
         data-embed-id="25549722"
+        key={key} // Add key to force remount
       ></div>
     </>
   );
@@ -114,9 +119,6 @@ declare global {
 
 export default function ReviewsPage() {
   const [rating, setRating] = useState<string>("5.0");
-  const [hasLoaded, setHasLoaded] = useState(false);
-  const cachedContent = useRef<HTMLDivElement | null>(null);
-  const pathname = usePathname();
 
   useEffect(() => {
     // Function to get rating from SociableKit widget
@@ -128,49 +130,24 @@ export default function ReviewsPage() {
       }
     };
 
-    if (!hasLoaded) {
-      // Initial check
+    // Initial check
+    getRating();
+
+    // Check periodically until we find the rating
+    const interval = setInterval(() => {
       getRating();
+    }, 1000);
 
-      // Check periodically until we find the rating
-      const interval = setInterval(() => {
-        getRating();
-      }, 1000);
+    // Clean up interval after 10 seconds
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 10000);
 
-      // Clean up interval after 10 seconds
-      const timeout = setTimeout(() => {
-        clearInterval(interval);
-      }, 10000);
-
-      return () => {
-        clearInterval(interval);
-        clearTimeout(timeout);
-      };
-    }
-  }, [hasLoaded]);
-
-  useEffect(() => {
-    if (hasLoaded && cachedContent.current) {
-      // If we have cached content and this isn't the first load,
-      // replace the reviews container with the cached content
-      const container = document.querySelector('.container-custom');
-      if (container) {
-        const reviewsSection = container.querySelector('.sk-ww-google-reviews');
-        if (reviewsSection) {
-          reviewsSection.replaceWith(cachedContent.current.cloneNode(true));
-        }
-      }
-    }
-  }, [hasLoaded]);
-
-  const handleFirstLoad = () => {
-    // Cache the content after it's first loaded
-    const reviewsSection = document.querySelector('.sk-ww-google-reviews');
-    if (reviewsSection) {
-      cachedContent.current = reviewsSection.cloneNode(true) as HTMLDivElement;
-      setHasLoaded(true);
-    }
-  };
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
     <div className="bg-white">
@@ -209,6 +186,7 @@ export default function ReviewsPage() {
           <GoogleReviews />
         </div>
       </section>
+
 
       {/* Google Maps Section */}
       <section className="py-12 md:py-20 bg-gray-100">
@@ -255,6 +233,7 @@ export default function ReviewsPage() {
           </div>
         </div>
       </section>
+
 
       {/* Call to Action */}
       <section className="py-12 md:py-20 bg-primary text-white">
