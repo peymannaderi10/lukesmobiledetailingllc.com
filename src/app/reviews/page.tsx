@@ -10,94 +10,56 @@ import { useReviews } from "../context/ReviewsContext";
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const scriptLoadedRef = useRef(false);
-  const { isReviewsLoaded, setIsReviewsLoaded, hasVisitedBefore } = useReviews();
-  const [showLoader, setShowLoader] = useState(!hasVisitedBefore || !isReviewsLoaded);
+  const { isReviewsLoaded, setIsReviewsLoaded, hasVisitedBefore, setHasVisitedBefore } = useReviews();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Only show loader if reviews aren't loaded
+    // Mark that we've visited the page
+    setHasVisitedBefore(true);
+    
+    // If we've cached the reviews and loaded them before, don't show loading state
     if (hasVisitedBefore && isReviewsLoaded) {
-      setShowLoader(false);
+      setIsLoading(false);
     }
-
-    // Don't show the widget initially if we haven't visited before
-    if (!hasVisitedBefore) {
-      const widgetEl = reviewsContainerRef.current;
-      if (widgetEl) {
-        widgetEl.style.visibility = 'hidden';
-      }
-    }
-
-    // This function handles the initialization of SociableKit
-    const initializeSociableKit = () => {
-      if (scriptLoadedRef.current) return;
+    
+    // Function to handle SociableKit initialization
+    const initSociableKit = () => {
+      console.log("Initializing SociableKit");
       
-      scriptLoadedRef.current = true;
-      
-      // If we've already visited and loaded, don't reinitialize
-      if (hasVisitedBefore && isReviewsLoaded) return;
-      
+      // Reset/initialize if needed
       if (window.sociablekit) {
-        // Clear any existing widget data
         window.sociablekit.widgets = [];
-        
-        console.log("Initializing SociableKit...");
-        
-        // Initialize the widget
         window.sociablekit.initSocialFeed();
-        
-        // Wait for the widget to load
-        const checkWidget = setInterval(() => {
-          const widgetContent = document.querySelector('.sk-reviews');
-          if (widgetContent) {
-            clearInterval(checkWidget);
-            
-            console.log("SociableKit widget loaded!");
-            
-            // Hide loader and show widget
-            setShowLoader(false);
-            
-            // Make widget visible if it was hidden
-            const widgetEl = reviewsContainerRef.current;
-            if (widgetEl) {
-              widgetEl.style.visibility = 'visible';
-            }
-            
-            // Mark as loaded after everything is complete
-            setTimeout(() => {
-              setIsReviewsLoaded(true);
-            }, 1000);
-          }
-        }, 500);
-        
-        // Add timeout to prevent infinite waiting
-        setTimeout(() => {
-          clearInterval(checkWidget);
-          
-          // If we still don't have content, force the completion
-          if (!document.querySelector('.sk-reviews')) {
-            console.log("SociableKit widget timeout - forcing completion");
-            setShowLoader(false);
-            setIsReviewsLoaded(true);
-            
-            const widgetEl = reviewsContainerRef.current;
-            if (widgetEl) {
-              widgetEl.style.visibility = 'visible';
-            }
-          }
-        }, 10000);
       }
+      
+      // Check for the widget content periodically
+      const checkInterval = setInterval(() => {
+        const skReviews = document.querySelector('.sk-reviews');
+        if (skReviews) {
+          console.log("SociableKit widget found and loaded!");
+          clearInterval(checkInterval);
+          
+          // Mark as loaded and hide loader
+          setIsLoading(false);
+          setIsReviewsLoaded(true);
+        }
+      }, 500);
+      
+      // Set a timeout to prevent infinite checking
+      setTimeout(() => {
+        clearInterval(checkInterval);
+        // If still loading after timeout, assume it's loaded anyway
+        if (isLoading) {
+          console.log("SociableKit loading timeout - forcing completion");
+          setIsLoading(false);
+          setIsReviewsLoaded(true);
+        }
+      }, 8000);
     };
-
-    // If the script is already loaded in the document, initialize directly
-    if (typeof window !== 'undefined' && window.sociablekit) {
-      initializeSociableKit();
-    }
-
-    // Add CSS fixes for the stars regardless of loading state
+    
+    // Apply star fix CSS
     const styleElement = document.createElement('style');
     styleElement.textContent = `
-      /* Fix for vertical stars in SociableKit widget */
       .sk-badge__stars {
         display: flex !important;
         flex-direction: row !important;
@@ -106,7 +68,6 @@ const GoogleReviews = () => {
         margin: 5px auto !important;
       }
       
-      /* Individual review stars should be left-aligned */
       .sk-post__rating {
         display: flex !important;
         flex-direction: row !important;
@@ -121,47 +82,58 @@ const GoogleReviews = () => {
       }
     `;
     document.head.appendChild(styleElement);
-
-    // Set up event listener for the script loaded event
-    window.onSociablekitLoad = initializeSociableKit;
-
+    
+    // If we need to initialize the widget
+    if (!hasVisitedBefore || !isReviewsLoaded) {
+      // If SociableKit is already loaded, initialize now
+      if (window.sociablekit) {
+        initSociableKit();
+      } else {
+        // Otherwise set it up to initialize when the script loads
+        window.onSociablekitLoad = initSociableKit;
+      }
+    }
+    
     return () => {
       // Cleanup
       delete window.onSociablekitLoad;
     };
-  }, [hasVisitedBefore, isReviewsLoaded, setIsReviewsLoaded]);
+  }, [hasVisitedBefore, isReviewsLoaded, isLoading, setIsReviewsLoaded, setHasVisitedBefore]);
 
   return (
     <>
-      {/* Always include the script - its execution will be managed by our useEffect */}
-      <Script
-        src="https://widgets.sociablekit.com/google-reviews/widget.js"
-        async
-        defer
-        strategy="lazyOnload"
-        onLoad={() => {
-          if (typeof window !== 'undefined' && window.sociablekit) {
-            // Call the global handler we set up
+      {/* Only include the script if we need to load reviews */}
+      {(!hasVisitedBefore || !isReviewsLoaded) && (
+        <Script
+          src="https://widgets.sociablekit.com/google-reviews/widget.js"
+          async
+          defer
+          strategy="afterInteractive"
+          onLoad={() => {
+            console.log("SociableKit script loaded");
             if (window.onSociablekitLoad) {
               window.onSociablekitLoad();
             }
-          }
-        }}
-      />
+          }}
+        />
+      )}
       
-      {/* Loading indicator */}
-      {showLoader && (
+      {/* Simple loader that only shows when loading */}
+      {isLoading && (
         <div className="flex justify-center items-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
           <span className="ml-3 text-lg">Loading reviews...</span>
         </div>
       )}
       
-      {/* SociableKit Widget Container */}
+      {/* Widget container - always render but manage visibility with CSS */}
       <div 
         ref={reviewsContainerRef}
         className="sk-ww-google-reviews" 
         data-embed-id="25549722"
+        style={{ 
+          display: isLoading ? 'none' : 'block' 
+        }}
       ></div>
     </>
   );
@@ -180,12 +152,9 @@ declare global {
 
 export default function ReviewsPage() {
   const [rating, setRating] = useState<string>("5.0");
-  const { hasVisitedBefore, setHasVisitedBefore } = useReviews();
+  const { resetReviewsState } = useReviews();
 
   useEffect(() => {
-    // Mark that we've visited the reviews page
-    setHasVisitedBefore(true);
-    
     // Function to get rating from SociableKit widget
     const getRating = () => {
       const ratingElement = document.querySelector('.sk-badge__value');
@@ -212,7 +181,7 @@ export default function ReviewsPage() {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, [setHasVisitedBefore]);
+  }, []);
 
   return (
     <div className="bg-white">
@@ -310,6 +279,17 @@ export default function ReviewsPage() {
           <Link href="/booking" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
             Book Now
           </Link>
+          
+          {/* Small debug button - can be removed in production */}
+          <div className="mt-8 opacity-40 hover:opacity-100 transition-opacity">
+            <button 
+              onClick={resetReviewsState} 
+              className="text-xs underline"
+              aria-label="Reset reviews cache (debug only)"
+            >
+              Reset reviews cache
+            </button>
+          </div>
         </div>
       </section>
     </div>

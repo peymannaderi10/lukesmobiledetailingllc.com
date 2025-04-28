@@ -7,6 +7,7 @@ type ReviewsContextType = {
   hasVisitedBefore: boolean;
   setIsReviewsLoaded: (loaded: boolean) => void;
   setHasVisitedBefore: (visited: boolean) => void;
+  resetReviewsState: () => void;
 };
 
 const ReviewsContext = createContext<ReviewsContextType | undefined>(undefined);
@@ -20,39 +21,67 @@ export const useReviews = () => {
 };
 
 export const ReviewsProvider = ({ children }: { children: ReactNode }) => {
-  // Initialize states from localStorage if available
+  // Initialize with default values
   const [isReviewsLoaded, setIsReviewsLoadedState] = useState<boolean>(false);
   const [hasVisitedBefore, setHasVisitedBeforeState] = useState<boolean>(false);
   
-  // Check local storage on first render
+  // Load state from localStorage on first render
   useEffect(() => {
-    // Only run on client side to avoid SSR issues
     if (typeof window !== 'undefined') {
-      const storedIsLoaded = localStorage.getItem('reviewsLoaded');
-      const storedHasVisited = localStorage.getItem('reviewsVisited');
-      
-      if (storedIsLoaded === 'true') {
-        setIsReviewsLoadedState(true);
-      }
-      
-      if (storedHasVisited === 'true') {
-        setHasVisitedBeforeState(true);
+      try {
+        const storedIsLoaded = localStorage.getItem('reviewsLoaded') === 'true';
+        const storedHasVisited = localStorage.getItem('reviewsVisited') === 'true';
+        
+        console.log('ReviewsContext: Initial load from localStorage:', { 
+          storedIsLoaded, 
+          storedHasVisited 
+        });
+        
+        setIsReviewsLoadedState(storedIsLoaded);
+        setHasVisitedBeforeState(storedHasVisited);
+      } catch (error) {
+        console.error('Error loading reviews state from localStorage:', error);
       }
     }
   }, []);
   
   // Setter functions that update both state and localStorage
   const setIsReviewsLoaded = (loaded: boolean) => {
+    console.log('ReviewsContext: Setting isReviewsLoaded to', loaded);
     setIsReviewsLoadedState(loaded);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('reviewsLoaded', loaded.toString());
+      try {
+        localStorage.setItem('reviewsLoaded', loaded.toString());
+      } catch (error) {
+        console.error('Error saving reviews loaded state to localStorage:', error);
+      }
     }
   };
   
   const setHasVisitedBefore = (visited: boolean) => {
+    console.log('ReviewsContext: Setting hasVisitedBefore to', visited);
     setHasVisitedBeforeState(visited);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('reviewsVisited', visited.toString());
+      try {
+        localStorage.setItem('reviewsVisited', visited.toString());
+      } catch (error) {
+        console.error('Error saving reviews visited state to localStorage:', error);
+      }
+    }
+  };
+  
+  // Function to reset the state (useful for debugging or when needed)
+  const resetReviewsState = () => {
+    console.log('ReviewsContext: Resetting review state');
+    setIsReviewsLoadedState(false);
+    setHasVisitedBeforeState(false);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('reviewsLoaded');
+        localStorage.removeItem('reviewsVisited');
+      } catch (error) {
+        console.error('Error removing reviews state from localStorage:', error);
+      }
     }
   };
 
@@ -61,6 +90,7 @@ export const ReviewsProvider = ({ children }: { children: ReactNode }) => {
     hasVisitedBefore,
     setIsReviewsLoaded,
     setHasVisitedBefore,
+    resetReviewsState,
   };
 
   return (
