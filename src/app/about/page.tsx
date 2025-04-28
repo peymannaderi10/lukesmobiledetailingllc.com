@@ -6,8 +6,19 @@ export default function AboutPage() {
   return (
     <div className="bg-white">
       {/* Header */}
-      <div className="bg-secondary text-white py-16">
-        <div className="container-custom text-center">
+      <div className="bg-secondary text-white py-16 relative">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/Images/webPhotos/banner3.jpg" 
+            alt="About Luke's Mobile Detailing" 
+            fill
+            priority
+            className="object-cover"
+            style={{ objectPosition: "center 55%" }}
+          />
+          <div className="absolute inset-0 bg-black opacity-50" />
+        </div>
+        <div className="container-custom text-center relative z-10">
           <h1 className="text-3xl md:text-5xl font-bold mb-6">About Luke's Mobile Detailing</h1>
           <p className="text-lg max-w-2xl mx-auto">
             Professional mobile car detailing services that come to you.

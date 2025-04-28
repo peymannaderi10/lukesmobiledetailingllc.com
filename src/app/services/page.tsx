@@ -8,6 +8,7 @@ import {
   CloudIcon,
   BeakerIcon
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 export default function ServicesPage() {
   // Track active tab for each package
@@ -27,12 +28,22 @@ export default function ServicesPage() {
   return (
     <div className="bg-white">
       {/* Header */}
-      <div className="bg-secondary text-white py-16">
-        <div className="container-custom text-center">
+      <div className="bg-secondary text-white py-16 relative">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/Images/webPhotos/servicesBanner.jpg" 
+            alt="Car detailing services" 
+            fill
+            priority
+            className="object-cover"
+            style={{ objectPosition: "center 90%" }}
+          />
+          <div className="absolute inset-0 bg-black opacity-65" />
+        </div>
+        <div className="container-custom text-center relative z-10">
           <h1 className="text-3xl md:text-5xl font-bold mb-6">Our Detailing Services</h1>
           <p className="text-lg max-w-2xl mx-auto">
-            We offer a range of professional car detailing services tailored to keep your vehicle looking its best.
-            All services are performed at your location.
+            From basic to premium details, we have the perfect package for your vehicle.
           </p>
         </div>
       </div>

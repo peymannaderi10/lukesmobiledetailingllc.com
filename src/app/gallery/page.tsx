@@ -36,7 +36,7 @@ export default function GalleryPage() {
               Our Detailing Gallery
             </h1>
             <p className="text-base md:text-lg">
-              Browse through our showcase of transformations and see the difference our professional detailing services can make.
+              See the stunning transformations we deliver. Your car deserves this level of perfection.
             </p>
           </div>
         </div>

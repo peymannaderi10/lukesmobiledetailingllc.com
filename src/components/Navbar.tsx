@@ -22,13 +22,6 @@ export default function Navbar() {
       <nav className="container-custom flex items-center justify-between py-2">
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
-            {/* <Image 
-              src="/Images/webPhotos/logoblack.png" 
-              alt="Luke's Mobile Detailing Logo"
-              width={100}
-              height={100}
-              className="w-[100px] h-auto object-contain"
-            /> */}
             <span className="text-xl font-bold text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
           </Link>
         </div>

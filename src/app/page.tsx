@@ -48,7 +48,7 @@ export default function Home() {
               Professional Mobile Detailing Services
             </h1>
             <p className="text-lg md:text-xl mb-8">
-              We bring our premium car detailing services directly to your location.
+              Premium car detailing services directly to you,
               Convenience and quality at your doorstep.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
