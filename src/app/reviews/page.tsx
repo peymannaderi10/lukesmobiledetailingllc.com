@@ -5,56 +5,60 @@ import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Script from "next/script";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const isScriptLoaded = useRef(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Only execute this if the script hasn't been loaded yet
-    if (!isScriptLoaded.current && reviewsContainerRef.current) {
-      isScriptLoaded.current = true;
+    // Clean up any existing widgets
+    if (window.sociablekit) {
+      window.sociablekit.widgets = [];
+    }
+
+    // Initialize SociableKit
+    if (typeof window !== 'undefined' && window.sociablekit) {
+      window.sociablekit.initSocialFeed();
+    }
       
-      // Clean up any existing widgets before re-initializing
+    // Add custom CSS to fix the vertical stars issue
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      /* Fix for vertical stars in SociableKit widget */
+      .sk-badge__stars {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 5px auto !important;
+      }
+      
+      /* Individual review stars should be left-aligned */
+      .sk-post__rating {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        margin: 5px 0 !important;
+      }
+      
+      .sk-post__rating-icon {
+        display: inline-block !important;
+        margin: 0 2px !important;
+      }
+    `;
+    document.head.appendChild(styleElement);
+
+    return () => {
+      // Clean up on unmount
       if (window.sociablekit) {
         window.sociablekit.widgets = [];
       }
-
-      // Initialize SociableKit
-      if (typeof window !== 'undefined' && window.sociablekit) {
-        window.sociablekit.initSocialFeed();
-      }
-      
-      // Add custom CSS to fix the vertical stars issue
-      const styleElement = document.createElement('style');
-      styleElement.textContent = `
-        /* Fix for vertical stars in SociableKit widget */
-        .sk-badge__stars {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: center !important;
-          align-items: center !important;
-          margin: 5px auto !important;
-        }
-        
-        /* Individual review stars should be left-aligned */
-        .sk-post__rating {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: flex-start !important;
-          align-items: center !important;
-          margin: 5px 0 !important;
-        }
-        
-        .sk-post__rating-icon {
-          display: inline-block !important;
-          margin: 0 2px !important;
-        }
-      `;
-      document.head.appendChild(styleElement);
-    }
-  }, []);
+      styleElement.remove();
+    };
+  }, [pathname]); // Re-run when pathname changes
 
   return (
     <>
