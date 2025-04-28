@@ -5,7 +5,6 @@ import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Script from "next/script";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
@@ -94,25 +93,6 @@ declare global {
 
 export default function ReviewsPage() {
   const [rating, setRating] = useState<string>("5.0");
-  const pathname = usePathname();
-  const hasRefreshed = useRef(false);
-
-  useEffect(() => {
-    // Check if this is the reviews page and hasn't been refreshed yet in this session
-    if (pathname === '/reviews' && !hasRefreshed.current) {
-      // Set the flag to avoid infinite refresh loop
-      hasRefreshed.current = true;
-      // Store the flag in sessionStorage to remember across component remounts
-      sessionStorage.setItem('reviewsPageRefreshed', 'true');
-      // Refresh the page
-      window.location.reload();
-    }
-
-    // Clear the flag when leaving the page
-    return () => {
-      sessionStorage.removeItem('reviewsPageRefreshed');
-    };
-  }, [pathname]);
 
   useEffect(() => {
     // Function to get rating from SociableKit widget
