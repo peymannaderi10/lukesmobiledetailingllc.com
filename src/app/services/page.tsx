@@ -158,10 +158,10 @@ export default function ServicesPage() {
 
             {/* The Full Interior Package */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
-              <div className="bg-secondary text-white p-6">
-                <h2 className="text-2xl font-bold mb-2">The Full Interior</h2>
-                <p className="text-3xl font-bold">$195</p>
-                <p className="text-sm mt-2">Interior Detail</p>
+              <div className="bg-[#1e3a8a] text-white p-6">
+                <h2 className="text-2xl font-bold mb-2 text-white">The Full Interior</h2>
+                <p className="text-3xl font-bold text-white">$195</p>
+                <p className="text-sm mt-2 text-white">Interior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
                 <div className="flex-1 min-h-[350px]">
@@ -207,10 +207,10 @@ export default function ServicesPage() {
 
             {/* The Full Exterior Package */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
-              <div className="bg-secondary text-white p-6">
-                <h2 className="text-2xl font-bold mb-2">The Full Exterior</h2>
-                <p className="text-3xl font-bold">$130</p>
-                <p className="text-sm mt-2">Exterior Detail</p>
+              <div className="bg-[#fcc603] text-white p-6">
+                <h2 className="text-2xl font-bold mb-2 text-white ">The Full Exterior</h2>
+                <p className="text-3xl font-bold text-white">$130</p>
+                <p className="text-sm mt-2 text-white">Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
                 <div className="flex-1 min-h-[350px]">
