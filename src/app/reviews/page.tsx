@@ -10,90 +10,147 @@ import { useReviews } from "../context/ReviewsContext";
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const isScriptLoaded = useRef(false);
+  const scriptLoadedRef = useRef(false);
   const { isReviewsLoaded, setIsReviewsLoaded, hasVisitedBefore } = useReviews();
+  const [showLoader, setShowLoader] = useState(!hasVisitedBefore || !isReviewsLoaded);
 
   useEffect(() => {
-    // If we've visited before and reviews are loaded, we don't need to reinitialize
+    // Only show loader if reviews aren't loaded
     if (hasVisitedBefore && isReviewsLoaded) {
-      return;
+      setShowLoader(false);
     }
-    
-    // Only execute this if the script hasn't been loaded yet
-    if (!isScriptLoaded.current && reviewsContainerRef.current) {
-      isScriptLoaded.current = true;
-      
-      // Clean up any existing widgets before re-initializing
-      if (window.sociablekit) {
-        window.sociablekit.widgets = [];
-      }
 
-      // Initialize SociableKit
-      if (typeof window !== 'undefined' && window.sociablekit) {
+    // Don't show the widget initially if we haven't visited before
+    if (!hasVisitedBefore) {
+      const widgetEl = reviewsContainerRef.current;
+      if (widgetEl) {
+        widgetEl.style.visibility = 'hidden';
+      }
+    }
+
+    // This function handles the initialization of SociableKit
+    const initializeSociableKit = () => {
+      if (scriptLoadedRef.current) return;
+      
+      scriptLoadedRef.current = true;
+      
+      // If we've already visited and loaded, don't reinitialize
+      if (hasVisitedBefore && isReviewsLoaded) return;
+      
+      if (window.sociablekit) {
+        // Clear any existing widget data
+        window.sociablekit.widgets = [];
+        
+        console.log("Initializing SociableKit...");
+        
+        // Initialize the widget
         window.sociablekit.initSocialFeed();
         
-        // Set a timeout to mark reviews as loaded
-        const loadingTimer = setTimeout(() => {
-          setIsReviewsLoaded(true);
-        }, 3000); // Give 3 seconds for the initial load
+        // Wait for the widget to load
+        const checkWidget = setInterval(() => {
+          const widgetContent = document.querySelector('.sk-reviews');
+          if (widgetContent) {
+            clearInterval(checkWidget);
+            
+            console.log("SociableKit widget loaded!");
+            
+            // Hide loader and show widget
+            setShowLoader(false);
+            
+            // Make widget visible if it was hidden
+            const widgetEl = reviewsContainerRef.current;
+            if (widgetEl) {
+              widgetEl.style.visibility = 'visible';
+            }
+            
+            // Mark as loaded after everything is complete
+            setTimeout(() => {
+              setIsReviewsLoaded(true);
+            }, 1000);
+          }
+        }, 500);
         
-        return () => clearTimeout(loadingTimer);
+        // Add timeout to prevent infinite waiting
+        setTimeout(() => {
+          clearInterval(checkWidget);
+          
+          // If we still don't have content, force the completion
+          if (!document.querySelector('.sk-reviews')) {
+            console.log("SociableKit widget timeout - forcing completion");
+            setShowLoader(false);
+            setIsReviewsLoaded(true);
+            
+            const widgetEl = reviewsContainerRef.current;
+            if (widgetEl) {
+              widgetEl.style.visibility = 'visible';
+            }
+          }
+        }, 10000);
+      }
+    };
+
+    // If the script is already loaded in the document, initialize directly
+    if (typeof window !== 'undefined' && window.sociablekit) {
+      initializeSociableKit();
+    }
+
+    // Add CSS fixes for the stars regardless of loading state
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      /* Fix for vertical stars in SociableKit widget */
+      .sk-badge__stars {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 5px auto !important;
       }
       
-      // Add custom CSS to fix the vertical stars issue
-      const styleElement = document.createElement('style');
-      styleElement.textContent = `
-        /* Fix for vertical stars in SociableKit widget */
-        .sk-badge__stars {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: center !important;
-          align-items: center !important;
-          margin: 5px auto !important;
-        }
-        
-        /* Individual review stars should be left-aligned */
-        .sk-post__rating {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: flex-start !important;
-          align-items: center !important;
-          margin: 5px 0 !important;
-        }
-        
-        .sk-post__rating-icon {
-          display: inline-block !important;
-          margin: 0 2px !important;
-        }
-      `;
-      document.head.appendChild(styleElement);
-    }
+      /* Individual review stars should be left-aligned */
+      .sk-post__rating {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        margin: 5px 0 !important;
+      }
+      
+      .sk-post__rating-icon {
+        display: inline-block !important;
+        margin: 0 2px !important;
+      }
+    `;
+    document.head.appendChild(styleElement);
+
+    // Set up event listener for the script loaded event
+    window.onSociablekitLoad = initializeSociableKit;
+
+    return () => {
+      // Cleanup
+      delete window.onSociablekitLoad;
+    };
   }, [hasVisitedBefore, isReviewsLoaded, setIsReviewsLoaded]);
 
   return (
     <>
-      {/* SociableKit Script - Only load if we haven't visited before or reviews aren't loaded */}
-      {(!hasVisitedBefore || !isReviewsLoaded) && (
-        <Script
-          src="https://widgets.sociablekit.com/google-reviews/widget.js"
-          async
-          defer
-          strategy="afterInteractive"
-          onLoad={() => {
-            if (typeof window !== 'undefined' && window.sociablekit) {
-              window.sociablekit.initSocialFeed();
-              
-              // Set a timeout to mark reviews as loaded after script loads
-              setTimeout(() => {
-                setIsReviewsLoaded(true);
-              }, 2000);
+      {/* Always include the script - its execution will be managed by our useEffect */}
+      <Script
+        src="https://widgets.sociablekit.com/google-reviews/widget.js"
+        async
+        defer
+        strategy="lazyOnload"
+        onLoad={() => {
+          if (typeof window !== 'undefined' && window.sociablekit) {
+            // Call the global handler we set up
+            if (window.onSociablekitLoad) {
+              window.onSociablekitLoad();
             }
-          }}
-        />
-      )}
+          }
+        }}
+      />
       
-      {/* Loading indicator when reviews are loading for the first time */}
-      {!hasVisitedBefore && !isReviewsLoaded && (
+      {/* Loading indicator */}
+      {showLoader && (
         <div className="flex justify-center items-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
           <span className="ml-3 text-lg">Loading reviews...</span>
@@ -105,7 +162,6 @@ const GoogleReviews = () => {
         ref={reviewsContainerRef}
         className="sk-ww-google-reviews" 
         data-embed-id="25549722"
-        style={{ display: (!hasVisitedBefore && !isReviewsLoaded) ? 'none' : 'block' }}
       ></div>
     </>
   );
@@ -118,6 +174,7 @@ declare global {
       initSocialFeed: () => void;
       widgets: Array<unknown>;
     };
+    onSociablekitLoad?: () => void;
   }
 }
 

@@ -4,7 +4,6 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 type ReviewsContextType = {
   isReviewsLoaded: boolean;
-  isAnimationComplete: boolean;
   hasVisitedBefore: boolean;
   setIsReviewsLoaded: (loaded: boolean) => void;
   setHasVisitedBefore: (visited: boolean) => void;
@@ -21,25 +20,44 @@ export const useReviews = () => {
 };
 
 export const ReviewsProvider = ({ children }: { children: ReactNode }) => {
-  const [isReviewsLoaded, setIsReviewsLoaded] = useState(false);
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  const [hasVisitedBefore, setHasVisitedBefore] = useState(false);
-
-  // When reviews are loaded, wait for the animation to complete
+  // Initialize states from localStorage if available
+  const [isReviewsLoaded, setIsReviewsLoadedState] = useState<boolean>(false);
+  const [hasVisitedBefore, setHasVisitedBeforeState] = useState<boolean>(false);
+  
+  // Check local storage on first render
   useEffect(() => {
-    if (isReviewsLoaded && !isAnimationComplete) {
-      // Wait additional time for the masonry layout animation to finish
-      const timer = setTimeout(() => {
-        setIsAnimationComplete(true);
-      }, 3000); // 3 seconds delay to ensure animation is complete
-
-      return () => clearTimeout(timer);
+    // Only run on client side to avoid SSR issues
+    if (typeof window !== 'undefined') {
+      const storedIsLoaded = localStorage.getItem('reviewsLoaded');
+      const storedHasVisited = localStorage.getItem('reviewsVisited');
+      
+      if (storedIsLoaded === 'true') {
+        setIsReviewsLoadedState(true);
+      }
+      
+      if (storedHasVisited === 'true') {
+        setHasVisitedBeforeState(true);
+      }
     }
-  }, [isReviewsLoaded, isAnimationComplete]);
+  }, []);
+  
+  // Setter functions that update both state and localStorage
+  const setIsReviewsLoaded = (loaded: boolean) => {
+    setIsReviewsLoadedState(loaded);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('reviewsLoaded', loaded.toString());
+    }
+  };
+  
+  const setHasVisitedBefore = (visited: boolean) => {
+    setHasVisitedBeforeState(visited);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('reviewsVisited', visited.toString());
+    }
+  };
 
   const value = {
     isReviewsLoaded,
-    isAnimationComplete,
     hasVisitedBefore,
     setIsReviewsLoaded,
     setHasVisitedBefore,
