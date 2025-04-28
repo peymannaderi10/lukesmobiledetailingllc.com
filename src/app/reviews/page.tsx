@@ -3,25 +3,81 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
-import Script from "next/script";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const [key, setKey] = useState(Date.now()); // Add a key state to force remount
+  const scriptRef = useRef<HTMLScriptElement | null>(null);
+  const pathname = usePathname();
+  const loadTriesRef = useRef(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    // Clean up any existing widgets
+  // Function to clean up SociableKit
+  const cleanupSociableKit = () => {
+    // Remove any existing widgets
     if (window.sociablekit) {
       window.sociablekit.widgets = [];
     }
-
-    // Initialize SociableKit
-    if (typeof window !== 'undefined' && window.sociablekit) {
-      window.sociablekit.initSocialFeed();
+    
+    // Remove any existing script
+    if (scriptRef.current && scriptRef.current.parentNode) {
+      scriptRef.current.parentNode.removeChild(scriptRef.current);
+      scriptRef.current = null;
     }
-      
+    
+    // Remove any existing widget containers
+    const widgetContainers = document.querySelectorAll('.sk-ww-google-reviews');
+    widgetContainers.forEach(container => {
+      while (container.firstChild) {
+        container.removeChild(container.firstChild);
+      }
+    });
+  };
+
+  // Function to load the SociableKit script
+  const loadSociableKitScript = () => {
+    if (loadTriesRef.current > 5) return; // Prevent infinite retries
+    loadTriesRef.current++;
+    
+    cleanupSociableKit();
+    
+    // Create a new script element
+    const script = document.createElement('script');
+    script.src = "https://widgets.sociablekit.com/google-reviews/widget.js";
+    script.async = true;
+    script.defer = true;
+    
+    script.onload = () => {
+      console.log("SociableKit script loaded");
+      setIsLoaded(true);
+      // Initialize SociableKit after script is loaded
+      if (typeof window !== 'undefined' && window.sociablekit) {
+        setTimeout(() => {
+          if (window.sociablekit) {
+            window.sociablekit.initSocialFeed();
+            // Force another initialization after a delay to ensure widgets are loaded
+            setTimeout(() => {
+              if (window.sociablekit) {
+                window.sociablekit.initSocialFeed();
+              }
+            }, 1000);
+          }
+        }, 100);
+      }
+    };
+    
+    script.onerror = () => {
+      console.error("Failed to load SociableKit script");
+      // Try to reload after a delay
+      setTimeout(loadSociableKitScript, 2000);
+    };
+    
+    // Add the script to the document
+    document.body.appendChild(script);
+    scriptRef.current = script;
+    
     // Add custom CSS to fix the vertical stars issue
     const styleElement = document.createElement('style');
     styleElement.textContent = `
@@ -49,28 +105,31 @@ const GoogleReviews = () => {
       }
     `;
     document.head.appendChild(styleElement);
+  };
 
-    // Reinitialize after a short delay to ensure DOM is ready
-    const reinitTimer = setTimeout(() => {
-      if (typeof window !== 'undefined' && window.sociablekit) {
-        window.sociablekit.initSocialFeed();
-      }
-    }, 500);
-
+  // Initialize on component mount and reload when pathname changes
+  useEffect(() => {
+    console.log("Reviews page mounted, pathname:", pathname);
+    
+    // Only load if we're on the reviews page
+    if (pathname === '/reviews') {
+      loadTriesRef.current = 0;
+      loadSociableKitScript();
+    }
+    
     return () => {
-      // Clean up on unmount
-      clearTimeout(reinitTimer);
-      if (styleElement.parentNode) {
-        styleElement.parentNode.removeChild(styleElement);
-      }
+      // Clean up when component unmounts or pathname changes
+      cleanupSociableKit();
     };
-  }, [key]); // Dependency on key will ensure this runs when component mounts
+  }, [pathname]);
 
-  // Force component to remount when it becomes visible
+  // Listen for visibility changes to reload when tab becomes visible
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        setKey(Date.now()); // Reset key when page becomes visible
+      if (document.visibilityState === 'visible' && pathname === '/reviews') {
+        console.log("Page became visible, reloading SociableKit");
+        loadTriesRef.current = 0;
+        loadSociableKitScript();
       }
     };
 
@@ -79,31 +138,23 @@ const GoogleReviews = () => {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [pathname]);
 
   return (
-    <>
-      {/* SociableKit Script */}
-      <Script
-        src="https://widgets.sociablekit.com/google-reviews/widget.js"
-        async
-        defer
-        strategy="afterInteractive"
-        onLoad={() => {
-          if (typeof window !== 'undefined' && window.sociablekit) {
-            window.sociablekit.initSocialFeed();
-          }
-        }}
-      />
-      
-      {/* SociableKit Widget Container */}
-      <div 
-        ref={reviewsContainerRef}
-        className="sk-ww-google-reviews" 
-        data-embed-id="25549722"
-        key={key} // Add key to force remount
-      ></div>
-    </>
+    <div 
+      ref={reviewsContainerRef}
+      className="sk-ww-google-reviews" 
+      data-embed-id="25549722"
+    >
+      {!isLoaded && (
+        <div className="text-center py-16">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+          </div>
+          <p className="mt-4 text-gray-600">Loading reviews...</p>
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -187,7 +238,6 @@ export default function ReviewsPage() {
         </div>
       </section>
 
-
       {/* Google Maps Section */}
       <section className="py-12 md:py-20 bg-gray-100">
         <div className="container-custom">
@@ -233,7 +283,6 @@ export default function ReviewsPage() {
           </div>
         </div>
       </section>
-
 
       {/* Call to Action */}
       <section className="py-12 md:py-20 bg-primary text-white">
