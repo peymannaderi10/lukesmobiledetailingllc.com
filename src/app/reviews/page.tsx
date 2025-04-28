@@ -23,88 +23,105 @@ const GoogleReviews = () => {
     
     // Remove any existing script
     if (scriptRef.current && scriptRef.current.parentNode) {
-      scriptRef.current.parentNode.removeChild(scriptRef.current);
+      try {
+        scriptRef.current.parentNode.removeChild(scriptRef.current);
+      } catch (error) {
+        console.error("Error removing script:", error);
+      }
       scriptRef.current = null;
     }
     
-    // Remove any existing widget containers
+    // Instead of removing children, empty the container safely
     const widgetContainers = document.querySelectorAll('.sk-ww-google-reviews');
     widgetContainers.forEach(container => {
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
+      try {
+        // Safer way to clear contents - just set innerHTML to empty
+        container.innerHTML = '';
+      } catch (error) {
+        console.error("Error clearing container:", error);
       }
     });
   };
 
   // Function to load the SociableKit script
   const loadSociableKitScript = () => {
-    if (loadTriesRef.current > 5) return; // Prevent infinite retries
+    if (loadTriesRef.current > 5) {
+      console.warn("Maximum load attempts reached");
+      return; // Prevent infinite retries
+    }
     loadTriesRef.current++;
     
-    cleanupSociableKit();
-    
-    // Create a new script element
-    const script = document.createElement('script');
-    script.src = "https://widgets.sociablekit.com/google-reviews/widget.js";
-    script.async = true;
-    script.defer = true;
-    
-    script.onload = () => {
-      console.log("SociableKit script loaded");
-      setIsLoaded(true);
-      // Initialize SociableKit after script is loaded
-      if (typeof window !== 'undefined' && window.sociablekit) {
+    try {
+      cleanupSociableKit();
+      
+      // Add a version parameter to avoid caching issues
+      const timestamp = new Date().getTime();
+      
+      // Create a new script element
+      const script = document.createElement('script');
+      script.src = `https://widgets.sociablekit.com/google-reviews/widget.js?v=${timestamp}`;
+      script.async = true;
+      script.defer = true;
+      
+      script.onload = () => {
+        console.log("SociableKit script loaded");
+        setIsLoaded(true);
+        
+        // Simple approach: wait a bit and then initialize once
         setTimeout(() => {
-          if (window.sociablekit) {
-            window.sociablekit.initSocialFeed();
-            // Force another initialization after a delay to ensure widgets are loaded
-            setTimeout(() => {
-              if (window.sociablekit) {
-                window.sociablekit.initSocialFeed();
-              }
-            }, 1000);
+          try {
+            if (window.sociablekit) {
+              console.log("Initializing SociableKit");
+              window.sociablekit.initSocialFeed();
+            } else {
+              console.warn("SociableKit not available after script load");
+            }
+          } catch (error) {
+            console.error("Error initializing SociableKit:", error);
           }
-        }, 100);
-      }
-    };
-    
-    script.onerror = () => {
-      console.error("Failed to load SociableKit script");
-      // Try to reload after a delay
-      setTimeout(loadSociableKitScript, 2000);
-    };
-    
-    // Add the script to the document
-    document.body.appendChild(script);
-    scriptRef.current = script;
-    
-    // Add custom CSS to fix the vertical stars issue
-    const styleElement = document.createElement('style');
-    styleElement.textContent = `
-      /* Fix for vertical stars in SociableKit widget */
-      .sk-badge__stars {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-        margin: 5px auto !important;
-      }
+        }, 500);
+      };
       
-      /* Individual review stars should be left-aligned */
-      .sk-post__rating {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: flex-start !important;
-        align-items: center !important;
-        margin: 5px 0 !important;
-      }
+      script.onerror = (e) => {
+        console.error("Failed to load SociableKit script:", e);
+        // Try to reload after a delay
+        setTimeout(loadSociableKitScript, 2000);
+      };
       
-      .sk-post__rating-icon {
-        display: inline-block !important;
-        margin: 0 2px !important;
-      }
-    `;
-    document.head.appendChild(styleElement);
+      // Add the script to the document
+      document.body.appendChild(script);
+      scriptRef.current = script;
+      
+      // Add custom CSS to fix the vertical stars issue
+      const styleElement = document.createElement('style');
+      styleElement.textContent = `
+        /* Fix for vertical stars in SociableKit widget */
+        .sk-badge__stars {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: center !important;
+          align-items: center !important;
+          margin: 5px auto !important;
+        }
+        
+        /* Individual review stars should be left-aligned */
+        .sk-post__rating {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          margin: 5px 0 !important;
+        }
+        
+        .sk-post__rating-icon {
+          display: inline-block !important;
+          margin: 0 2px !important;
+        }
+      `;
+      document.head.appendChild(styleElement);
+    } catch (error) {
+      console.error("Error in loadSociableKitScript:", error);
+    }
   };
 
   // Initialize on component mount and reload when pathname changes
@@ -125,11 +142,25 @@ const GoogleReviews = () => {
 
   // Listen for visibility changes to reload when tab becomes visible
   useEffect(() => {
+    let lastVisibilityChange = 0;
+    
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && pathname === '/reviews') {
-        console.log("Page became visible, reloading SociableKit");
-        loadTriesRef.current = 0;
-        loadSociableKitScript();
+      try {
+        // Debounce visibility changes to prevent rapid reloading
+        const now = Date.now();
+        if (now - lastVisibilityChange < 2000) {
+          console.log("Ignoring rapid visibility change");
+          return;
+        }
+        lastVisibilityChange = now;
+        
+        if (document.visibilityState === 'visible' && pathname === '/reviews') {
+          console.log("Page became visible, reloading SociableKit");
+          loadTriesRef.current = 0;
+          loadSociableKitScript();
+        }
+      } catch (error) {
+        console.error("Error in visibility change handler:", error);
       }
     };
 
