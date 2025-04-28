@@ -11,17 +11,31 @@ import { usePathname } from "next/navigation";
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const [key, setKey] = useState(0); // Add key to force remount
 
   useEffect(() => {
-    // Clean up any existing widgets
-    if (window.sociablekit) {
-      window.sociablekit.widgets = [];
-    }
+    // Force remount of component when pathname changes
+    setKey(prev => prev + 1);
+  }, [pathname]);
 
-    // Initialize SociableKit
-    if (typeof window !== 'undefined' && window.sociablekit) {
-      window.sociablekit.initSocialFeed();
-    }
+  useEffect(() => {
+    const initializeWidget = () => {
+      // Clean up any existing widgets
+      if (window.sociablekit) {
+        window.sociablekit.widgets = [];
+      }
+
+      // Initialize SociableKit
+      if (typeof window !== 'undefined' && window.sociablekit) {
+        window.sociablekit.initSocialFeed();
+      }
+    };
+
+    // Try to initialize immediately
+    initializeWidget();
+
+    // Also try again after a short delay to ensure script is loaded
+    const timer = setTimeout(initializeWidget, 1000);
       
     // Add custom CSS to fix the vertical stars issue
     const styleElement = document.createElement('style');
@@ -57,13 +71,15 @@ const GoogleReviews = () => {
         window.sociablekit.widgets = [];
       }
       styleElement.remove();
+      clearTimeout(timer);
     };
-  }, [pathname]); // Re-run when pathname changes
+  }, [key]); // Re-run when key changes
 
   return (
     <>
       {/* SociableKit Script */}
       <Script
+        key={key} // Force script reload
         src="https://widgets.sociablekit.com/google-reviews/widget.js"
         async
         defer
@@ -77,6 +93,7 @@ const GoogleReviews = () => {
       
       {/* SociableKit Widget Container */}
       <div 
+        key={key} // Force div remount
         ref={reviewsContainerRef}
         className="sk-ww-google-reviews" 
         data-embed-id="25549722"
