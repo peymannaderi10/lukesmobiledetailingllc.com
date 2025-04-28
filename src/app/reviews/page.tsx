@@ -8,12 +8,13 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 // Create a Reviews component that will use SociableKit
-const GoogleReviews = ({ onFirstLoad }: { onFirstLoad: () => void }) => {
+const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const isFirstLoad = useRef(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const styleAdded = useRef(false);
 
   useEffect(() => {
-    if (isFirstLoad.current) {
+    if (!styleAdded.current) {
       // Add custom CSS to fix the vertical stars issue
       const styleElement = document.createElement('style');
       styleElement.textContent = `
@@ -41,10 +42,40 @@ const GoogleReviews = ({ onFirstLoad }: { onFirstLoad: () => void }) => {
         }
       `;
       document.head.appendChild(styleElement);
-      isFirstLoad.current = false;
-      onFirstLoad();
+      styleAdded.current = true;
     }
-  }, [onFirstLoad]);
+  }, []);
+
+  // Store the reviews HTML in localStorage after it loads
+  useEffect(() => {
+    const checkAndStoreReviews = () => {
+      const reviewsElement = document.querySelector('.sk-ww-google-reviews');
+      if (reviewsElement && reviewsElement.children.length > 0) {
+        localStorage.setItem('cachedReviews', reviewsElement.innerHTML);
+        setIsLoaded(true);
+      }
+    };
+
+    // Check every second for 10 seconds
+    const interval = setInterval(checkAndStoreReviews, 1000);
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  // Try to load cached content first
+  useEffect(() => {
+    const cachedContent = localStorage.getItem('cachedReviews');
+    if (cachedContent && reviewsContainerRef.current) {
+      reviewsContainerRef.current.innerHTML = cachedContent;
+      setIsLoaded(true);
+    }
+  }, []);
 
   return (
     <>
@@ -55,7 +86,7 @@ const GoogleReviews = ({ onFirstLoad }: { onFirstLoad: () => void }) => {
         defer
         strategy="afterInteractive"
         onLoad={() => {
-          if (typeof window !== 'undefined' && window.sociablekit) {
+          if (!isLoaded && typeof window !== 'undefined' && window.sociablekit) {
             window.sociablekit.initSocialFeed();
           }
         }}
@@ -175,7 +206,7 @@ export default function ReviewsPage() {
       {/* Google Reviews Section */}
       <section className="py-12 md:py-20">
         <div className="container-custom">
-          <GoogleReviews onFirstLoad={handleFirstLoad} />
+          <GoogleReviews />
         </div>
       </section>
 
