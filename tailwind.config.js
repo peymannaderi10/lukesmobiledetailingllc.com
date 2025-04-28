@@ -31,8 +31,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'Arial', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
+        'anchor-jack': ['Anchor Jack', 'sans-serif'],
       },
       fontWeight: {
         normal: 400,

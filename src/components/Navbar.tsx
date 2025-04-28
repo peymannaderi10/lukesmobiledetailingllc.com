@@ -22,7 +22,7 @@ export default function Navbar() {
       <nav className="container-custom flex items-center justify-between py-2">
         <div className="flex lg:flex-1">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
+            <span className="text-lg font-bold text-black font-anchor-jack">Luke's Mobile <span className="text-primary">Detailing</span></span>
           </Link>
         </div>
         
@@ -74,7 +74,7 @@ export default function Navbar() {
                     height={100}
                     className="w-[100px] h-auto object-contain"
                   /> */}
-                  <span className="text-xl font-bold text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
+                  <span className="text-lg font-bold font-anchor-jack text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
                 </Link>
                 <button
                   type="button"
