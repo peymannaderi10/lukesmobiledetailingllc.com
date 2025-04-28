@@ -16,7 +16,7 @@ export default function AboutPage() {
             className="object-cover"
             style={{ objectPosition: "center 55%" }}
           />
-          <div className="absolute inset-0 bg-black opacity-50" />
+          <div className="absolute inset-0 bg-black opacity-65" />
         </div>
         <div className="container-custom text-center relative z-10">
           <h1 className="text-3xl md:text-5xl font-bold mb-6">About Luke's Mobile Detailing</h1>
