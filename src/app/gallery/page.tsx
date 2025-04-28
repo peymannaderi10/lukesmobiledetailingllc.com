@@ -218,7 +218,7 @@ export default function GalleryPage() {
               </div>
             </div>
 
-            {/* Before/After Comparison 5 */}
+            {/* Before/After Comparison 5 - Hair */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <div className="relative">
                 {/* Toggle buttons */}
@@ -239,19 +239,27 @@ export default function GalleryPage() {
                 
                 {/* Images */}
                 <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison5 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual before image */}
-                    <p className="text-gray-700 font-bold text-xl">Before Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison5 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/Images/beforeAndAfter/hairbefore.jpg"
+                      alt="Hair Before Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison5 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual after image */}
-                    <p className="text-gray-700 font-bold text-xl">After Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison5 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/Images/beforeAndAfter/hairafter.jpg"
+                      alt="Hair After Cleaning"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Before/After Comparison 6 */}
+            {/* Before/After Comparison 6 - Ford */}
             <div className="bg-white rounded-xl shadow-md overflow-hidden">
               <div className="relative">
                 {/* Toggle buttons */}
@@ -272,13 +280,21 @@ export default function GalleryPage() {
                 
                 {/* Images */}
                 <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison6 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual before image */}
-                    <p className="text-gray-700 font-bold text-xl">Before Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison6 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/Images/beforeAndAfter/fordBefore.jpg"
+                      alt="Ford Before Detailing"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
-                  <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${activeImages.comparison6 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    {/* Replace with actual after image */}
-                    <p className="text-gray-700 font-bold text-xl">After Image</p>
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison6 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
+                    <Image
+                      src="/Images/beforeAndAfter/fordAfter.jpg"
+                      alt="Ford After Detailing"
+                      fill
+                      className="object-cover object-center"
+                    />
                   </div>
                 </div>
               </div>

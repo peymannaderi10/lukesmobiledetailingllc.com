@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Script from "next/script";
+import Image from "next/image";
 
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
@@ -125,8 +126,19 @@ export default function ReviewsPage() {
   return (
     <div className="bg-white">
       {/* Header */}
-      <div className="bg-secondary text-white py-16">
-        <div className="container-custom text-center">
+      <div className="bg-secondary text-white py-16 relative">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/Images/webPhotos/reviewsBanner.jpeg" 
+            alt="Customer reviews banner" 
+            fill
+            priority
+            className="object-cover"
+            style={{ objectPosition: "center 30%" }}
+          />
+          <div className="absolute inset-0 bg-black opacity-65" />
+        </div>
+        <div className="container-custom text-center relative z-10">
           <h1 className="text-3xl md:text-5xl font-bold mb-6">Customer Reviews</h1>
           <div className="flex justify-center items-center gap-1 mb-4">
             <StarIcon className="h-6 w-6 text-primary" />
