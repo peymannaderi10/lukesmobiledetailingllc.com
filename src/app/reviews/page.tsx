@@ -12,21 +12,68 @@ const GoogleReviews = () => {
   const isScriptLoaded = useRef(false);
 
   useEffect(() => {
-    // Only execute this if the script hasn't been loaded yet
+    // Clean up any existing widgets first
+    if (window.sociablekit) {
+      window.sociablekit.widgets = [];
+    }
+    
+    // Force reinitialize when component mounts
+    isScriptLoaded.current = false;
+    
+    // Initialize or re-initialize SociableKit
     if (!isScriptLoaded.current && reviewsContainerRef.current) {
       isScriptLoaded.current = true;
       
-      // Clean up any existing widgets before re-initializing
-      if (window.sociablekit) {
-        window.sociablekit.widgets = [];
-      }
-
       // Initialize SociableKit
       if (typeof window !== 'undefined' && window.sociablekit) {
         window.sociablekit.initSocialFeed();
+      } else {
+        // If sociablekit isn't loaded yet, check again in a moment
+        const initTimer = setTimeout(() => {
+          if (typeof window !== 'undefined' && window.sociablekit) {
+            window.sociablekit.initSocialFeed();
+          }
+        }, 1000);
+        
+        return () => clearTimeout(initTimer);
       }
       
+      // Add custom CSS to fix the vertical stars issue
+      const styleElement = document.createElement('style');
+      styleElement.textContent = `
+        /* Fix for vertical stars in SociableKit widget */
+        .sk-badge__stars {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: center !important;
+          align-items: center !important;
+          margin: 5px auto !important;
+        }
+        
+        /* Individual review stars should be left-aligned */
+        .sk-post__rating {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          margin: 5px 0 !important;
+        }
+        
+        .sk-post__rating-icon {
+          display: inline-block !important;
+          margin: 0 2px !important;
+        }
+      `;
+      document.head.appendChild(styleElement);
     }
+    
+    // Clean up function
+    return () => {
+      // Clean up on unmount
+      if (window.sociablekit) {
+        window.sociablekit.widgets = [];
+      }
+    };
   }, []);
 
   return (
@@ -38,7 +85,11 @@ const GoogleReviews = () => {
         defer
         strategy="afterInteractive"
         onLoad={() => {
+          // Force re-initialization on script load
           if (typeof window !== 'undefined' && window.sociablekit) {
+            // Clear any existing widgets
+            window.sociablekit.widgets = [];
+            // Initialize the widget
             window.sociablekit.initSocialFeed();
           }
         }}
