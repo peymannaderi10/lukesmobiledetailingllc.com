@@ -3,94 +3,42 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
+import Script from "next/script";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { useReviews } from "../context/ReviewsContext";
 
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const scriptRef = useRef<HTMLScriptElement | null>(null);
-  const pathname = usePathname();
-  const loadTriesRef = useRef(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const isScriptLoaded = useRef(false);
+  const { isReviewsLoaded, setIsReviewsLoaded, hasVisitedBefore } = useReviews();
 
-  // Function to clean up SociableKit
-  const cleanupSociableKit = () => {
-    // Remove any existing widgets
-    if (window.sociablekit) {
-      window.sociablekit.widgets = [];
+  useEffect(() => {
+    // If we've visited before and reviews are loaded, we don't need to reinitialize
+    if (hasVisitedBefore && isReviewsLoaded) {
+      return;
     }
     
-    // Remove any existing script
-    if (scriptRef.current && scriptRef.current.parentNode) {
-      try {
-        scriptRef.current.parentNode.removeChild(scriptRef.current);
-      } catch (error) {
-        console.error("Error removing script:", error);
+    // Only execute this if the script hasn't been loaded yet
+    if (!isScriptLoaded.current && reviewsContainerRef.current) {
+      isScriptLoaded.current = true;
+      
+      // Clean up any existing widgets before re-initializing
+      if (window.sociablekit) {
+        window.sociablekit.widgets = [];
       }
-      scriptRef.current = null;
-    }
-    
-    // Instead of removing children, empty the container safely
-    const widgetContainers = document.querySelectorAll('.sk-ww-google-reviews');
-    widgetContainers.forEach(container => {
-      try {
-        // Safer way to clear contents - just set innerHTML to empty
-        container.innerHTML = '';
-      } catch (error) {
-        console.error("Error clearing container:", error);
-      }
-    });
-  };
 
-  // Function to load the SociableKit script
-  const loadSociableKitScript = () => {
-    if (loadTriesRef.current > 5) {
-      console.warn("Maximum load attempts reached");
-      return; // Prevent infinite retries
-    }
-    loadTriesRef.current++;
-    
-    try {
-      cleanupSociableKit();
-      
-      // Add a version parameter to avoid caching issues
-      const timestamp = new Date().getTime();
-      
-      // Create a new script element
-      const script = document.createElement('script');
-      script.src = `https://widgets.sociablekit.com/google-reviews/widget.js?v=${timestamp}`;
-      script.async = true;
-      script.defer = true;
-      
-      script.onload = () => {
-        console.log("SociableKit script loaded");
-        setIsLoaded(true);
+      // Initialize SociableKit
+      if (typeof window !== 'undefined' && window.sociablekit) {
+        window.sociablekit.initSocialFeed();
         
-        // Simple approach: wait a bit and then initialize once
-        setTimeout(() => {
-          try {
-            if (window.sociablekit) {
-              console.log("Initializing SociableKit");
-              window.sociablekit.initSocialFeed();
-            } else {
-              console.warn("SociableKit not available after script load");
-            }
-          } catch (error) {
-            console.error("Error initializing SociableKit:", error);
-          }
-        }, 500);
-      };
-      
-      script.onerror = (e) => {
-        console.error("Failed to load SociableKit script:", e);
-        // Try to reload after a delay
-        setTimeout(loadSociableKitScript, 2000);
-      };
-      
-      // Add the script to the document
-      document.body.appendChild(script);
-      scriptRef.current = script;
+        // Set a timeout to mark reviews as loaded
+        const loadingTimer = setTimeout(() => {
+          setIsReviewsLoaded(true);
+        }, 3000); // Give 3 seconds for the initial load
+        
+        return () => clearTimeout(loadingTimer);
+      }
       
       // Add custom CSS to fix the vertical stars issue
       const styleElement = document.createElement('style');
@@ -119,73 +67,47 @@ const GoogleReviews = () => {
         }
       `;
       document.head.appendChild(styleElement);
-    } catch (error) {
-      console.error("Error in loadSociableKitScript:", error);
     }
-  };
-
-  // Initialize on component mount and reload when pathname changes
-  useEffect(() => {
-    console.log("Reviews page mounted, pathname:", pathname);
-    
-    // Only load if we're on the reviews page
-    if (pathname === '/reviews') {
-      loadTriesRef.current = 0;
-      loadSociableKitScript();
-    }
-    
-    return () => {
-      // Clean up when component unmounts or pathname changes
-      cleanupSociableKit();
-    };
-  }, [pathname]);
-
-  // Listen for visibility changes to reload when tab becomes visible
-  useEffect(() => {
-    let lastVisibilityChange = 0;
-    
-    const handleVisibilityChange = () => {
-      try {
-        // Debounce visibility changes to prevent rapid reloading
-        const now = Date.now();
-        if (now - lastVisibilityChange < 2000) {
-          console.log("Ignoring rapid visibility change");
-          return;
-        }
-        lastVisibilityChange = now;
-        
-        if (document.visibilityState === 'visible' && pathname === '/reviews') {
-          console.log("Page became visible, reloading SociableKit");
-          loadTriesRef.current = 0;
-          loadSociableKitScript();
-        }
-      } catch (error) {
-        console.error("Error in visibility change handler:", error);
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [pathname]);
+  }, [hasVisitedBefore, isReviewsLoaded, setIsReviewsLoaded]);
 
   return (
-    <div 
-      ref={reviewsContainerRef}
-      className="sk-ww-google-reviews" 
-      data-embed-id="25549722"
-    >
-      {!isLoaded && (
-        <div className="text-center py-16">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
-            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
-          </div>
-          <p className="mt-4 text-gray-600">Loading reviews...</p>
+    <>
+      {/* SociableKit Script - Only load if we haven't visited before or reviews aren't loaded */}
+      {(!hasVisitedBefore || !isReviewsLoaded) && (
+        <Script
+          src="https://widgets.sociablekit.com/google-reviews/widget.js"
+          async
+          defer
+          strategy="afterInteractive"
+          onLoad={() => {
+            if (typeof window !== 'undefined' && window.sociablekit) {
+              window.sociablekit.initSocialFeed();
+              
+              // Set a timeout to mark reviews as loaded after script loads
+              setTimeout(() => {
+                setIsReviewsLoaded(true);
+              }, 2000);
+            }
+          }}
+        />
+      )}
+      
+      {/* Loading indicator when reviews are loading for the first time */}
+      {!hasVisitedBefore && !isReviewsLoaded && (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+          <span className="ml-3 text-lg">Loading reviews...</span>
         </div>
       )}
-    </div>
+      
+      {/* SociableKit Widget Container */}
+      <div 
+        ref={reviewsContainerRef}
+        className="sk-ww-google-reviews" 
+        data-embed-id="25549722"
+        style={{ display: (!hasVisitedBefore && !isReviewsLoaded) ? 'none' : 'block' }}
+      ></div>
+    </>
   );
 };
 
@@ -201,8 +123,12 @@ declare global {
 
 export default function ReviewsPage() {
   const [rating, setRating] = useState<string>("5.0");
+  const { hasVisitedBefore, setHasVisitedBefore } = useReviews();
 
   useEffect(() => {
+    // Mark that we've visited the reviews page
+    setHasVisitedBefore(true);
+    
     // Function to get rating from SociableKit widget
     const getRating = () => {
       const ratingElement = document.querySelector('.sk-badge__value');
@@ -229,7 +155,7 @@ export default function ReviewsPage() {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, []);
+  }, [setHasVisitedBefore]);
 
   return (
     <div className="bg-white">
@@ -268,6 +194,7 @@ export default function ReviewsPage() {
           <GoogleReviews />
         </div>
       </section>
+
 
       {/* Google Maps Section */}
       <section className="py-12 md:py-20 bg-gray-100">
@@ -314,6 +241,7 @@ export default function ReviewsPage() {
           </div>
         </div>
       </section>
+
 
       {/* Call to Action */}
       <section className="py-12 md:py-20 bg-primary text-white">
