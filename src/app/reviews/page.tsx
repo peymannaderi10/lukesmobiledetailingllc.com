@@ -12,30 +12,18 @@ const GoogleReviews = () => {
   const isScriptLoaded = useRef(false);
 
   useEffect(() => {
-    // Clean up any existing widgets first
-    if (window.sociablekit) {
-      window.sociablekit.widgets = [];
-    }
-    
-    // Force reinitialize when component mounts
-    isScriptLoaded.current = false;
-    
-    // Initialize or re-initialize SociableKit
+    // Only execute this if the script hasn't been loaded yet
     if (!isScriptLoaded.current && reviewsContainerRef.current) {
       isScriptLoaded.current = true;
       
+      // Clean up any existing widgets before re-initializing
+      if (window.sociablekit) {
+        window.sociablekit.widgets = [];
+      }
+
       // Initialize SociableKit
       if (typeof window !== 'undefined' && window.sociablekit) {
         window.sociablekit.initSocialFeed();
-      } else {
-        // If sociablekit isn't loaded yet, check again in a moment
-        const initTimer = setTimeout(() => {
-          if (typeof window !== 'undefined' && window.sociablekit) {
-            window.sociablekit.initSocialFeed();
-          }
-        }, 1000);
-        
-        return () => clearTimeout(initTimer);
       }
       
       // Add custom CSS to fix the vertical stars issue
@@ -66,14 +54,6 @@ const GoogleReviews = () => {
       `;
       document.head.appendChild(styleElement);
     }
-    
-    // Clean up function
-    return () => {
-      // Clean up on unmount
-      if (window.sociablekit) {
-        window.sociablekit.widgets = [];
-      }
-    };
   }, []);
 
   return (
@@ -85,11 +65,7 @@ const GoogleReviews = () => {
         defer
         strategy="afterInteractive"
         onLoad={() => {
-          // Force re-initialization on script load
           if (typeof window !== 'undefined' && window.sociablekit) {
-            // Clear any existing widgets
-            window.sociablekit.widgets = [];
-            // Initialize the widget
             window.sociablekit.initSocialFeed();
           }
         }}
