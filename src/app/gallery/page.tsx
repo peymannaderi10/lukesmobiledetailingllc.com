@@ -42,82 +42,9 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* Featured Before & After Transformations */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container-custom px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-4">Featured Transformations</h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              Take a look at some of our most impressive detailing transformations.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Transformation 1 */}
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-              <div className="relative pt-[56.25%]">
-                <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                  {/* Replace with actual image */}
-                  <p className="text-gray-700">Transformation Image</p>
-                </div>
-              </div>
-              <div className="p-4 sm:p-6">
-                <h3 className="font-bold text-lg mb-2">Paint Correction & Ceramic Coating</h3>
-                <p className="text-gray-600 mb-4">
-                  Removed years of swirl marks and applied a premium ceramic coating for long-lasting protection.
-                </p>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">Vehicle: Mercedes-Benz C300</span>
-                  <span className="text-sm font-medium text-primary">Ultimate Package</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Transformation 2 */}
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-              <div className="relative pt-[56.25%]">
-                <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                  {/* Replace with actual image */}
-                  <p className="text-gray-700">Transformation Image</p>
-                </div>
-              </div>
-              <div className="p-4 sm:p-6">
-                <h3 className="font-bold text-lg mb-2">Interior Restoration</h3>
-                <p className="text-gray-600 mb-4">
-                  Deep cleaned heavily soiled seats and carpets, restoring them to like-new condition.
-                </p>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">Vehicle: Ford F-150</span>
-                  <span className="text-sm font-medium text-primary">Premium Package</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Transformation 3 */}
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-              <div className="relative pt-[56.25%]">
-                <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-                  {/* Replace with actual image */}
-                  <p className="text-gray-700">Transformation Image</p>
-                </div>
-              </div>
-              <div className="p-4 sm:p-6">
-                <h3 className="font-bold text-lg mb-2">Headlight Restoration</h3>
-                <p className="text-gray-600 mb-4">
-                  Restored foggy, yellowed headlights to crystal clear, improving visibility and appearance.
-                </p>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">Vehicle: Toyota Camry</span>
-                  <span className="text-sm font-medium text-primary">Add-on Service</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Before & After Comparisons */}
-      <section className="py-12 md:py-20 bg-gray-100">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container-custom px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-black">Before & After</h2>
