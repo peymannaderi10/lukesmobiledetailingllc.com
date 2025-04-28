@@ -74,7 +74,7 @@ export default function Navbar() {
                     height={100}
                     className="w-[100px] h-auto object-contain"
                   /> */}
-                  <span className="text-xl font-bold">Luke's Mobile <span className="text-primary">Detailing</span></span>
+                  <span className="text-xl font-bold text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
                 </Link>
                 <button
                   type="button"
