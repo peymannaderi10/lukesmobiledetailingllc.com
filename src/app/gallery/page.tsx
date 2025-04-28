@@ -241,7 +241,7 @@ export default function GalleryPage() {
                 <div className="relative pt-[125%]">
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison5 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/Images/beforeAndAfter/hairbefore.jpg"
+                      src="/Images/beforeAndAfter/hairBefore.jpg"
                       alt="Hair Before Cleaning"
                       fill
                       className="object-cover object-center"
@@ -249,7 +249,7 @@ export default function GalleryPage() {
                   </div>
                   <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison5 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
                     <Image
-                      src="/Images/beforeAndAfter/hairafter.jpg"
+                      src="/Images/beforeAndAfter/hairAfter.jpg"
                       alt="Hair After Cleaning"
                       fill
                       className="object-cover object-center"
