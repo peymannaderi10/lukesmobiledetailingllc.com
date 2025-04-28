@@ -5,135 +5,79 @@ import Link from "next/link";
 import { StarIcon } from "@heroicons/react/24/solid";
 import Script from "next/script";
 import Image from "next/image";
-import { useReviews } from "../context/ReviewsContext";
+import { usePathname } from 'next/navigation';
 
 // Create a Reviews component that will use SociableKit
 const GoogleReviews = () => {
   const reviewsContainerRef = useRef<HTMLDivElement>(null);
-  const { isReviewsLoaded, setIsReviewsLoaded, hasVisitedBefore, setHasVisitedBefore } = useReviews();
-  const [isLoading, setIsLoading] = useState(true);
+  const isScriptLoaded = useRef(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Mark that we've visited the page
-    setHasVisitedBefore(true);
-    
-    // If we've cached the reviews and loaded them before, don't show loading state
-    if (hasVisitedBefore && isReviewsLoaded) {
-      setIsLoading(false);
-    }
-    
-    // Function to handle SociableKit initialization
-    const initSociableKit = () => {
-      console.log("Initializing SociableKit");
-      
-      // Reset/initialize if needed
+    // Reinitialize on every render when we're on the reviews page
+    if (reviewsContainerRef.current) {
+      // Clean up any existing widgets before re-initializing
       if (window.sociablekit) {
         window.sociablekit.widgets = [];
+      }
+
+      // Initialize SociableKit
+      if (typeof window !== 'undefined' && window.sociablekit) {
         window.sociablekit.initSocialFeed();
       }
       
-      // Check for the widget content periodically
-      const checkInterval = setInterval(() => {
-        const skReviews = document.querySelector('.sk-reviews');
-        if (skReviews) {
-          console.log("SociableKit widget found and loaded!");
-          clearInterval(checkInterval);
-          
-          // Mark as loaded and hide loader
-          setIsLoading(false);
-          setIsReviewsLoaded(true);
+      // Add custom CSS to fix the vertical stars issue
+      const styleElement = document.createElement('style');
+      styleElement.textContent = `
+        /* Fix for vertical stars in SociableKit widget */
+        .sk-badge__stars {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: center !important;
+          align-items: center !important;
+          margin: 5px auto !important;
         }
-      }, 500);
-      
-      // Set a timeout to prevent infinite checking
-      setTimeout(() => {
-        clearInterval(checkInterval);
-        // If still loading after timeout, assume it's loaded anyway
-        if (isLoading) {
-          console.log("SociableKit loading timeout - forcing completion");
-          setIsLoading(false);
-          setIsReviewsLoaded(true);
+        
+        /* Individual review stars should be left-aligned */
+        .sk-post__rating {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          margin: 5px 0 !important;
         }
-      }, 8000);
-    };
-    
-    // Apply star fix CSS
-    const styleElement = document.createElement('style');
-    styleElement.textContent = `
-      .sk-badge__stars {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-        margin: 5px auto !important;
-      }
-      
-      .sk-post__rating {
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: flex-start !important;
-        align-items: center !important;
-        margin: 5px 0 !important;
-      }
-      
-      .sk-post__rating-icon {
-        display: inline-block !important;
-        margin: 0 2px !important;
-      }
-    `;
-    document.head.appendChild(styleElement);
-    
-    // If we need to initialize the widget
-    if (!hasVisitedBefore || !isReviewsLoaded) {
-      // If SociableKit is already loaded, initialize now
-      if (window.sociablekit) {
-        initSociableKit();
-      } else {
-        // Otherwise set it up to initialize when the script loads
-        window.onSociablekitLoad = initSociableKit;
-      }
+        
+        .sk-post__rating-icon {
+          display: inline-block !important;
+          margin: 0 2px !important;
+        }
+      `;
+      document.head.appendChild(styleElement);
     }
     
-    return () => {
-      // Cleanup
-      delete window.onSociablekitLoad;
-    };
-  }, [hasVisitedBefore, isReviewsLoaded, isLoading, setIsReviewsLoaded, setHasVisitedBefore]);
+    // Force reinitialize when path changes to reviews page
+  }, [pathname]);
 
   return (
     <>
-      {/* Only include the script if we need to load reviews */}
-      {(!hasVisitedBefore || !isReviewsLoaded) && (
-        <Script
-          src="https://widgets.sociablekit.com/google-reviews/widget.js"
-          async
-          defer
-          strategy="afterInteractive"
-          onLoad={() => {
-            console.log("SociableKit script loaded");
-            if (window.onSociablekitLoad) {
-              window.onSociablekitLoad();
-            }
-          }}
-        />
-      )}
+      {/* SociableKit Script */}
+      <Script
+        src="https://widgets.sociablekit.com/google-reviews/widget.js"
+        async
+        defer
+        strategy="afterInteractive"
+        onLoad={() => {
+          if (typeof window !== 'undefined' && window.sociablekit) {
+            window.sociablekit.initSocialFeed();
+          }
+        }}
+      />
       
-      {/* Simple loader that only shows when loading */}
-      {isLoading && (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-          <span className="ml-3 text-lg">Loading reviews...</span>
-        </div>
-      )}
-      
-      {/* Widget container - always render but manage visibility with CSS */}
+      {/* SociableKit Widget Container */}
       <div 
         ref={reviewsContainerRef}
         className="sk-ww-google-reviews" 
         data-embed-id="25549722"
-        style={{ 
-          display: isLoading ? 'none' : 'block' 
-        }}
       ></div>
     </>
   );
@@ -146,13 +90,12 @@ declare global {
       initSocialFeed: () => void;
       widgets: Array<unknown>;
     };
-    onSociablekitLoad?: () => void;
   }
 }
 
 export default function ReviewsPage() {
   const [rating, setRating] = useState<string>("5.0");
-  const { resetReviewsState } = useReviews();
+  const pathname = usePathname();
 
   useEffect(() => {
     // Function to get rating from SociableKit widget
@@ -181,7 +124,7 @@ export default function ReviewsPage() {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <div className="bg-white">
@@ -279,17 +222,6 @@ export default function ReviewsPage() {
           <Link href="/booking" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
             Book Now
           </Link>
-          
-          {/* Small debug button - can be removed in production */}
-          <div className="mt-8 opacity-40 hover:opacity-100 transition-opacity">
-            <button 
-              onClick={resetReviewsState} 
-              className="text-xs underline"
-              aria-label="Reset reviews cache (debug only)"
-            >
-              Reset reviews cache
-            </button>
-          </div>
         </div>
       </section>
     </div>
