@@ -471,6 +471,14 @@ export default function Home() {
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
                   <span>Gridley</span>
                 </li>
+                <li className="flex items-center text-black">
+                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
+                  <span>Sutter</span>
+                </li>
+                <li className="flex items-center text-black">
+                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
+                  <span>Plumas Lake</span>
+                </li>
               </ul>
               <p className="mt-6 text-gray-700">
                 Not sure if we service your area? <Link href="/contact" className="text-primary hover:underline">Contact us</Link> to find out!

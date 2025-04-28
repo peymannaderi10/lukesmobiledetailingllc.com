@@ -129,7 +129,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-bold mb-2">Service Area</h3>
                       <p className="text-gray-600 mb-2">
-                        We serve Yuba City, Marysville, and surrounding areas in California.
+                        We serve Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.
                       </p>
                       <Link href="/about#service-area" className="text-primary hover:underline">
                         View Service Area Map
@@ -311,7 +311,7 @@ export default function ContactPage() {
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold mb-4">Our Service Area</h2>
             <p className="text-gray-800 max-w-3xl mx-auto">
-              We provide mobile detailing services throughout Yuba City, Marysville, and surrounding areas in California.
+              We provide mobile detailing services throughout Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.
             </p>
           </div>
           

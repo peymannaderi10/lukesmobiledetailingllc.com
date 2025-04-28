@@ -504,7 +504,7 @@ export default function ServicesPage() {
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">What areas do you service?</h3>
               <p className="text-gray-800">
-                We service Yuba City, Marysville, and surrounding areas within a 25-mile radius. If you're unsure 
+                We service Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas within a 25-mile radius. If you're unsure 
                 if we serve your area, please contact us to check.
               </p>
             </div>

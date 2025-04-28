@@ -50,7 +50,7 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Luke's Mobile Detailing</h3>
             <p className="mb-4">Professional car detailing services that come to you.</p>
             <address className="not-italic mb-4">
-              <p>Service Area: Yuba City, Marysville, Live Oak, Olivehurst, and surrounding areas in California.</p>
+              <p>Service Area: Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.</p>
               <br></br>
               <p>Phone: (530) 650-3631</p>
               <p>Email: info@lukesmobiledetailing.com</p>
