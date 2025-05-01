@@ -55,7 +55,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/Images/webPhotos/contactBanner.jpg"
-            alt="Contact Banner"
+            alt="Contact Us Banner"
             fill
             className="object-cover"
             priority
