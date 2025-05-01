@@ -53,12 +53,10 @@ export default function ContactPage() {
       <div className="relative py-16">
         {/* Banner Image */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/Images/webPhotos/contactBanner.jpg"
+          <img 
+            src="/Images/webPhotos/contactBanner.jpg" 
             alt="Contact Us Banner"
-            fill
-            className="object-cover"
-            priority
+            className="object-cover w-full h-full"
             style={{ objectPosition: "center 55%" }}
           />
           <div className="absolute inset-0 bg-black bg-opacity-60" />
@@ -88,7 +86,11 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-bold mb-2">Phone</h3>
-                      <a href="tel:(530)650-3631" className="text-gray-600 hover:text-primary">
+                      <a 
+                        href="tel:(530)650-3631" 
+                        className="text-primary underline hover:text-primary-dark flex items-center gap-1 transition-colors"
+                      >
+                        <PhoneIcon className="h-4 w-4" />
                         (530) 650-3631
                       </a>
                     </div>
@@ -102,7 +104,11 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-bold mb-2">Email</h3>
-                      <a href="mailto:luke8888z@gmail.com" className="text-gray-600 hover:text-primary">
+                      <a 
+                        href="mailto:luke8888z@gmail.com" 
+                        className="text-primary underline hover:text-primary-dark flex items-center gap-1 transition-colors"
+                      >
+                        <EnvelopeIcon className="h-4 w-4" />
                         luke8888z@gmail.com
                       </a>
                     </div>
@@ -187,131 +193,6 @@ export default function ContactPage() {
                     </svg>
                   </a>
                 </div>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 lg:p-8">
-                <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
-                
-                {isSuccess ? (
-                  <div className="bg-green-50 border border-green-200 text-green-700 p-6 rounded-lg">
-                    <h3 className="font-bold text-xl mb-2 text-black">Thank You!</h3>
-                    <p className="mb-4 text-black">Your message has been sent successfully. We'll get back to you as soon as possible.</p>
-                    <button
-                      onClick={() => setIsSuccess(false)}
-                      className="btn-primary"
-                    >
-                      Send Another Message
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      <div>
-                        <label htmlFor="name" className="block mb-2 font-medium text-black">
-                          Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          id="name"
-                          type="text"
-                          className={`w-full p-3 border rounded-md ${
-                            errors.name ? "border-red-500" : "border-gray-300"
-                          }`}
-                          {...register("name", { required: true })}
-                        />
-                        {errors.name && (
-                          <p className="text-red-500 text-sm mt-1">Name is required</p>
-                        )}
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="email" className="block mb-2 font-medium text-black">
-                          Email <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          id="email"
-                          type="email"
-                          className={`w-full p-3 border rounded-md ${
-                            errors.email ? "border-red-500" : "border-gray-300"
-                          }`}
-                          {...register("email", {
-                            required: true,
-                            pattern: /^\S+@\S+$/i,
-                          })}
-                        />
-                        {errors.email && (
-                          <p className="text-red-500 text-sm mt-1">
-                            Valid email is required
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      <div>
-                        <label htmlFor="phone" className="block mb-2 font-medium text-black">
-                          Phone
-                        </label>
-                        <input
-                          id="phone"
-                          type="tel"
-                          className="w-full p-3 border border-gray-300 rounded-md"
-                          {...register("phone")}
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="subject" className="block mb-2 font-medium text-black">
-                          Subject <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          id="subject"
-                          type="text"
-                          className={`w-full p-3 border rounded-md ${
-                            errors.subject ? "border-red-500" : "border-gray-300"
-                          }`}
-                          {...register("subject", { required: true })}
-                        />
-                        {errors.subject && (
-                          <p className="text-red-500 text-sm mt-1">Subject is required</p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="mb-6">
-                      <label htmlFor="message" className="block mb-2 font-medium text-black">
-                        Message <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        rows={5}
-                        className={`w-full p-3 border rounded-md ${
-                          errors.message ? "border-red-500" : "border-gray-300"
-                        }`}
-                        {...register("message", { required: true })}
-                      ></textarea>
-                      {errors.message && (
-                        <p className="text-red-500 text-sm mt-1">Message is required</p>
-                      )}
-                    </div>
-                    
-                    {errorMessage && (
-                      <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-md mb-6">
-                        {errorMessage}
-                      </div>
-                    )}
-                    
-                    <button
-                      type="submit"
-                      className="btn-primary px-8 py-3"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "Sending..." : "Send Message"}
-                    </button>
-                  </form>
-                )}
               </div>
             </div>
           </div>

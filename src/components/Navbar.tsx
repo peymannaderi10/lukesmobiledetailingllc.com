@@ -120,6 +120,8 @@ export default function Navbar() {
           <div className="inline-block animate-ticker">
             <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
             <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
+            <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
+            <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
           </div>
         </div>
       </header>
