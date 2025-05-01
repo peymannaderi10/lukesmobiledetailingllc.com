@@ -44,13 +44,12 @@ export default function Home() {
         </div>
         <div className="container-custom relative z-10 py-20 md:py-28">
           <div className="max-w-3xl mx-auto text-center">
+            <div className="mb-2">
+              <p className="text-xl md:text-2xl font-semibold">WE COME TO YOU!</p>
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Professional Mobile Detailing Services
+              PREMIUM AUTO DETAILING
             </h1>
-            <p className="text-lg md:text-xl mb-8">
-              Premium car detailing services directly to you,
-              Convenience and quality at your doorstep.
-            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/booking" className="btn-primary text-center">
                 Book Your Detail
@@ -474,6 +473,10 @@ export default function Home() {
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
                   <span>Sutter</span>
+                </li>
+                <li className="flex items-center text-black">
+                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
+                  <span>Plumas Lake</span>
                 </li>
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />

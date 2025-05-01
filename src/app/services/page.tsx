@@ -42,9 +42,9 @@ export default function ServicesPage() {
         </div>
         <div className="container-custom text-center relative z-10">
           <h1 className="text-3xl md:text-5xl font-bold mb-6">Our Detailing Services</h1>
-          <p className="text-lg max-w-2xl mx-auto">
-            From basic to premium details, we have the perfect package for your vehicle.
-          </p>
+          <Link href="/contact" className="btn-outline text-center">
+                Free Quote or Custom Detail?
+          </Link>
         </div>
       </div>
 

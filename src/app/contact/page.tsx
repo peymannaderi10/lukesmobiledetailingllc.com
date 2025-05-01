@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { EnvelopeIcon, PhoneIcon, ClockIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Image from "next/image";
 
 type ContactFormInputs = {
   name: string;
@@ -49,11 +50,23 @@ export default function ContactPage() {
   return (
     <div className="bg-white">
       {/* Header */}
-      <div className="bg-secondary text-white py-16">
-        <div className="container-custom text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6">Contact Us</h1>
-          <p className="text-lg max-w-2xl mx-auto">
-            Have questions or want to book a service? Get in touch with us today.
+      <div className="relative py-16">
+        {/* Banner Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/Images/webPhotos/contactBanner.jpg"
+            alt="Contact Banner"
+            fill
+            className="object-cover"
+            priority
+            style={{ objectPosition: "center 55%" }}
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-60" />
+        </div>
+        <div className="container-custom text-center relative z-10">
+          <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white">Contact Us</h1>
+          <p className="text-xl max-w-2xl mx-auto text-white">
+            Looking for a free quote or a custom detail? <br></br> Give us a call or send us a message today!
           </p>
         </div>
       </div>
@@ -129,7 +142,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-bold mb-2">Service Area</h3>
                       <p className="text-gray-600 mb-2">
-                        We serve Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.
+                        We serve Yuba City, Marysville, Meridian, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.
                       </p>
                       <Link href="/about#service-area" className="text-primary hover:underline">
                         View Service Area Map
@@ -311,7 +324,7 @@ export default function ContactPage() {
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold mb-4">Our Service Area</h2>
             <p className="text-gray-800 max-w-3xl mx-auto">
-              We provide mobile detailing services throughout Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.
+              We provide mobile detailing services throughout Yuba City, Marysville, Meridian, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.
             </p>
           </div>
           

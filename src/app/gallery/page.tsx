@@ -26,9 +26,18 @@ export default function GalleryPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Page Header */}
-      <section className="relative bg-secondary text-white py-12 md:py-20">
-        <div className="absolute inset-0 z-0 opacity-50">
-          <div className="w-full h-full bg-gradient-to-r from-secondary to-secondary-light" />
+      <section className="relative text-white py-12 md:py-20">
+        {/* Banner Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/Images/webPhotos/galleryBanner.jpg"
+            alt="Gallery Banner"
+            fill
+            className="object-cover"
+            priority
+            style={{ objectPosition: "center 55%" }}
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-60" />
         </div>
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -41,7 +50,6 @@ export default function GalleryPage() {
           </div>
         </div>
       </section>
-
 
       {/* Before & After Comparisons */}
       <section className="py-12 md:py-20 bg-white">

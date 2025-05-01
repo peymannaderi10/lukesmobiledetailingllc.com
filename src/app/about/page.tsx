@@ -156,6 +156,10 @@ export default function AboutPage() {
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
                   <span>Plumas Lake</span>
                 </li>
+                <li className="flex items-center text-black">
+                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
+                  <span>Meridian</span>
+                </li>
               </ul>
               <p className="text-gray-600">
                 Not sure if we service your area? <Link href="/contact" className="text-primary hover:underline">Contact us</Link> to find out!
