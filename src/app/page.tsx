@@ -480,7 +480,7 @@ export default function Home() {
                 </li>
                 <li className="flex items-center text-black">
                   <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Plumas Lake</span>
+                  <span>Meridian</span>
                 </li>
               </ul>
               <p className="mt-6 text-gray-700">
