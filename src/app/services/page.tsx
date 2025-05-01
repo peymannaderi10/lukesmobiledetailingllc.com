@@ -6,7 +6,8 @@ import {
   ShieldCheckIcon,
   LightBulbIcon,
   CloudIcon,
-  BeakerIcon
+  BeakerIcon,
+  ClockIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
@@ -14,6 +15,7 @@ export default function ServicesPage() {
   // Track active tab for each package
   const [activeTab, setActiveTab] = useState({
     signature: "interior",
+    diamond: "interior",
     basic: "interior"
   });
 
@@ -51,7 +53,7 @@ export default function ServicesPage() {
       {/* Packages Overview */}
       <section className="py-12 md:py-20">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {/* The Signature Package */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative lg:transform lg:scale-105 flex flex-col">
               <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg font-medium text-sm z-10">
@@ -80,7 +82,7 @@ export default function ServicesPage() {
                 </div>
                 
                 {/* Tab Content */}
-                <div className="flex-1 min-h-[350px]">
+                <div className="flex-1">
                   {/* Interior Content */}
                   <div className={activeTab.signature === "interior" ? "block" : "hidden"}>
                     <ul className="space-y-3 mb-6">
@@ -111,6 +113,10 @@ export default function ServicesPage() {
                       <li className="flex items-start">
                         <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
                         <span className="text-gray-800">Air freshener</span>
+                      </li>
+                      <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                        <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                        <span className="text-gray-700">Duration: 4 hours</span>
                       </li>
                     </ul>
                   </div>
@@ -154,12 +160,248 @@ export default function ServicesPage() {
                         <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
                         <span className="text-gray-800">3-5 month sealant</span>
                       </li>
+                      <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                        <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                        <span className="text-gray-700">Duration: 4 hours</span>
+                      </li>
                     </ul>
                   </div>
                 </div>
                 
                 <Link
                   href="/booking?package=signature"
+                  className="btn-primary w-full text-center block mt-4"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+
+            {/* The Diamond Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
+              <div className="bg-[#34eba1] p-6">
+                <h2 className="text-2xl font-bold mb-2 text-white">The Diamond</h2>
+                <p className="text-3xl font-bold text-white">$495</p>
+                <p className="text-sm mt-2 text-white">Interior & Exterior Detail</p>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-200 mb-4">
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.diamond === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("diamond", "interior")}
+                  >
+                    Interior
+                  </button>
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.diamond === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("diamond", "exterior")}
+                  >
+                    Exterior
+                  </button>
+                </div>
+                
+                {/* Tab Content */}
+                <div className="flex-1">
+                  {/* Interior Content */}
+                  <div className={activeTab.diamond === "interior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full interior deep vacuum</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wipe down of all surfaces</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Heated shampoo extraction of seats and carpets</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Steam cleaning of cracks & crevices vinyl</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Inside screens windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Application of P&S interior UV protectant</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Leather and vinyl conditioning</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Final touch up's & vacuum</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Air freshener</span>
+                      </li>
+                      <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                        <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                        <span className="text-gray-700">Duration: 5.5 hours</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Exterior Content */}
+                  <div className={activeTab.diamond === "exterior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full vehicle pre rinse</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Foam wash</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wheels & wheel wells</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tires</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Paint decontamination</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Undercarriage wash</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Clay bar treatment</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Machine applied ceramic infused wax</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full dry down & light polish</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tire shine</span>
+                      </li>
+                      <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                        <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                        <span className="text-gray-700">Duration: 5.5 hours</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <Link
+                  href="/booking?package=diamond"
+                  className="btn-primary w-full text-center block mt-4"
+                >
+                  Book Now
+                </Link>
+              </div>
+            </div>
+
+            {/* The Basic Package */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
+              <div className="bg-secondary text-white p-6">
+                <h2 className="text-2xl font-bold mb-2">The Basic</h2>
+                <p className="text-3xl font-bold">$185</p>
+                <p className="text-sm mt-2">Interior & Exterior Detail</p>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-200 mb-4">
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("basic", "interior")}
+                  >
+                    Interior
+                  </button>
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("basic", "exterior")}
+                  >
+                    Exterior
+                  </button>
+                </div>
+                
+                {/* Tab Content */}
+                <div className="flex-1">
+                  {/* Interior Content */}
+                  <div className={activeTab.basic === "interior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full interior vacuum</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wipe down of all surfaces</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Inside screens windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Air freshener</span>
+                      </li>
+                      <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                        <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                        <span className="text-gray-700">Duration: 2.5 hours</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Exterior Content */}
+                  <div className={activeTab.basic === "exterior" ? "block" : "hidden"}>
+                    <ul className="space-y-3 mb-6">
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Foam wash</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Wheels cleaned</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tires</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Full dry down</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Windows</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                        <span className="text-gray-800">Tire shine</span>
+                      </li>
+                      <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                        <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                        <span className="text-gray-700">Duration: 2.5 hours</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <Link
+                  href="/booking?package=basic"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -175,7 +417,7 @@ export default function ServicesPage() {
                 <p className="text-sm mt-2 text-white">Interior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
-                <div className="flex-1 min-h-[350px]">
+                <div className="flex-1">
                   <ul className="space-y-3 mb-6">
                     <li className="flex items-start">
                       <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
@@ -205,6 +447,10 @@ export default function ServicesPage() {
                       <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
                       <span className="text-gray-800">Air freshener & business card to finish it off!</span>
                     </li>
+                    <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                      <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">Duration: 3 hours</span>
+                    </li>
                   </ul>
                 </div>
                 <Link
@@ -224,7 +470,7 @@ export default function ServicesPage() {
                 <p className="text-sm mt-2 text-white">Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
-                <div className="flex-1 min-h-[350px]">
+                <div className="flex-1">
                   <ul className="space-y-3 mb-6">
                     <li className="flex items-start">
                       <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
@@ -262,98 +508,14 @@ export default function ServicesPage() {
                       <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
                       <span className="text-gray-800">6-8 month sealant</span>
                     </li>
+                    <li className="flex items-start border-t border-gray-200 pt-3 mt-3">
+                      <ClockIcon className="h-6 w-6 text-gray-500 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">Duration: 2 hours</span>
+                    </li>
                   </ul>
                 </div>
                 <Link
                   href="/booking?package=full-exterior"
-                  className="btn-primary w-full text-center block mt-4"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </div>
-
-            {/* The Basic Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
-              <div className="bg-secondary text-white p-6">
-                <h2 className="text-2xl font-bold mb-2">The Basic</h2>
-                <p className="text-3xl font-bold">$185</p>
-                <p className="text-sm mt-2">Interior & Exterior Detail</p>
-              </div>
-              <div className="p-6 flex-1 flex flex-col">
-                {/* Tab Navigation */}
-                <div className="flex border-b border-gray-200 mb-4">
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("basic", "interior")}
-                  >
-                    Interior
-                  </button>
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("basic", "exterior")}
-                  >
-                    Exterior
-                  </button>
-                </div>
-                
-                {/* Tab Content */}
-                <div className="flex-1 min-h-[350px]">
-                  {/* Interior Content */}
-                  <div className={activeTab.basic === "interior" ? "block" : "hidden"}>
-                    <ul className="space-y-3 mb-6">
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Full interior vacuum</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Wipe down of all surfaces</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Inside screens windows</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Air freshener</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  {/* Exterior Content */}
-                  <div className={activeTab.basic === "exterior" ? "block" : "hidden"}>
-                    <ul className="space-y-3 mb-6">
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Foam wash</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Wheels cleaned</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Tires</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Full dry down</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Windows</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                        <span className="text-gray-800">Tire shine</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <Link
-                  href="/booking?package=basic"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -422,7 +584,7 @@ export default function ServicesPage() {
       </section>*/}
 
       {/* Process Section */}
-      <section className="py-12 md:py-20">
+      <section className="py-6 md:py-10">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Detailing Process</h2>

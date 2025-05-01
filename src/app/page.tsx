@@ -16,6 +16,7 @@ export default function Home() {
   // Track active tab for each package
   const [activeTab, setActiveTab] = useState({
     signature: "interior",
+    diamond: "interior",
     basic: "interior"
   });
 
@@ -96,7 +97,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* The Signature Package */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
               <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg font-medium text-sm">
@@ -177,77 +178,76 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Full Interior Package */}
+            {/* The Diamond Package */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-[#1e3a8a] text-white p-6">
-                <h3 className="text-2xl font-bold mb-2 text-white">The Full Interior</h3>
-                <p className="text-3xl font-bold text-white">$195</p>
-                <p className="text-sm mt-2 text-white">Interior Detail</p>
+              <div className="bg-[#34eba1] p-6">
+                <h3 className="text-2xl font-bold mb-2 text-white">The Diamond</h3>
+                <p className="text-3xl font-bold text-white">$495</p>
+                <p className="text-sm mt-2 text-white">Interior & Exterior Detail</p>
               </div>
               <div className="p-6">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Full interior deep vacuum</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Wipe down of all surfaces</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Steam cleaning of cup holders</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Air freshener</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">See full details on services page</span>
-                  </li>
-                </ul>
+                {/* Tab Navigation */}
+                <div className="flex border-b border-gray-200 mb-4">
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.diamond === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("diamond", "interior")}
+                  >
+                    Interior
+                  </button>
+                  <button 
+                    className={`py-2 px-4 font-medium text-sm ${activeTab.diamond === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
+                    onClick={() => handleTabChange("diamond", "exterior")}
+                  >
+                    Exterior
+                  </button>
+                </div>
+                
+                {/* Interior Features */}
+                <div className={activeTab.diamond === "interior" ? "block" : "hidden"}>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Full interior deep vacuum</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Heated shampoo extraction</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Leather & vinyl conditioning</span>
+                    </li>
+                    <li className="flex items-start">
+                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">See full details on services page</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                {/* Exterior Features */}
+                <div className={activeTab.diamond === "exterior" ? "block" : "hidden"}>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Clay bar treatment</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Machine applied ceramic wax</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
+                      <span className="text-gray-800">Light polish & undercarriage wash</span>
+                    </li>
+                    <li className="flex items-start">
+                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
+                      <span className="text-gray-700">See full details on services page</span>
+                    </li>
+                  </ul>
+                </div>
+                
                 <Link 
-                  href="/booking?package=full-interior" 
-                  className="btn-primary w-full mt-6 text-center block"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </div>
-
-            {/* Full Exterior Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-[#fcc603] text-white p-6">
-                <h3 className="text-2xl font-bold mb-2 text-white">The Full Exterior</h3>
-                <p className="text-3xl font-bold text-white">$130</p>
-                <p className="text-sm mt-2 text-white">Exterior Detail</p>
-              </div>
-              <div className="p-6">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Foam wash</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Wheels & wheel wells</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">Paint decontamination</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                    <span className="text-gray-800">6-8 month sealant</span>
-                  </li>
-                  <li className="flex items-start">
-                    <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                    <span className="text-gray-700">See full details on services page</span>
-                  </li>
-                </ul>
-                <Link 
-                  href="/booking?package=full-exterior" 
+                  href="/booking?package=diamond" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now

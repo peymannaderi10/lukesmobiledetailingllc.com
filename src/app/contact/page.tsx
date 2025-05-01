@@ -102,8 +102,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-bold mb-2">Email</h3>
-                      <a href="mailto:info@lukesmobiledetailing.com" className="text-gray-600 hover:text-primary">
-                        info@lukesmobiledetailing.com
+                      <a href="mailto:luke8888z@gmail.com" className="text-gray-600 hover:text-primary">
+                        luke8888z@gmail.com
                       </a>
                     </div>
                   </div>
@@ -119,11 +119,11 @@ export default function ContactPage() {
                       <ul className="text-gray-600 space-y-1">
                         <li className="flex justify-between">
                           <span>Monday - Friday:</span>
-                          <span>8:00 AM - 6:00 PM</span>
+                          <span>8:00 AM - 5:00 PM</span>
                         </li>
                         <li className="flex justify-between">
                           <span>Saturday:</span>
-                          <span>9:00 AM - 4:00 PM</span>
+                          <span>8:00 AM - 5:00 PM</span>
                         </li>
                         <li className="flex justify-between">
                           <span>Sunday:</span>
