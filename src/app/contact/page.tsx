@@ -53,10 +53,12 @@ export default function ContactPage() {
       <div className="relative py-16">
         {/* Banner Image */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <Image 
             src="/Images/webPhotos/contactBanner.jpg" 
             alt="Contact Us Banner"
-            className="object-cover w-full h-full"
+            fill
+            className="object-cover"
+            priority
             style={{ objectPosition: "center 55%" }}
           />
           <div className="absolute inset-0 bg-black bg-opacity-60" />
