@@ -55,7 +55,7 @@ function BookingContent() {
                 <li>Full dry down & light polish</li>
                 <li>Windows</li>
                 <li>Tire shine</li>
-                <li>3-5 month sealant</li>
+                <li>6-8 month sealant</li>
               </ul>
             </div>
           </div>

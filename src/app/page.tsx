@@ -160,7 +160,7 @@ export default function Home() {
                     </li>
                     <li className="flex items-start">
                       <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">3-5 month sealant</span>
+                      <span className="text-gray-800">6-8 month sealant</span>
                     </li>
                     <li className="flex items-start">
                       <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
