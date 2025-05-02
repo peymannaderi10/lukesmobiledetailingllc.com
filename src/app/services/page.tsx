@@ -169,9 +169,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="https://app.squareup.com/appointments/book/ol8bykxt9qhyl1/L76HQK2G7GC0R/start"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/booking?package=signature"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -307,9 +305,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="https://app.squareup.com/appointments/book/ol8bykxt9qhyl1/L76HQK2G7GC0R/start"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/booking?package=diamond"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -405,9 +401,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="https://app.squareup.com/appointments/book/ol8bykxt9qhyl1/L76HQK2G7GC0R/start"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/booking?package=basic"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -460,9 +454,7 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 <Link
-                  href="https://app.squareup.com/appointments/book/ol8bykxt9qhyl1/L76HQK2G7GC0R/start"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/booking?package=full-interior"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -523,9 +515,7 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 <Link
-                  href="https://app.squareup.com/appointments/book/ol8bykxt9qhyl1/L76HQK2G7GC0R/start"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/booking?package=full-exterior"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
