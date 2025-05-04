@@ -238,7 +238,7 @@ export default function ContactPage() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Don't wait to restore your vehicle to its showroom shine. Book your appointment today!
           </p>
-          <Link href="/booking" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3">
+          <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3">
             Book Now
           </Link>
         </div>

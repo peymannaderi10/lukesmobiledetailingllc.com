@@ -191,7 +191,7 @@ export default function AboutPage() {
             Book your appointment today and see why our customers trust us with their vehicles.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/booking" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3">
+            <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3">
               Book Now
             </Link>
             <Link href="/contact" className="btn bg-transparent border-2 border-white hover:bg-white/10 font-bold px-8 py-3">
