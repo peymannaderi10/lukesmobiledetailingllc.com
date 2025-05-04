@@ -56,12 +56,7 @@ export default function Navbar() {
           </div>
           
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link
-              href="/booking"
-              className="btn-primary"
-            >
-              Book Now
-            </Link>
+          <a href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary uppercase font-medium text-sm" >Book Now</a>  
           </div>
           
           {/* Mobile menu */}
@@ -101,13 +96,7 @@ export default function Navbar() {
                         {item.name}
                       </Link>
                     ))}
-                    <Link
-                      href="/booking"
-                      className="block w-full mt-4 btn-primary text-center"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Book Now
-                    </Link>
+                    <a href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary block w-full mt-4 text-center uppercase font-medium text-sm" onClick={() => setMobileMenuOpen(false)}>Book an appointment</a>
                   </div>
                 </div>
               </div>

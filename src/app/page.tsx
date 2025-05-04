@@ -52,11 +52,11 @@ export default function Home() {
               PREMIUM AUTO DETAILING
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/booking" className="btn-primary text-center">
-                Book Your Detail
-              </Link>
-              <Link href="/services" className="btn-outline text-center">
+            <Link href="/services" className="btn-primary text-center">
                 Our Services
+              </Link>
+              <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-outline text-center">
+                Book Your Detail
               </Link>
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function Home() {
                 </div>
                 
                 <Link 
-                  href="/booking?package=signature" 
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/GRM2YZAKP4ONQJTU7CRS4DGI" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now
@@ -247,7 +247,7 @@ export default function Home() {
                 </div>
                 
                 <Link 
-                  href="/booking?package=diamond" 
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/NXJA3PDFZXDV3GT4K2JTKDPX" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now
@@ -324,7 +324,7 @@ export default function Home() {
                 </div>
                 
                 <Link 
-                  href="/booking?package=basic" 
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/WDQ62TG7WUZJ7D6J3N7KY6IO" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now

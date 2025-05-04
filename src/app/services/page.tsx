@@ -169,7 +169,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="/booking?package=signature"
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/GRM2YZAKP4ONQJTU7CRS4DGI"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -305,7 +305,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="/booking?package=diamond"
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/NXJA3PDFZXDV3GT4K2JTKDPX"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -401,7 +401,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="/booking?package=basic"
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/WDQ62TG7WUZJ7D6J3N7KY6IO"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -454,7 +454,7 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 <Link
-                  href="/booking?package=full-interior"
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/LC6EIKAV6UUDRBMESJF7XOZW"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -515,7 +515,7 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 <Link
-                  href="/booking?package=full-exterior"
+                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/C2LHAU4BATIYKDYHNBMDZSOA"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -689,7 +689,7 @@ export default function ServicesPage() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Schedule your appointment today and experience the difference of professional mobile detailing.
           </p>
-          <Link href="/booking" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3">
+          <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3">
             Book Now
           </Link>
         </div>
