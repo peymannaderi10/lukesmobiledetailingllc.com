@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://lukesmobiledetailingllc.com/Images/webPhotos/logo2.png',
+        url: 'https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg',
         width: 1200,
         height: 630,
         alt: "Luke's Mobile Detailing Logo",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Luke's Mobile Detailing | Professional Car Detailing Services",
     description: "Professional mobile car detailing services that come to you.",
-    images: ['https://lukesmobiledetailingllc.com/Images/webPhotos/logo2.png'],
+    images: ['https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg'],
   },
   robots: {
     index: true,
@@ -89,7 +89,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "Luke's Mobile Detailing",
-              "image": "https://lukesmobiledetailingllc.com/Images/webPhotos/logo2.png",
+              "image": "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
               "url": "https://lukesmobiledetailingllc.com",
               "telephone": "+1-530-650-3631", 
               "description": "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more.",
