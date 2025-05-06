@@ -31,39 +31,37 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      {/* Hero Section */}
-{/* Hero Section */}
-<section className="relative text-white">
-  <div className="absolute inset-0 z-0">
-    <Image 
-      src="/Images/webPhotos/Banner.jpg" 
-      alt="Professional car detailing" 
-      fill
-      priority
-      className="object-cover object-center"
-      style={{ objectPosition: "center 55%" }}
-    />
-    <div className="absolute inset-0 bg-black opacity-50" />
-  </div>
-  <div className="container-custom relative z-10 py-20 md:py-28">
-    <div className="max-w-3xl mx-auto text-center" style={{ marginTop: "-2rem" }}>
-      <div className="mb-2">
-        <p className="text-xl md:text-2xl font-semibold">WE COME TO YOU!</p>
-      </div>
-      <h1 className="text-4xl md:text-6xl font-bold mb-6">
-        PREMIUM AUTO DETAILING
-      </h1>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-20 md:mt-32">
-        <Link href="/services" className="btn-primary text-center">
-          Our Services
-        </Link>
-        <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-outline text-center">
-          Book Your Detail
-        </Link>
-      </div>
-    </div>
-  </div>
-</section>
+      <section className="relative text-white">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/Images/webPhotos/Banner.jpg" 
+            alt="Professional car detailing" 
+            fill
+            priority
+            className="object-cover object-center"
+            style={{ objectPosition: "center 55%" }}
+          />
+          <div className="absolute inset-0 bg-black opacity-50" />
+        </div>
+        <div className="container-custom relative z-10 py-20 md:py-28">
+          <div className="max-w-3xl mx-auto text-center" style={{ marginTop: "-2rem" }}>
+            <div className="mb-2">
+              <p className="text-xl md:text-2xl font-semibold">WE COME TO YOU!</p>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              PREMIUM AUTO DETAILING
+            </h1>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-20 md:mt-32">
+              <Link href="/services" className="btn-primary text-center">
+                Our Services
+              </Link>
+              <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-outline text-center">
+                Book Your Detail
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features */}
       <section className="py-12 md:py-20 bg-white">
