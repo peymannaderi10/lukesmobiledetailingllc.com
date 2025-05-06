@@ -64,7 +64,7 @@ export default function Footer() {
               <p>Service Area: Yuba City, Marysville, Meridian, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.</p>
               <br></br>
               <p>Phone: (530) 650-3631</p>
-              <p>Email: info@lukesmobiledetailing.com</p>
+              <p>Email: luke8888z@gmail.com</p>
             </address>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
