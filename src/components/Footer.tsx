@@ -1,11 +1,13 @@
 import Link from "next/link";
 
 const navigation = {
-  main: [
+  mainCol1: [
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
     { name: "About", href: "/about" },
     { name: "Gallery", href: "/gallery" },
+  ],
+  mainCol2: [
     { name: "Reviews", href: "/reviews" },
     { name: "Contact", href: "/contact" },
     { name: "Booking", href: "https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" },
@@ -50,13 +52,27 @@ const navigation = {
       ),
     },
   ],
+  industryPartners: [
+    { name: "International Detailing Association", href: "https://www.the-ida.com/" },
+    { name: "Auto Care Association", href: "https://www.autocare.org/" },
+    { name: "Detail King", href: "https://www.detailking.com/" },
+    { name: "Chemical Guys", href: "https://www.chemicalguys.com/" },
+    { name: "Meguiar's", href: "https://www.meguiars.com/" },
+  ],
+  resources: [
+    { name: "Car Cleaning Tips", href: "https://www.consumerreports.org/cars-car-cleaning-a9586364447/" },
+    { name: "Auto Detailing Guide", href: "https://www.autoblog.com/auto-detailing-guide/" },
+    { name: "Vehicle Maintenance", href: "https://www.edmunds.com/car-maintenance/" },
+    { name: "Paint Protection Info", href: "https://www.caranddriver.com/research/a31860701/ceramic-coating/" },
+    { name: "Detailing Wiki", href: "https://detailingwiki.org/" },
+  ],
 };
 
 export default function Footer() {
   return (
     <footer className="bg-secondary text-white">
       <div className="container-custom py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Business Info */}
           <div>
             <h3 className="text-xl font-bold mb-4">Luke's Mobile Detailing</h3>
@@ -64,12 +80,12 @@ export default function Footer() {
             <address className="not-italic mb-4">
               <p>Service Area: Yuba City, Marysville, Meridian, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.</p>
               <br></br>
-              <p>Phone: (530) 650-3631</p>
-              <p>Email: luke8888z@gmail.com</p>
+              <p>Phone: <a href="tel:+15306503631" className="hover:text-primary">(530) 650-3631</a></p>
+              <p>Email: <a href="mailto:luke8888z@gmail.com" className="hover:text-primary">luke8888z@gmail.com</a></p>
             </address>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
-                <a key={item.name} href={item.href} className="text-gray-400 hover:text-primary">
+                <a key={item.name} href={item.href} className="text-gray-400 hover:text-primary" target="_blank" rel="noopener noreferrer">
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
                 </a>
@@ -77,8 +93,61 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Hours */}
+          {/* Quick Links and Business Hours */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                {navigation.mainCol1.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-primary transition-colors">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <br></br><br></br>
+              <ul className="space-y-2">
+                {navigation.mainCol2.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-primary transition-colors">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Industry Partners */}
           <div>
+            <h3 className="text-xl font-bold mb-4">Industry Partners</h3>
+            <ul className="space-y-2">
+              {navigation.industryPartners.map((item) => (
+                <li key={item.name}>
+                  <a href={item.href} className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources and Hours */}
+          <div>
+            <h3 className="text-xl font-bold mb-4">Helpful Resources</h3>
+            <ul className="space-y-2 mb-6">
+              {navigation.resources.map((item) => (
+                <li key={item.name}>
+                  <a href={item.href} className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
             <h3 className="text-xl font-bold mb-4">Business Hours</h3>
             <ul className="space-y-2">
               <li className="flex justify-between">
@@ -95,26 +164,15 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {navigation.main.map((item) => (
-                <li key={item.name}>
-                  <Link href={item.href} className="hover:text-primary transition-colors">
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
         <div className="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between">
           <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Luke's Mobile Detailing. All rights reserved.</p>
-          <div className="mt-4 md:mt-0">
-            <Link href="/privacy-policy" className="text-sm text-gray-400 hover:text-primary mr-4">
+          <div className="mt-4 md:mt-0 flex flex-wrap gap-4">
+            <Link href="/sitemap" className="text-sm text-gray-400 hover:text-primary">
+              Sitemap
+            </Link>
+            <Link href="/privacy-policy" className="text-sm text-gray-400 hover:text-primary">
               Privacy Policy
             </Link>
             <Link href="/terms-of-service" className="text-sm text-gray-400 hover:text-primary">

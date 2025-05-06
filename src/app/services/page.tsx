@@ -10,6 +10,7 @@ import {
   ClockIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Script from "next/script";
 
 export default function ServicesPage() {
   // Track active tab for each package
@@ -27,8 +28,256 @@ export default function ServicesPage() {
     }));
   };
 
+  // Services schema data
+  const detailingServices = [
+    {
+      "@type": "Service",
+      "name": "The Signature Detail Package",
+      "description": "Complete interior and exterior detail including deep vacuum, steam cleaning, paint decontamination, and 6-8 month sealant.",
+      "offers": {
+        "@type": "Offer",
+        "price": "255.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "serviceOutput": {
+        "@type": "Thing",
+        "name": "Detailed vehicle with 6-8 month paint protection"
+      },
+      "estimatedDuration": "PT4H"
+    },
+    {
+      "@type": "Service",
+      "name": "The Diamond Detail Package",
+      "description": "Premium interior and exterior detailing with heated extraction, leather conditioning, clay bar treatment, ceramic wax, and light polish.",
+      "offers": {
+        "@type": "Offer",
+        "price": "495.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Premium Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "serviceOutput": {
+        "@type": "Thing",
+        "name": "Premium detailed vehicle with ceramic infused wax protection"
+      },
+      "estimatedDuration": "PT5H30M"
+    },
+    {
+      "@type": "Service",
+      "name": "The Basic Detail Package",
+      "description": "Essential interior and exterior detail with vacuum, wipe down of surfaces, foam wash, and tire shine.",
+      "offers": {
+        "@type": "Offer",
+        "price": "185.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Basic Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "serviceOutput": {
+        "@type": "Thing",
+        "name": "Clean and refreshed vehicle"
+      },
+      "estimatedDuration": "PT2H30M"
+    },
+    {
+      "@type": "Service",
+      "name": "The Full Interior Package",
+      "description": "Comprehensive interior detailing with deep vacuum, steam cleaning of surfaces, UV protectant application, and air freshener.",
+      "offers": {
+        "@type": "Offer",
+        "price": "195.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Interior Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "serviceOutput": {
+        "@type": "Thing",
+        "name": "Thoroughly cleaned and protected vehicle interior"
+      },
+      "estimatedDuration": "PT3H"
+    },
+    {
+      "@type": "Service",
+      "name": "The Full Exterior Package",
+      "description": "Complete exterior detailing with foam wash, paint decontamination, wheel cleaning, window cleaning, and 6-8 month sealant.",
+      "offers": {
+        "@type": "Offer",
+        "price": "130.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Exterior Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "serviceOutput": {
+        "@type": "Thing",
+        "name": "Professionally cleaned and protected vehicle exterior"
+      },
+      "estimatedDuration": "PT2H"
+    }
+  ];
+
+  // Service categories schema
+  const serviceCategories = [
+    {
+      "@type": "Service", 
+      "name": "Interior Detailing",
+      "description": "Complete interior cleaning services including vacuuming, steam cleaning, and surface treatments.",
+      "serviceType": "Car Interior Cleaning",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "39.1404",
+          "longitude": "-121.6169"
+        },
+        "geoRadius": "40"
+      }
+    },
+    {
+      "@type": "Service", 
+      "name": "Exterior Detailing",
+      "description": "Exterior cleaning services including wash, polish, paint correction, and protective coatings.",
+      "serviceType": "Car Exterior Cleaning",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "39.1404",
+          "longitude": "-121.6169"
+        },
+        "geoRadius": "40"
+      }
+    },
+    {
+      "@type": "Service", 
+      "name": "Paint Correction",
+      "description": "Professional paint correction to remove swirls, scratches, and imperfections.",
+      "serviceType": "Car Paint Restoration",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      }
+    },
+    {
+      "@type": "Service", 
+      "name": "Ceramic Coating",
+      "description": "Long-lasting ceramic coating protection for your vehicle's paint.",
+      "serviceType": "Car Paint Protection",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      }
+    },
+    {
+      "@type": "Service", 
+      "name": "Mobile Detailing",
+      "description": "Professional car detailing services that come to your location in Yuba City, Marysville, and surrounding areas.",
+      "serviceType": "Mobile Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Yuba City",
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "CA"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Marysville",
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "CA"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Live Oak",
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "CA"
+          }
+        },
+        {
+          "@type": "City",
+          "name": "Olivehurst",
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "CA"
+          }
+        }
+      ]
+    }
+  ];
+
   return (
     <div className="bg-white">
+      {/* Schema.org markup */}
+      <Script
+        id="schema-services-page"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": detailingServices.map((service, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": service
+            }))
+          })
+        }}
+      />
+
+      <Script
+        id="schema-service-categories"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": serviceCategories.map((category, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": category
+            }))
+          })
+        }}
+      />
+
       {/* Header */}
       <div className="bg-secondary text-white py-16 relative">
         <div className="absolute inset-0 z-0">

@@ -11,6 +11,7 @@ import {
   StarIcon
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import Script from "next/script";
 
 export default function Home() {
   // Track active tab for each package
@@ -28,8 +29,228 @@ export default function Home() {
     }));
   };
 
+  // Services data for Schema.org
+  const servicesData = [
+    {
+      "@type": "Service",
+      "name": "The Signature Detail Package",
+      "description": "Complete interior and exterior detail including deep vacuum, steam cleaning, paint decontamination, and 6-8 month sealant.",
+      "offers": {
+        "@type": "Offer",
+        "price": "255.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "estimatedDuration": "PT4H"
+    },
+    {
+      "@type": "Service",
+      "name": "The Diamond Detail Package",
+      "description": "Premium interior and exterior detailing with heated extraction, leather conditioning, clay bar treatment, ceramic wax, and light polish.",
+      "offers": {
+        "@type": "Offer",
+        "price": "495.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Premium Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "estimatedDuration": "PT5H30M"
+    },
+    {
+      "@type": "Service",
+      "name": "The Basic Detail Package",
+      "description": "Essential interior and exterior detail with vacuum, wipe down of surfaces, foam wash, and tire shine.",
+      "offers": {
+        "@type": "Offer",
+        "price": "185.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Basic Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "estimatedDuration": "PT2H30M"
+    },
+    {
+      "@type": "Service",
+      "name": "The Full Interior Package",
+      "description": "Comprehensive interior detailing with deep vacuum, steam cleaning of surfaces, UV protectant application, and air freshener.",
+      "offers": {
+        "@type": "Offer",
+        "price": "195.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Interior Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "estimatedDuration": "PT3H"
+    },
+    {
+      "@type": "Service",
+      "name": "The Full Exterior Package",
+      "description": "Complete exterior detailing with foam wash, paint decontamination, wheel cleaning, window cleaning, and 6-8 month sealant.",
+      "offers": {
+        "@type": "Offer",
+        "price": "130.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "serviceType": "Exterior Car Detailing",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Luke's Mobile Detailing"
+      },
+      "estimatedDuration": "PT2H"
+    }
+  ];
+
+  // FAQ data for Schema.org
+  const faqData = [
+    {
+      "@type": "Question",
+      "name": "Do you come to my location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! We are a mobile detailing service that comes to your home, office, or any location convenient for you in Yuba City, Marysville, and surrounding areas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a detail take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Service times vary by package. The Basic package takes 1-2 hours, the Signature package takes 2-3 hours, and the Diamond package takes 4-6 hours depending on vehicle size and condition."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What forms of payment do you accept?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We accept all major credit cards, cash, and electronic payment methods including Square, Venmo, and more."
+      }
+    }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Schema.org JSON-LD */}
+      <Script
+        id="schema-services"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": servicesData.map((service, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": service
+            }))
+          })
+        }}
+      />
+
+      <Script
+        id="schema-faqs"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqData
+          })
+        }}
+      />
+
+      <Script
+        id="schema-business"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AutoDetailingBusiness",
+            "name": "Luke's Mobile Detailing",
+            "description": "Professional mobile car detailing services that come to you in Yuba City, Marysville and surrounding areas.",
+            "url": "https://lukesmobiledetailingllc.com",
+            "logo": "https://lukesmobiledetailingllc.com/Images/webPhotos/logoblack.png",
+            "image": "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
+            "telephone": "+15306503631",
+            "priceRange": "$$",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Yuba City",
+              "addressRegion": "CA",
+              "addressCountry": "US"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "39.1404",
+              "longitude": "-121.6169"
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "09:00",
+                "closes": "17:00"
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Saturday",
+                "opens": "09:00",
+                "closes": "17:00"
+              }
+            ],
+            "sameAs": [
+              "https://www.facebook.com/lukemobiledetailing/",
+              "https://www.instagram.com/lukesmobiledetailingllc/",
+              "https://tiktok.com/@lukesmobiledetailing"
+            ],
+            "areaServed": [
+              {
+                "@type": "City",
+                "name": "Yuba City"
+              },
+              {
+                "@type": "City",
+                "name": "Marysville"
+              },
+              {
+                "@type": "City",
+                "name": "Live Oak"
+              },
+              {
+                "@type": "City",
+                "name": "Olivehurst"
+              },
+              {
+                "@type": "City",
+                "name": "Linda"
+              },
+              {
+                "@type": "City",
+                "name": "Gridley"
+              }
+            ]
+          })
+        }}
+      />
+
       {/* Hero Section */}
       <section className="relative text-white">
         <div className="absolute inset-0 z-0">
