@@ -152,7 +152,7 @@ export default function RootLayout({
                 }
               ],
               "sameAs": [
-                "https://www.tiktok.com/@lukesmobiledetailing",  
+                "https://tiktok.com/@lukesmobiledetailing",
                 "https://www.instagram.com/lukesmobiledetailingllc"
               ]
             })
