@@ -10,7 +10,6 @@ import {
   ClockIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import RelatedPages from "@/components/RelatedPages";
 
 export default function ServicesPage() {
   // Track active tab for each package
@@ -695,9 +694,6 @@ export default function ServicesPage() {
           </Link>
         </div>
       </section>
-
-      {/* Add Related Pages Section before the footer */}
-      <RelatedPages currentPath="/services" title="Related Information" />
     </div>
   );
 } 

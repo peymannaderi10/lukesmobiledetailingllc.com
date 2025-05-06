@@ -11,7 +11,6 @@ import {
   StarIcon
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import RelatedPages from "@/components/RelatedPages";
 
 export default function Home() {
   // Track active tab for each package
@@ -504,9 +503,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <br></br>
-      {/* Add Related Pages Section */}
-      <RelatedPages currentPath="/" title="" />
       </section>
     </div>
   );

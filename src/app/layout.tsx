@@ -26,42 +26,6 @@ export const metadata: Metadata = {
   title: "Luke's Mobile Detailing | Professional Car Detailing Services",
   description: "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more. Book online today.",
   keywords: "car detailing, mobile detailing, auto detailing, car wash, luke's mobile detailing",
-  metadataBase: new URL('https://lukesmobiledetailingllc.com'),
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: "Luke's Mobile Detailing | Professional Car Detailing Services",
-    description: "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more.",
-    url: 'https://lukesmobiledetailingllc.com',
-    siteName: "Luke's Mobile Detailing",
-    locale: 'en_US',
-    type: 'website',
-    images: [
-      {
-        url: 'https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg',
-        width: 1200,
-        height: 630,
-        alt: "Luke's Mobile Detailing Logo",
-      }
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Luke's Mobile Detailing | Professional Car Detailing Services",
-    description: "Professional mobile car detailing services that come to you.",
-    images: ['https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    }
-  }
 };
 
 export default function RootLayout({
@@ -71,94 +35,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Favicon tags */}
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" />
-        
-        {/* Schema.org JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "Luke's Mobile Detailing",
-              "image": "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
-              "url": "https://lukesmobiledetailingllc.com",
-              "telephone": "+1-530-650-3631", 
-              "description": "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more.",
-              "areaServed": [
-                {
-                  "@type": "City",
-                  "name": "Yuba City, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Marysville, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Meridian, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Live Oak, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Olivehurst, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Linda, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Gridley, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Sutter, CA"
-                },
-                {
-                  "@type": "City",
-                  "name": "Plumas Lake, CA"
-                }
-              ],
-              "address": {
-                "@type": "PostalAddress",
-                "addressRegion": "CA",
-                "addressCountry": "US"
-              },
-              "priceRange": "$$",
-              "openingHoursSpecification": [
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                  "opens": "09:00",
-                  "closes": "17:00"
-                },
-                {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Saturday"],
-                  "opens": "09:00",
-                  "closes": "17:00"
-                }
-              ],
-              "sameAs": [
-                "https://tiktok.com/@lukesmobiledetailing",
-                "https://www.instagram.com/lukesmobiledetailingllc"
-              ]
-            })
-          }}
-        />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
         style={{ isolation: "isolate" }}
