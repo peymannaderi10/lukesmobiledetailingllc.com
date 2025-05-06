@@ -53,6 +53,36 @@ const nextConfig = {
           },
         ],
       },
+      {
+        // Apply cache control headers to favicon files
+        source: '/:favicon.(ico|png)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Apply cache control headers to webmanifest
+        source: '/site.webmanifest',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, must-revalidate',
+          },
+        ],
+      },
+      {
+        // Apply cache control headers to android chrome icons
+        source: '/android-chrome-:size.png',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
     ];
   },
 };
