@@ -52,13 +52,6 @@ const navigation = {
       ),
     },
   ],
-  industryPartners: [
-    { name: "International Detailing Association", href: "https://www.the-ida.com/" },
-    { name: "Auto Care Association", href: "https://www.autocare.org/" },
-    { name: "Detail King", href: "https://www.detailking.com/" },
-    { name: "Chemical Guys", href: "https://www.chemicalguys.com/" },
-    { name: "Meguiar's", href: "https://www.meguiars.com/" },
-  ],
   resources: [
     { name: "Car Cleaning Tips", href: "https://www.consumerreports.org/cars-car-cleaning-a9586364447/" },
     { name: "Auto Detailing Guide", href: "https://www.autoblog.com/auto-detailing-guide/" },
@@ -121,20 +114,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Industry Partners */}
-          <div>
-            <h3 className="text-xl font-bold mb-4">Industry Partners</h3>
-            <ul className="space-y-2">
-              {navigation.industryPartners.map((item) => (
-                <li key={item.name}>
-                  <a href={item.href} className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Resources and Hours */}
           <div>
             <h3 className="text-xl font-bold mb-4">Helpful Resources</h3>
@@ -147,8 +126,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
 
-            <h3 className="text-xl font-bold mb-4">Business Hours</h3>
+          <div>
+          <h3 className="text-xl font-bold mb-4">Business Hours</h3>
             <ul className="space-y-2">
               <li className="flex justify-between">
                 <span>Monday - Friday</span>
@@ -164,6 +145,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+
         </div>
 
         <div className="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between">
