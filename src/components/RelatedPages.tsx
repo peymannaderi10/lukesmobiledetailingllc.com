@@ -63,7 +63,7 @@ const RelatedPages: React.FC<RelatedPagesProps> = ({ currentPath, title = "You M
               <p className="text-gray-600 mb-4">{page.description}</p>
               <Link 
                 href={page.path} 
-                className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+                className="text-red-600 hover:text-red-800 font-medium inline-flex items-center"
               >
                 Learn more
                 <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

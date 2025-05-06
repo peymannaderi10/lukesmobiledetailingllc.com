@@ -342,9 +342,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Add Related Pages Section */}
-      <RelatedPages currentPath="/" title="Explore Our Other Services" />
-
       {/* Testimonials Section */}
       <section className="py-12 md:py-20 bg-white">
         <div className="container-custom">
@@ -507,6 +504,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <br></br>
+      {/* Add Related Pages Section */}
+      <RelatedPages currentPath="/" title="" />
       </section>
     </div>
   );
