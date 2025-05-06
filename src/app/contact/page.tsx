@@ -160,7 +160,7 @@ export default function ContactPage() {
       <section className="py-12 bg-gray-100">
         <div className="container-custom">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold mb-4">Our Service Area</h2>
+            <h2 className="text-2xl font-bold mb-4" id="service-area">Our Service Area</h2>
             <p className="text-gray-800 max-w-3xl mx-auto">
               We provide mobile detailing services throughout Yuba City, Marysville, Meridian, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.
             </p>

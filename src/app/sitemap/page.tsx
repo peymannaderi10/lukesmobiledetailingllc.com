@@ -32,21 +32,11 @@ export default function Sitemap() {
     {
       title: 'Service Areas',
       links: [
-        { name: 'Yuba City', href: '/service-areas/yuba-city' },
-        { name: 'Marysville', href: '/service-areas/marysville' },
-        { name: 'Live Oak', href: '/service-areas/live-oak' },
-        { name: 'Olivehurst', href: '/service-areas/olivehurst' },
-        { name: 'Gridley', href: '/service-areas/gridley' },
-      ]
-    },
-    {
-      title: 'Resources',
-      links: [
-        { name: 'Car Detailing Tips', href: '/blog/car-detailing-tips' },
-        { name: 'How to Maintain Your Car', href: '/blog/car-maintenance' },
-        { name: 'Detailing FAQ', href: '/faq' },
-        { name: 'Pricing Guide', href: '/pricing' },
-        { name: 'Auto Detailing Blog', href: '/blog' },
+        { name: 'Yuba City', href: '/contact#service-area' },
+        { name: 'Marysville', href: '/contact#service-area' },
+        { name: 'Live Oak', href: '/contact#service-area' },
+        { name: 'Olivehurst', href: '/contact#service-area' },
+        { name: 'Gridley', href: '/contact#service-area' },
       ]
     },
     {
