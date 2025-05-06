@@ -107,10 +107,10 @@ export default function Navbar() {
         {/* Scrolling News Ticker */}
         <div className="bg-primary text-white py-1 overflow-hidden whitespace-nowrap relative">
           <div className="inline-block animate-ticker">
-            <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
-            <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
-            <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
-            <span className="mr-4">🚗 Proudly Serving: {serviceAreas} </span>
+            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
+            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
+            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
+            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
           </div>
         </div>
       </header>
