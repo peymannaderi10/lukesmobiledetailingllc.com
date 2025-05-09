@@ -59,7 +59,7 @@ export const metadata: Metadata = {
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
     ],
     apple: [
-      { url: '/apple-touch-icon.png' }
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
     ],
     other: [
       {
@@ -67,6 +67,11 @@ export const metadata: Metadata = {
         url: '/site.webmanifest'
       }
     ]
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: "Luke's Mobile Detailing"
   },
 };
 
@@ -78,7 +83,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Removed duplicate canonical link since it's already in metadata */}
+        {/* iOS Safari specific tags that can't be defined in metadata */}
+        <meta name="format-detection" content="telephone=no" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
