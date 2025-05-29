@@ -53,11 +53,10 @@ const navigation = {
     },
   ],
   resources: [
-    { name: "Car Cleaning Tips", href: "https://www.consumerreports.org/cars-car-cleaning-a9586364447/" },
-    { name: "Auto Detailing Guide", href: "https://www.autoblog.com/auto-detailing-guide/" },
-    { name: "Vehicle Maintenance", href: "https://www.edmunds.com/car-maintenance/" },
-    { name: "Paint Protection Info", href: "https://www.caranddriver.com/research/a31860701/ceramic-coating/" },
-    { name: "Detailing Wiki", href: "https://detailingwiki.org/" },
+    { name: "Car Cleaning Tips", href: "https://www.houseford.com/blogs/7256/car-cleaning-tips-and-tricks" },
+    { name: "Auto Detailing Guide", href: "https://guidetodetailing.com/" },
+    { name: "Vehicle Detailing Maintenance", href: "https://www.detailedimage.com/Ask-a-Pro/auto-detailing-maintenance-schedules/" },
+    { name: "Detailing Wiki", href: "https://www.detailingwiki.org/" },
   ],
 };
 
