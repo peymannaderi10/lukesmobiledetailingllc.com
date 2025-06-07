@@ -34,7 +34,7 @@ module.exports = {
         sans: ['var(--font-geist-sans)', 'Arial', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
         'anchor-jack': ['Anchor Jack', 'sans-serif'],
-        'didot': ['Lora', 'Georgia', 'serif'],
+        'didot': ['Baskervville', 'Georgia', 'serif'],
       },
       fontWeight: {
         normal: 400,
