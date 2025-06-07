@@ -4,16 +4,64 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 
+// Define the comparison data structure
+const comparisonData = [
+  {
+    id: "comparison7",
+    beforeImage: "/Images/beforeAndAfter/before7.jpg",
+    afterImage: "/Images/beforeAndAfter/after7.jpg",
+    beforeAlt: "New Before Detailing",
+    afterAlt: "New After Detailing"
+  },
+  {
+    id: "comparison1",
+    beforeImage: "/Images/beforeAndAfter/hondaBefore.jpg",
+    afterImage: "/Images/beforeAndAfter/hondaAfter.jpg",
+    beforeAlt: "Honda Before Detailing",
+    afterAlt: "Honda After Detailing"
+  },
+  {
+    id: "comparison2",
+    beforeImage: "/Images/beforeAndAfter/passengerBefore.jpg",
+    afterImage: "/Images/beforeAndAfter/passengerAfter.jpg",
+    beforeAlt: "Passenger Seat Before Cleaning",
+    afterAlt: "Passenger Seat After Cleaning"
+  },
+  {
+    id: "comparison3",
+    beforeImage: "/Images/beforeAndAfter/carpetBefore.jpg",
+    afterImage: "/Images/beforeAndAfter/carpetAfter.jpg",
+    beforeAlt: "Carpet Before Cleaning",
+    afterAlt: "Carpet After Cleaning"
+  },
+  {
+    id: "comparison4",
+    beforeImage: "/Images/beforeAndAfter/carseatBefore.jpg",
+    afterImage: "/Images/beforeAndAfter/carseatAfter.jpg",
+    beforeAlt: "Car Seat Before Cleaning",
+    afterAlt: "Car Seat After Cleaning"
+  },
+  {
+    id: "comparison5",
+    beforeImage: "/Images/beforeAndAfter/hairBefore.jpg",
+    afterImage: "/Images/beforeAndAfter/hairAfter.jpg",
+    beforeAlt: "Hair Before Cleaning",
+    afterAlt: "Hair After Cleaning"
+  },
+  {
+    id: "comparison6",
+    beforeImage: "/Images/beforeAndAfter/fordBefore.jpg",
+    afterImage: "/Images/beforeAndAfter/fordAfter.jpg",
+    beforeAlt: "Ford Before Detailing",
+    afterAlt: "Ford After Detailing"
+  }
+];
+
 export default function GalleryPage() {
-  // Track which before/after image is being viewed for each comparison
-  const [activeImages, setActiveImages] = useState({
-    comparison1: "before",
-    comparison2: "before",
-    comparison3: "before",
-    comparison4: "before",
-    comparison5: "before",
-    comparison6: "before"
-  });
+  // Initialize state for all comparisons
+  const [activeImages, setActiveImages] = useState(
+    Object.fromEntries(comparisonData.map(comp => [comp.id, "before"]))
+  );
 
   // Function to handle image toggle
   const handleImageToggle = (comparisonId: string, view: string) => {
@@ -62,251 +110,47 @@ export default function GalleryPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Before/After Comparison 1 - Honda */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
-              <div className="relative">
-                {/* Toggle buttons */}
-                <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison1 === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison1', 'before')}
-                  >
-                    Before
-                  </button>
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison1 === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison1', 'after')}
-                  >
-                    After
-                  </button>
-                </div>
-                
-                {/* Images */}
-                <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison1 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/hondaBefore.jpg"
-                      alt="Honda Before Detailing"
-                      fill
-                      className="object-cover object-center"
-                    />
+            {comparisonData.map((comparison) => (
+              <div key={comparison.id} className="bg-white rounded-xl shadow-md overflow-hidden">
+                <div className="relative">
+                  {/* Toggle buttons */}
+                  <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
+                    <button 
+                      className={`px-4 py-2 text-sm font-medium ${activeImages[comparison.id] === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
+                      onClick={() => handleImageToggle(comparison.id, 'before')}
+                    >
+                      Before
+                    </button>
+                    <button 
+                      className={`px-4 py-2 text-sm font-medium ${activeImages[comparison.id] === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
+                      onClick={() => handleImageToggle(comparison.id, 'after')}
+                    >
+                      After
+                    </button>
                   </div>
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison1 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/hondaAfter.jpg"
-                      alt="Honda After Detailing"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Before/After Comparison 2 - Passenger Seat */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
-              <div className="relative">
-                {/* Toggle buttons */}
-                <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison2 === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison2', 'before')}
-                  >
-                    Before
-                  </button>
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison2 === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison2', 'after')}
-                  >
-                    After
-                  </button>
-                </div>
-                
-                {/* Images */}
-                <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison2 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/passengerBefore.jpg"
-                      alt="Passenger Seat Before Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison2 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/passengerAfter.jpg"
-                      alt="Passenger Seat After Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
+                  
+                  {/* Images */}
+                  <div className="relative pt-[125%]">
+                    <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages[comparison.id] === 'before' ? 'opacity-100' : 'opacity-0'}`}>
+                      <Image
+                        src={comparison.beforeImage}
+                        alt={comparison.beforeAlt}
+                        fill
+                        className="object-cover object-center"
+                      />
+                    </div>
+                    <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages[comparison.id] === 'after' ? 'opacity-100' : 'opacity-0'}`}>
+                      <Image
+                        src={comparison.afterImage}
+                        alt={comparison.afterAlt}
+                        fill
+                        className="object-cover object-center"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            {/* Before/After Comparison 3 - Carpet */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
-              <div className="relative">
-                {/* Toggle buttons */}
-                <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison3 === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison3', 'before')}
-                  >
-                    Before
-                  </button>
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison3 === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison3', 'after')}
-                  >
-                    After
-                  </button>
-                </div>
-                
-                {/* Images */}
-                <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison3 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/carpetBefore.jpg"
-                      alt="Carpet Before Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison3 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/carpetAfter.jpg"
-                      alt="Carpet After Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Before/After Comparison 4 - Car Seat */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">              
-              <div className="relative">
-                {/* Toggle buttons */}
-                <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison4 === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison4', 'before')}
-                  >
-                    Before
-                  </button>
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison4 === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison4', 'after')}
-                  >
-                    After
-                  </button>
-                </div>
-                
-                {/* Images */}
-                <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison4 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/carseatBefore.jpg"
-                      alt="Car Seat Before Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison4 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/carseatAfter.jpg"
-                      alt="Car Seat After Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Before/After Comparison 5 - Hair */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">
-              <div className="relative">
-                {/* Toggle buttons */}
-                <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison5 === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison5', 'before')}
-                  >
-                    Before
-                  </button>
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison5 === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison5', 'after')}
-                  >
-                    After
-                  </button>
-                </div>
-                
-                {/* Images */}
-                <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison5 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/hairBefore.jpg"
-                      alt="Hair Before Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison5 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/hairAfter.jpg"
-                      alt="Hair After Cleaning"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Before/After Comparison 6 - Ford */}
-            <div className="bg-white rounded-xl shadow-md overflow-hidden">
-              <div className="relative">
-                {/* Toggle buttons */}
-                <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison6 === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison6', 'before')}
-                  >
-                    Before
-                  </button>
-                  <button 
-                    className={`px-4 py-2 text-sm font-medium ${activeImages.comparison6 === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                    onClick={() => handleImageToggle('comparison6', 'after')}
-                  >
-                    After
-                  </button>
-                </div>
-                
-                {/* Images */}
-                <div className="relative pt-[125%]">
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison6 === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/fordBefore.jpg"
-                      alt="Ford Before Detailing"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages.comparison6 === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                    <Image
-                      src="/Images/beforeAndAfter/fordAfter.jpg"
-                      alt="Ford After Detailing"
-                      fill
-                      className="object-cover object-center"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

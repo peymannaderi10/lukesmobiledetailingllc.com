@@ -270,7 +270,7 @@ export default function Home() {
               <p className="text-xl md:text-2xl font-semibold">WE COME TO YOU!</p>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              PREMIUM AUTO DETAILING
+              Protect Your Investment
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-20 md:mt-32">
               <Link href="/services" className="btn-primary text-center">
