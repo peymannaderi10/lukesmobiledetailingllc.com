@@ -267,9 +267,9 @@ export default function Home() {
         <div className="container-custom relative z-10 py-20 md:py-28">
           <div className="max-w-3xl mx-auto text-center" style={{ marginTop: "-2rem" }}>
             <div className="mb-2">
-              <p className="text-xl md:text-2xl font-semibold">WE COME TO YOU!</p>
+              <p className="text-xl md:text-2xl font-semibold font-didot italic">WE COME TO YOU!</p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl md:text-6xl font-bold mb-6">
               Protect Your Investment
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-20 md:mt-32">
