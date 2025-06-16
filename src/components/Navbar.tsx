@@ -25,8 +25,16 @@ export default function Navbar() {
       <header className="bg-white shadow-md">
         <nav className="container-custom flex items-center justify-between py-2">
           <div className="flex lg:flex-1">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-lg font-bold text-black font-anchor-jack">Luke's Mobile <span className="text-primary">Detailing</span></span>
+            <Link href="/" className="flex items-center">
+              <span className="text-lg font-extrabold text-black font-['PT_Serif']">LUKE'S MOBILE DETALING</span>
+              <Image 
+                src="/Images/webPhotos/navbarLogo.png"
+                alt="Luke's Mobile Detailing Logo"
+                width={512}
+                height={512}
+                className="w-9 h-9 object-contain"
+                priority
+              />
             </Link>
           </div>
           
@@ -65,15 +73,16 @@ export default function Navbar() {
               <div className="fixed inset-0 bg-black/30" onClick={() => setMobileMenuOpen(false)} />
               <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
                 <div className="flex items-center justify-between">
-                  <Link href="/" className="flex items-center gap-2">
-                    {/* <Image 
-                      src="/Images/webPhotos/logoblack.png"
+                  <Link href="/" className="flex items-center">
+                    <span className="text-lg font-extrabold text-black font-['PT_Serif']">LUKE'S MOBILE DETALING</span>
+                    <Image 
+                      src="/Images/webPhotos/navbarLogo.png"
                       alt="Luke's Mobile Detailing Logo"
-                      width={100}
-                      height={100}
-                      className="w-[100px] h-auto object-contain"
-                    /> */}
-                    <span className="text-lg font-bold font-anchor-jack text-black">Luke's Mobile <span className="text-primary">Detailing</span></span>
+                      width={36}
+                      height={36}
+                      className="w-9 h-9 object-contain"
+                      priority
+                    />
                   </Link>
                   <button
                     type="button"

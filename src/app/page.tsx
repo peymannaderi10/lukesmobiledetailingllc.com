@@ -289,20 +289,44 @@ export default function Home() {
         <div className="container-custom">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Why Choose Us?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center text-center p-6 bg-gray-100 rounded-lg shadow-sm">
-              <TruckIcon className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-xl font-bold mb-2">Mobile Service</h3>
-              <p className="text-gray-800">We come to your home, office, or any location convenient for you.</p>
+            <div className="relative overflow-hidden rounded-lg shadow-md h-80">
+              <Image 
+                src="/Images/webPhotos/mobileServiceCard.jpg" 
+                alt="Mobile Service" 
+                fill 
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6 text-center">
+                <TruckIcon className="w-12 h-12 text-white mb-4" />
+                <h3 className="text-xl font-bold mb-2 text-white">Mobile Service</h3>
+                <p className="text-white">We come to your home, office, or any location convenient for you.</p>
+              </div>
             </div>
-            <div className="flex flex-col items-center text-center p-6 bg-gray-100 rounded-lg shadow-sm">
-              <SparklesIcon className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-xl font-bold mb-2">Premium Products</h3>
-              <p className="text-gray-800">We use high-quality, eco-friendly products for a superior finish.</p>
+            <div className="relative overflow-hidden rounded-lg shadow-md h-80">
+              <Image 
+                src="/Images/webPhotos/PremiumProductsCard.jpg" 
+                alt="Premium Products" 
+                fill 
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6 text-center">
+                <SparklesIcon className="w-12 h-12 text-white mb-4" />
+                <h3 className="text-xl font-bold mb-2 text-white">Premium Products</h3>
+                <p className="text-white">We use high-quality, eco-friendly products for a superior finish.</p>
+              </div>
             </div>
-            <div className="flex flex-col items-center text-center p-6 bg-gray-100 rounded-lg shadow-sm">
-              <CheckCircleIcon className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-xl font-bold mb-2">Satisfaction Guaranteed</h3>
-              <p className="text-gray-800">Your satisfaction is our priority. We don't leave until you're happy.</p>
+            <div className="relative overflow-hidden rounded-lg shadow-md h-80">
+              <Image 
+                src="/Images/webPhotos/SatisfactionGuaranteedCard.jpg" 
+                alt="Satisfaction Guaranteed" 
+                fill 
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6 text-center">
+                <CheckCircleIcon className="w-12 h-12 text-white mb-4" />
+                <h3 className="text-xl font-bold mb-2 text-white">Satisfaction Guaranteed</h3>
+                <p className="text-white">Your satisfaction is our priority. We don't leave until you're happy.</p>
+              </div>
             </div>
           </div>
         </div>
