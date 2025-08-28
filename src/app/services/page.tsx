@@ -37,7 +37,7 @@ export default function ServicesPage() {
       "description": "Complete interior and exterior detail including deep vacuum, steam cleaning, paint decontamination, and 6-8 month sealant.",
       "offers": {
         "@type": "Offer",
-        "price": "255.00",
+        "price": "260.00",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
@@ -79,7 +79,7 @@ export default function ServicesPage() {
       "description": "Essential interior and exterior detail with vacuum, wipe down of surfaces, foam wash, and tire shine.",
       "offers": {
         "@type": "Offer",
-        "price": "185.00",
+        "price": "190.00",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
@@ -100,7 +100,7 @@ export default function ServicesPage() {
       "description": "Comprehensive interior detailing with deep vacuum, steam cleaning of surfaces, UV protectant application, and air freshener.",
       "offers": {
         "@type": "Offer",
-        "price": "195.00",
+        "price": "200.00",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
@@ -121,7 +121,7 @@ export default function ServicesPage() {
       "description": "Complete exterior detailing with foam wash, paint decontamination, wheel cleaning, window cleaning, and 6-8 month sealant.",
       "offers": {
         "@type": "Offer",
-        "price": "130.00",
+        "price": "135.00",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock"
       },
@@ -311,7 +311,7 @@ export default function ServicesPage() {
               </div>
               <div className="bg-primary text-white p-6">
                 <h2 className="text-2xl font-bold mb-2">The Signature</h2>
-                <p className="text-3xl font-bold">$255</p>
+                <p className="text-3xl font-bold">$260</p>
                 <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -567,7 +567,7 @@ export default function ServicesPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-secondary text-white p-6">
                 <h2 className="text-2xl font-bold mb-2">The Basic</h2>
-                <p className="text-3xl font-bold">$185</p>
+                <p className="text-3xl font-bold">$190</p>
                 <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -663,7 +663,7 @@ export default function ServicesPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-[#1e3a8a] text-white p-6">
                 <h2 className="text-2xl font-bold mb-2 text-white">The Full Interior</h2>
-                <p className="text-3xl font-bold text-white">$195</p>
+                <p className="text-3xl font-bold text-white">$200</p>
                 <p className="text-sm mt-2 text-white">Interior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -716,7 +716,7 @@ export default function ServicesPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-[#fcc603] text-white p-6">
                 <h2 className="text-2xl font-bold mb-2 text-white ">The Full Exterior</h2>
-                <p className="text-3xl font-bold text-white">$130</p>
+                <p className="text-3xl font-bold text-white">$135</p>
                 <p className="text-sm mt-2 text-white">Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
