@@ -784,7 +784,7 @@ export default function Home() {
                         : "opacity-0 translate-x-full z-0 invisible"
                     }`}
                   >
-                    <div className="bg-gray-100 p-6 rounded-lg shadow-sm h-full flex flex-col">
+                    <div className="bg-gray-100 p-6 rounded-lg shadow-sm h-full flex flex-col border-b-4 border-primary">
                       <p className="text-gray-800 mb-4 flex-1">
                         "{testimonial.text}"
                       </p>
