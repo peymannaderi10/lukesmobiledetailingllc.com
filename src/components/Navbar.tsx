@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
@@ -26,17 +25,9 @@ export default function Navbar() {
         <nav className="container-custom flex items-center justify-between py-2">
           <div className="flex lg:flex-1">
             <Link href="/" className="flex items-center">
-              <span className="text-lg font-extrabold text-black font-['PT_Serif']">
-                <span className="text-2xl">LUKE'S</span> <span style={{ color: '#af0f03' }}>MOBILE DETAILING</span>
+              <span className="text-lg font-extrabold text-primary font-['PT_Serif']">
+                <span className="text-2xl">WE COME TO YOU!</span>
               </span>
-              <Image 
-                src="/Images/webPhotos/navbarLogo.png"
-                alt="Luke's Mobile Detailing Logo"
-                width={512}
-                height={512}
-                className="w-9 h-9 object-contain"
-                priority
-              />
             </Link>
           </div>
           
@@ -76,17 +67,9 @@ export default function Navbar() {
               <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
                 <div className="flex items-center justify-between">
                   <Link href="/" className="flex items-center">
-                    <span className="text-lg font-extrabold text-black font-['PT_Serif']">
-                      <span className="text-2xl md:text-3xl">LUKE'S</span> <span style={{ color: '#af0f03' }}>MOBILE DETAILING</span>
+                    <span className="text-lg font-extrabold text-primary font-['PT_Serif']">
+                      <span className="text-2xl md:text-3xl">WE COME TO YOU!</span>
                     </span>
-                    <Image 
-                      src="/Images/webPhotos/navbarLogo.png"
-                      alt="Luke's Mobile Detailing Logo"
-                      width={36}
-                      height={36}
-                      className="w-9 h-9 object-contain"
-                      priority
-                    />
                   </Link>
                   <button
                     type="button"

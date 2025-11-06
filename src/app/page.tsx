@@ -254,26 +254,42 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative text-white">
         <div className="absolute inset-0 z-0">
+          {/* Mobile Image */}
+          <Image 
+            src="/Images/webPhotos/hero2.jpg" 
+            alt="Professional car detailing" 
+            fill
+            priority
+            className="object-cover object-center md:hidden"
+            style={{ objectPosition: "center 45%" }}
+          />
+          {/* Desktop Image */}
           <Image 
             src="/Images/webPhotos/Banner.jpg" 
             alt="Professional car detailing" 
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover object-center hidden md:block"
             style={{ objectPosition: "center 55%" }}
           />
           <div className="absolute inset-0 bg-black opacity-50" />
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-64 md:h-80 z-[1]" 
+            style={{
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,1) 100%)'
+            }}
+          />
         </div>
-        <div className="container-custom relative z-10 py-20 md:py-28">
+        <div className="container-custom relative z-10 py-32 md:py-40">
           <div className="max-w-3xl mx-auto text-center" style={{ marginTop: "-2rem" }}>
-            <div className="mb-2">
+            <div className="mb-2" style={{ visibility: "hidden" }}>
               <p className="text-xl md:text-2xl font-semibold font-didot italic">WE COME TO YOU!</p>
             </div>
-            <h1 className="text-3xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl md:text-6xl font-bold mb-6" style={{ visibility: "hidden" }}>
               Protect Your Investment
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-20 md:mt-32">
-              <Link href="/services" className="btn-primary text-center">
+              <Link href="/services" className="btn-primary text-center" style={{ visibility: "hidden", pointerEvents: "none" }}>
                 Our Services
               </Link>
               <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-outline text-center">
@@ -285,13 +301,9 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-12 md:py-20 bg-white">
+      <section className="py-6 md:py-12 bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">Our Detailing Packages</h2>
-            <p className="text-lg text-gray-800 max-w-3xl mx-auto">
-              Choose from our range of comprehensive detailing packages designed to meet your specific needs.
-            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
