@@ -369,11 +369,11 @@ export default function Home() {
             </h1>
             <div className="mt-auto mb-8 md:mb-12 flex flex-col items-center">
               <div className="hero-badge">
-                <span>As seen on Social Media</span>
-                <div className="view-counter">
+                <div className="flex items-center gap-1">
                   <span id="view-count">100.0M +</span>
-                  <span>views</span>
+                  <span className="text-white">Views</span>
                 </div>
+                <span>Across All Platforms</span>
               </div>
               <div className="hero-buttons-container flex gap-4 justify-center items-center">
                 <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary text-center">
