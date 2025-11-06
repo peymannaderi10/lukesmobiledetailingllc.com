@@ -2,9 +2,30 @@
 
 import { useEffect, useRef } from "react";
 
+interface LeafletMap {
+  remove: () => void;
+  setView: (latlng: [number, number], zoom: number) => LeafletMap;
+}
+
+interface LeafletMarker {
+  addTo: (map: LeafletMap) => LeafletMarker;
+  bindPopup: (content: string) => void;
+}
+
+interface LeafletLibrary {
+  map: (element: HTMLElement) => LeafletMap;
+  tileLayer: (url: string, options: Record<string, unknown>) => {
+    addTo: (map: LeafletMap) => void;
+  };
+  circle: (latlng: [number, number], options: Record<string, unknown>) => {
+    addTo: (map: LeafletMap) => void;
+  };
+  marker: (latlng: [number, number]) => LeafletMarker;
+}
+
 declare global {
   interface Window {
-    L: any;
+    L: LeafletLibrary;
   }
 }
 
@@ -14,7 +35,7 @@ interface ServiceAreaMapProps {
 
 export default function ServiceAreaMap({ className = "" }: ServiceAreaMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
+  const mapInstanceRef = useRef<LeafletMap | null>(null);
 
   useEffect(() => {
     // Load Leaflet CSS

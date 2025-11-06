@@ -185,7 +185,7 @@ import React, {
       swapRef.current = swap;
 
       swap();
-      intervalRef.current = setInterval(swap, delay) as any;
+      intervalRef.current = setInterval(swap, delay) as ReturnType<typeof setInterval>;
   
       if (pauseOnHover) {
         const node = container.current!;
@@ -195,7 +195,7 @@ import React, {
         };
         const resume = () => {
           tlRef.current?.play();
-          intervalRef.current = setInterval(swap, delay) as any;
+          intervalRef.current = setInterval(swap, delay) as ReturnType<typeof setInterval>;
         };
         node.addEventListener('mouseenter', pause);
         node.addEventListener('mouseleave', resume);

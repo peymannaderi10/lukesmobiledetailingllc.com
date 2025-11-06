@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import Image from "next/image";
+import SimpleBeforeAfterSlider from "@/components/SimpleBeforeAfterSlider";
 
 // Define the comparison data structure
 const comparisonData = [
@@ -58,18 +58,6 @@ const comparisonData = [
 ];
 
 export default function GalleryPage() {
-  // Initialize state for all comparisons
-  const [activeImages, setActiveImages] = useState(
-    Object.fromEntries(comparisonData.map(comp => [comp.id, "before"]))
-  );
-
-  // Function to handle image toggle
-  const handleImageToggle = (comparisonId: string, view: string) => {
-    setActiveImages(prev => ({
-      ...prev,
-      [comparisonId]: view
-    }));
-  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -130,43 +118,12 @@ export default function GalleryPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {comparisonData.map((comparison) => (
               <div key={comparison.id} className="bg-white rounded-xl shadow-md overflow-hidden">
-                <div className="relative">
-                  {/* Toggle buttons */}
-                  <div className="absolute top-4 left-4 z-10 flex bg-white rounded-lg shadow overflow-hidden">
-                    <button 
-                      className={`px-4 py-2 text-sm font-medium ${activeImages[comparison.id] === 'before' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                      onClick={() => handleImageToggle(comparison.id, 'before')}
-                    >
-                      Before
-                    </button>
-                    <button 
-                      className={`px-4 py-2 text-sm font-medium ${activeImages[comparison.id] === 'after' ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                      onClick={() => handleImageToggle(comparison.id, 'after')}
-                    >
-                      After
-                    </button>
-                  </div>
-                  
-                  {/* Images */}
-                  <div className="relative pt-[125%]">
-                    <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages[comparison.id] === 'before' ? 'opacity-100' : 'opacity-0'}`}>
-                      <Image
-                        src={comparison.beforeImage}
-                        alt={comparison.beforeAlt}
-                        fill
-                        className="object-cover object-center"
-                      />
-                    </div>
-                    <div className={`absolute inset-0 transition-opacity duration-300 ${activeImages[comparison.id] === 'after' ? 'opacity-100' : 'opacity-0'}`}>
-                      <Image
-                        src={comparison.afterImage}
-                        alt={comparison.afterAlt}
-                        fill
-                        className="object-cover object-center"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <SimpleBeforeAfterSlider
+                  beforeImage={comparison.beforeImage}
+                  afterImage={comparison.afterImage}
+                  beforeAlt={comparison.beforeAlt}
+                  afterAlt={comparison.afterAlt}
+                />
               </div>
             ))}
           </div>

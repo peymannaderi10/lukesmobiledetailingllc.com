@@ -9,6 +9,12 @@ interface BeforeAfterPair {
   afterAlt: string;
 }
 
+declare global {
+  interface Window {
+    beforeAfterCleanup?: () => void;
+  }
+}
+
 const beforeAfterPairs: BeforeAfterPair[] = [
   {
     before: '/Images/beforeAndAfter/passengerBefore.jpg',
@@ -289,15 +295,15 @@ export default function BeforeAfterSlider() {
       };
 
       // Store cleanup on window for potential later use
-      (window as any).beforeAfterCleanup = cleanup;
+      window.beforeAfterCleanup = cleanup;
     };
 
     initSlider();
 
     // Cleanup on unmount
     return () => {
-      if ((window as any).beforeAfterCleanup) {
-        (window as any).beforeAfterCleanup();
+      if (window.beforeAfterCleanup) {
+        window.beforeAfterCleanup();
       }
     };
   }, []);
