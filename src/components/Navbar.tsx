@@ -32,7 +32,7 @@ export default function Navbar() {
           </div>
           
           {/* Mobile menu button */}
-          <div className="flex lg:hidden absolute right-0">
+          <div className="flex lg:hidden absolute right-4 sm:right-6">
             <button
               type="button"
               className="text-secondary p-2 -m-2"
