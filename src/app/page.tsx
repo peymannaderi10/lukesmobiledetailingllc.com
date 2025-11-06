@@ -261,7 +261,7 @@ export default function Home() {
             fill
             priority
             className="object-cover object-center md:hidden"
-            style={{ objectPosition: "center 40%" }}
+            style={{ objectPosition: "center 45%" }}
           />
           {/* Desktop Image */}
           <Image 
@@ -280,7 +280,7 @@ export default function Home() {
             }}
           />
         </div>
-        <div className="container-custom relative z-10 py-32 md:py-40">
+        <div className="container-custom relative z-10 py-48 md:py-64">
           <div className="max-w-3xl mx-auto text-center" style={{ marginTop: "-2rem" }}>
             <div className="mb-2" style={{ visibility: "hidden" }}>
               <p className="text-xl md:text-2xl font-semibold font-didot italic">WE COME TO YOU!</p>
