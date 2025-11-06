@@ -289,9 +289,6 @@ export default function Home() {
               Protect Your Investment
             </h1>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-20 md:mt-32">
-              <Link href="/services" className="btn-primary text-center" style={{ visibility: "hidden", pointerEvents: "none" }}>
-                Our Services
-              </Link>
               <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-outline text-center">
                 Book Your Detail
               </Link>

@@ -22,8 +22,8 @@ export default function Navbar() {
   return (
     <>
       <header className="bg-white shadow-md">
-        <nav className="container-custom flex items-center justify-between py-2">
-          <div className="flex lg:flex-1">
+        <nav className="container-custom flex items-center justify-center lg:justify-between py-2 relative">
+          <div className="flex lg:flex-1 justify-center lg:justify-start">
             <Link href="/" className="flex items-center">
               <span className="text-lg font-extrabold text-primary font-['PT_Serif']">
                 <span className="text-2xl">WE COME TO YOU!</span>
@@ -32,7 +32,7 @@ export default function Navbar() {
           </div>
           
           {/* Mobile menu button */}
-          <div className="flex lg:hidden">
+          <div className="flex lg:hidden absolute right-0">
             <button
               type="button"
               className="text-secondary p-2 -m-2"
