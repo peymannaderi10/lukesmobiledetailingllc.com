@@ -353,9 +353,9 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black opacity-50" />
           <div 
-            className="absolute bottom-0 left-0 right-0 h-16 md:h-24 z-[1]" 
+            className="absolute bottom-0 left-0 right-0 h-48 md:h-56 z-[1]" 
             style={{
-              background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0) 15%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.25) 45%, rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.6) 65%, rgba(255,255,255,0.75) 75%, rgba(255,255,255,0.85) 85%, rgba(255,255,255,0.95) 95%, rgba(255,255,255,1) 100%)'
+              background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.3) 60%, rgba(255,255,255,0.5) 70%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0.85) 88%, rgba(255,255,255,0.95) 95%, rgba(255,255,255,1) 100%)'
             }}
           />
         </div>
@@ -385,19 +385,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-        
-        {/* Curved Divider */}
-        <div className="curved-divider hero-services-divider">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="hero-services-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.4"></stop>
-                <stop offset="100%" stopColor="#ffffff" stopOpacity="1"></stop>
-              </linearGradient>
-            </defs>
-            <path fill="url(#hero-services-gradient)" d="M0,128 C480,0 960,160 1440,80 L1440,160 L0,160 Z"></path>
-          </svg>
         </div>
       </section>
 
