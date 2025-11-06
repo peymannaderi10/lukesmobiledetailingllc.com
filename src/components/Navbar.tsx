@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import RotatingText, { type RotatingTextRef } from "./RotatingText";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -13,119 +13,142 @@ const navigation = [
   { name: "Contact", href: "/contact" },
 ];
 
-// Service areas for the ticker
-const serviceAreas = "Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in California.";
+// Service areas for the dynamic text animation - formatted with "!"
+const locations = [
+  "YOU!",
+  "Yuba City!",
+  "Marysville!",
+  "Live Oak!",
+  "Olivehurst!",
+  "Linda!",
+  "Gridley!",
+  "Sutter!",
+  "Plumas Lake!",
+];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const rotatingTextRef = useRef<RotatingTextRef>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle custom rotation intervals - longer for "YOU" (5 seconds), shorter for others (3 seconds)
+  const handleNext = useCallback((index: number) => {
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Determine duration based on next index
+    const nextIndex = (index + 1) % locations.length;
+    const duration = nextIndex === 0 ? 5000 : 3000;
+
+    // Set timeout to advance to next location
+    timeoutRef.current = setTimeout(() => {
+      if (rotatingTextRef.current) {
+        rotatingTextRef.current.next();
+      }
+    }, duration);
+  }, []);
+
+  // Start the rotation cycle
+  useEffect(() => {
+    // Initial delay for "YOU" (longer)
+    timeoutRef.current = setTimeout(() => {
+      if (rotatingTextRef.current) {
+        rotatingTextRef.current.next();
+      }
+    }, 5000);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
-      <header className="bg-white shadow-md">
-        <nav className="container-custom flex items-center justify-center lg:justify-between py-2 relative">
-          <div className="flex lg:flex-1 justify-center lg:justify-start">
-            <Link href="/" className="flex items-center">
-              <span className="text-lg font-extrabold text-primary font-['PT_Serif']">
-                <span className="text-2xl">WE COME TO YOU!</span>
-              </span>
-            </Link>
-          </div>
-          
-          {/* Mobile menu button */}
-          <div className="flex lg:hidden absolute right-4 sm:right-6">
-            <button
-              type="button"
-              className="text-secondary p-2 -m-2"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <span className="sr-only">Open menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          
-          {/* Desktop navigation */}
-          <div className="hidden lg:flex lg:gap-x-8">
+      <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
+        <div className="container">
+          <Link href="/" className="navbar-brand">
+            <span className="inline-block">
+              WE COME TO{" "}
+              <RotatingText
+                ref={rotatingTextRef}
+                texts={locations}
+                onNext={handleNext}
+                auto={false}
+                mainClassName=""
+                staggerFrom="last"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "-120%" }}
+                staggerDuration={0.025}
+                splitLevelClassName="overflow-hidden pb-1"
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              />
+            </span>
+          </Link>
+
+          <div className="navbar-links">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-semibold text-secondary hover:text-primary transition-colors"
+                className="navbar-link"
               >
                 {item.name}
               </Link>
             ))}
+            <a
+              href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD"
+              className="btn-primary btn-nav-book"
+            >
+              Book Now
+            </a>
           </div>
-          
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary font-medium text-sm">Book Now</a>  
+
+          <div
+            className={`mobile-menu-toggle ${mobileMenuOpen ? "active" : ""}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          
-          {/* Mobile menu */}
-          {mobileMenuOpen && (
-            <div className="fixed inset-0 z-50 lg:hidden">
-              <div className="fixed inset-0 bg-black/30" onClick={() => setMobileMenuOpen(false)} />
-              <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
-                <div className="flex items-center justify-between">
-                  <Link href="/" className="flex items-center">
-                    <span className="text-lg font-extrabold text-primary font-['PT_Serif']">
-                      <span className="text-2xl md:text-3xl">WE COME TO YOU!</span>
-                    </span>
-                  </Link>
-                  <button
-                    type="button"
-                    className="text-secondary p-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="mt-6 flow-root">
-                  <div className="space-y-2 py-6">
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className="block py-2 text-base font-medium text-secondary hover:text-primary transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                    <a href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary block w-full mt-4 text-center font-medium text-sm" onClick={() => setMobileMenuOpen(false)}>Book Your Appointment</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </nav>
-        
-        {/* Scrolling News Ticker */}
-        <div className="bg-primary text-white py-1 overflow-hidden whitespace-nowrap relative">
-          <div className="inline-block animate-ticker">
-            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
-            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
-            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
-            <span className="mr-4"> Proudly Serving: {serviceAreas} </span>
+
+          <div className={`mobile-menu ${mobileMenuOpen ? "active" : ""}`}>
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="navbar-link-mobile"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <a
+              href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD"
+              className="btn-primary btn-nav-book"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Book Now
+            </a>
           </div>
         </div>
-      </header>
-      
-      <style jsx global>{`
-        @keyframes ticker {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        .animate-ticker {
-          animation: ticker 30s linear infinite;
-          will-change: transform;
-        }
-      `}</style>
+      </nav>
+
     </>
   );
 } 

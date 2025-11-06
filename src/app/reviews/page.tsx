@@ -99,7 +99,7 @@ export default function ReviewsPage() {
   return (
     <div className="bg-white">
       {/* Header */}
-      <div className="bg-secondary text-white py-16 relative">
+      <section className="relative text-white min-h-[585px] md:min-h-[715px]">
         <div className="absolute inset-0 z-0">
           <Image 
             src="/Images/webPhotos/reviewsBanner.jpeg" 
@@ -109,75 +109,59 @@ export default function ReviewsPage() {
             className="object-cover"
             style={{ objectPosition: "center 30%" }}
           />
-          <div className="absolute inset-0 bg-black opacity-65" />
+          <div className="absolute inset-0 bg-black opacity-50" />
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-16 md:h-24 z-[1]" 
+            style={{
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0) 15%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.25) 45%, rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.6) 65%, rgba(255,255,255,0.75) 75%, rgba(255,255,255,0.85) 85%, rgba(255,255,255,0.95) 95%, rgba(255,255,255,1) 100%)'
+            }}
+          />
         </div>
-        <div className="container-custom text-center relative z-10">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6">Customer Reviews</h1>
-          <div className="flex justify-center items-center gap-1 mb-4">
-            <StarIcon className="h-6 w-6 text-primary" />
-            <StarIcon className="h-6 w-6 text-primary" />
-            <StarIcon className="h-6 w-6 text-primary" />
-            <StarIcon className="h-6 w-6 text-primary" />
-            <StarIcon className="h-6 w-6 text-primary" />
-            <span className="ml-2 text-2xl font-bold">{rating}/5</span>
-          </div>
-          <p className="text-lg max-w-2xl mx-auto">
-            See what our customers have to say about our detailing services.
-          </p>
-        </div>
-      </div>
-
-      {/* Google Reviews Section */}
-      <section className="py-12 md:py-20">
-        <div className="container-custom">
-          <GoogleReviews />
-        </div>
-      </section>
-
-
-      {/* Google Maps Section */}
-      <section className="py-12 md:py-20 bg-gray-100">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Find Us</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Luke's Mobile Detailing serves customers throughout the region. Check our service area and reviews on Google Maps.
-            </p>
-          </div>
-          <div className="w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d787342.9967339623!2d-121.6913194750624!3d39.569559709226795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x44ec67311b15f211%3A0x180b4e6d3cc4a12e!2sLuke%E2%80%99s%20Mobile%20Detailing!5e0!3m2!1sen!2sus!4v1745456581901!5m2!1sen!2sus" 
-              width="100%" 
-              height="450" 
-              style={{ border: 0 }} 
-              allowFullScreen 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
-        </div>
-      </section>
-
-      {/* Submit Review Section */}
-      <section className="py-12 md:py-20 bg-gray-100">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Had a Great Experience?</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              We'd love to hear about your experience with Luke's Mobile Detailing.
-              Share your feedback and help others discover our services!
+        <div className="container-custom relative z-10 pt-32 md:pt-40 pb-32 md:pb-48 flex flex-col min-h-[585px] md:min-h-[715px]">
+          <div className="max-w-3xl mx-auto text-center flex-1 flex flex-col justify-center">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-white">Customer Reviews</h1>
+            <div className="flex justify-center items-center gap-1 mb-4">
+              <StarIcon className="h-6 w-6 text-primary" />
+              <StarIcon className="h-6 w-6 text-primary" />
+              <StarIcon className="h-6 w-6 text-primary" />
+              <StarIcon className="h-6 w-6 text-primary" />
+              <StarIcon className="h-6 w-6 text-primary" />
+              <span className="ml-2 text-2xl font-bold text-white">{rating}/5</span>
+            </div>
+            <p className="text-lg max-w-2xl mx-auto text-white mb-6">
+              See what our customers have to say about our detailing services.
             </p>
             <div className="mt-6">
               <Link 
                 href="https://g.page/r/CRqkNMTJw0l8EAI/review"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary px-8 py-3"
+                className="btn-primary px-8 py-3 inline-block"
               >
                 Leave a Google Review
               </Link>
             </div>
           </div>
+        </div>
+        
+        {/* Curved Divider */}
+        <div className="curved-divider hero-services-divider">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="hero-reviews-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.4"></stop>
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="1"></stop>
+              </linearGradient>
+            </defs>
+            <path fill="url(#hero-reviews-gradient)" d="M0,128 C480,0 960,160 1440,80 L1440,160 L0,160 Z"></path>
+          </svg>
+        </div>
+      </section>
+
+      {/* Google Reviews Section */}
+      <section className="py-12 md:py-20">
+        <div className="container-custom">
+          <GoogleReviews />
         </div>
       </section>
 

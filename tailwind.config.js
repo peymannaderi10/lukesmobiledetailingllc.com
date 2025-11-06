@@ -43,6 +43,9 @@ module.exports = {
         bold: 700,
         extrabold: 800,
       },
+      transitionDuration: {
+        '600': '600ms',
+      },
     },
   },
   plugins: [],

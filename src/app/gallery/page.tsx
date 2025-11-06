@@ -74,8 +74,7 @@ export default function GalleryPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Page Header */}
-      <section className="relative text-white py-12 md:py-20">
-        {/* Banner Image */}
+      <section className="relative text-white min-h-[585px] md:min-h-[715px]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/Images/webPhotos/galleryBanner.jpg"
@@ -85,17 +84,36 @@ export default function GalleryPage() {
             priority
             style={{ objectPosition: "center 55%" }}
           />
-          <div className="absolute inset-0 bg-black bg-opacity-60" />
+          <div className="absolute inset-0 bg-black opacity-50" />
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-16 md:h-24 z-[1]" 
+            style={{
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0) 15%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.25) 45%, rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.6) 65%, rgba(255,255,255,0.75) 75%, rgba(255,255,255,0.85) 85%, rgba(255,255,255,0.95) 95%, rgba(255,255,255,1) 100%)'
+            }}
+          />
         </div>
-        <div className="container-custom relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4">
+        <div className="container-custom relative z-10 pt-32 md:pt-40 pb-32 md:pb-48 flex flex-col min-h-[585px] md:min-h-[715px]">
+          <div className="max-w-3xl mx-auto text-center flex-1 flex flex-col justify-center">
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">
               Our Detailing Gallery
             </h1>
-            <p className="text-base md:text-lg">
+            <p className="text-base md:text-lg text-white">
               See the stunning transformations we deliver. Your car deserves this level of perfection.
             </p>
           </div>
+        </div>
+        
+        {/* Curved Divider */}
+        <div className="curved-divider hero-services-divider">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="hero-gallery-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.4"></stop>
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="1"></stop>
+              </linearGradient>
+            </defs>
+            <path fill="url(#hero-gallery-gradient)" d="M0,128 C480,0 960,160 1440,80 L1440,160 L0,160 Z"></path>
+          </svg>
         </div>
       </section>
 
