@@ -261,7 +261,7 @@ export default function Home() {
             fill
             priority
             className="object-cover object-center md:hidden"
-            style={{ objectPosition: "center 45%" }}
+            style={{ objectPosition: "center 40%" }}
           />
           {/* Desktop Image */}
           <Image 
@@ -274,9 +274,9 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black opacity-50" />
           <div 
-            className="absolute bottom-0 left-0 right-0 h-64 md:h-80 z-[1]" 
+            className="absolute bottom-0 left-0 right-0 h-32 md:h-48 z-[1]" 
             style={{
-              background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,1) 100%)'
+              background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0) 15%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.25) 45%, rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.6) 65%, rgba(255,255,255,0.75) 75%, rgba(255,255,255,0.85) 85%, rgba(255,255,255,0.95) 95%, rgba(255,255,255,1) 100%)'
             }}
           />
         </div>
