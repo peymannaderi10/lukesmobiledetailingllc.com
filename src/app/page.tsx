@@ -652,7 +652,7 @@ export default function Home() {
       </section>
 
       {/* Before & After Section */}
-      <section id="before-after" className="py-12 md:py-20 bg-gray-50">
+      <section id="before-after" className="pt-12 md:pt-20 pb-6 md:pb-8 bg-gray-50">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">See the Difference</h2>
