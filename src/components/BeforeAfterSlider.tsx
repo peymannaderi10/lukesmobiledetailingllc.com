@@ -196,6 +196,7 @@ export default function BeforeAfterSlider() {
 
       const handleMouseDown = (e: MouseEvent) => {
         isDragging = true;
+        pauseTimer(); // Pause timer when grabbing slider
         sliderHandle.style.cursor = 'grabbing';
         document.body.style.cursor = 'grabbing';
         document.body.style.userSelect = 'none';
@@ -207,6 +208,7 @@ export default function BeforeAfterSlider() {
 
         const handleMouseUp = () => {
           isDragging = false;
+          resumeTimer(); // Resume timer when releasing slider
           if (rafId) {
             cancelAnimationFrame(rafId);
             rafId = 0;
@@ -225,6 +227,7 @@ export default function BeforeAfterSlider() {
 
       const handleTouchStart = (e: TouchEvent) => {
         isDragging = true;
+        pauseTimer(); // Pause timer when grabbing slider
 
         const handleTouchMove = (e: TouchEvent) => {
           if (!isDragging) return;
@@ -234,6 +237,7 @@ export default function BeforeAfterSlider() {
 
         const handleTouchEnd = () => {
           isDragging = false;
+          resumeTimer(); // Resume timer when releasing slider
           if (rafId) {
             cancelAnimationFrame(rafId);
             rafId = 0;
