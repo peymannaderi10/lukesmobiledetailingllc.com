@@ -373,7 +373,7 @@ export default function Home() {
                   <span id="view-count">100.0M +</span>
                   <span className="text-white">Views</span>
                 </div>
-                <span>Across All Platforms</span>
+                <span className="text-xs" style={{ fontSize: '0.583rem' }}>Across All Platforms</span>
               </div>
               <div className="hero-buttons-container flex gap-4 justify-center items-center">
                 <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary text-center">
