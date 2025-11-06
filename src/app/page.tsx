@@ -331,7 +331,7 @@ export default function Home() {
       />
 
       {/* Hero Section */}
-      <section className="relative text-white min-h-[900px] md:min-h-[1100px]">
+      <section className="relative text-white min-h-[750px] md:min-h-[900px]">
         <div className="absolute inset-0 z-0">
           {/* Mobile Image */}
           <Image 
@@ -359,7 +359,7 @@ export default function Home() {
             }}
           />
         </div>
-        <div className="container-custom relative z-10 pt-32 md:pt-40 pb-32 md:pb-48 flex flex-col min-h-[900px] md:min-h-[1100px]">
+        <div className="container-custom relative z-10 pt-28 md:pt-36 pb-28 md:pb-40 flex flex-col min-h-[750px] md:min-h-[900px]">
           <div className="max-w-3xl mx-auto text-center flex-1 flex flex-col" style={{ marginTop: "-2rem" }}>
             <div className="mb-2" style={{ visibility: "hidden" }}>
               <p className="text-xl md:text-2xl font-semibold font-didot italic">WE COME TO YOU!</p>
@@ -372,7 +372,7 @@ export default function Home() {
                 <span>As seen on Social Media</span>
                 <div className="view-counter">
                   <span id="view-count">100.0M +</span>
-                  <span>views online</span>
+                  <span>views</span>
                 </div>
               </div>
               <div className="hero-buttons-container flex gap-4 justify-center items-center">

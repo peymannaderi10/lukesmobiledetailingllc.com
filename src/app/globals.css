@@ -421,20 +421,21 @@ html {
   display: inline-flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0.7rem 1.5rem;
-  margin-bottom: 2.5rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   position: relative;
   overflow: hidden;
   isolation: isolate;
   flex-direction: column;
-  min-width: 220px;
+  min-width: 180px;
+  font-size: 0.875rem;
 }
 
 /* Remove the dot before the badge text */
@@ -451,7 +452,8 @@ html {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  margin-top: 0.25rem;
+  margin-top: 0.15rem;
+  font-size: 0.875rem;
 }
 
 .view-counter span {
