@@ -131,12 +131,8 @@ export default function Footer() {
           <h3 className="text-xl font-bold mb-4">Business Hours</h3>
             <ul className="space-y-2">
               <li className="flex justify-between">
-                <span>Monday - Friday</span>
-                <span>9:00 AM - 5:00 PM</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Saturday</span>
-                <span>9:00 AM - 5:00 PM</span>
+                <span>Monday - Saturday</span>
+                <span>7:00 AM - 8:00 PM</span>
               </li>
               <li className="flex justify-between">
                 <span>Sunday</span>
