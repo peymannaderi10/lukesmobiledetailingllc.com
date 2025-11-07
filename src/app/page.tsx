@@ -774,7 +774,7 @@ export default function Home() {
             </div>
 
             {/* Testimonials on the right */}
-            <div className="md:w-1/2 flex flex-col mt-12 md:mt-24">
+            <div className="md:w-1/2 flex flex-col mt-4 md:mt-24">
               {/* Testimonials Container */}
               <div className="relative flex-1 min-h-[300px] md:min-h-[350px] mb-4 overflow-hidden">
                 {testimonials.map((testimonial, index) => (
