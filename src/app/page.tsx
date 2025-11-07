@@ -16,6 +16,7 @@ import { useState } from "react";
 import Script from "next/script";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
+import CountUp from "@/components/CountUp";
 
 export default function Home() {
   // Track active tab for each package
@@ -30,26 +31,6 @@ export default function Home() {
 
   // Testimonials data
   const testimonials = [
-    {
-      text: "Nikita came on time! The car was pretty dirty and I have a lot of activities so the car was full of stuff too. They were thorough and the inside looks like I just drove it off the lot! Now I'm a barn person so the car was pretty dirty and muddy. They worked hard and the car is shiny and looks great! She even drives better!! Highly recommend this service.",
-      author: "Bree-Anna Vail",
-      initials: "BV"
-    },
-    {
-      text: "Great job on our car! Every detail looks better than when the car was new. Easy to schedule, showed up on time, and did a great job. Highly recommend if you want your car to look great.",
-      author: "George Blankenship",
-      initials: "GB"
-    },
-    {
-      text: "I want to give a shout out to Nikita and his awesome auto detailing company that he has started. When I hired him, I did not know much about him, but I have to say that within a few hours that I spent with him, I can see where he is going. He is not finished with the job until he feels it's perfect. I just think this is an outstanding young man. He loves what he does and it shows. I know if I could fast-forward 10 years, he is going to be a huge success in business and in life. I HIGHLY recommend hiring him.",
-      author: "Jo James",
-      initials: "JJ"
-    },
-    {
-      text: "I have been looking around for a little while for someone to come clean my car. It was filthy inside and out! I got a few estimates but had an issue with not really having access to water. Back duplex front parking. Right away Nikita said we do charge a little fee we can pick it up clean it then bring it back! That was music to my ears. Today he picked up my car and a couple of hours later brought it back looking like new. They really go out of their way to make sure the customer is happy. I am a very happy customer!",
-      author: "Debbie Gapsar",
-      initials: "DG"
-    },
     {
       text: "I contacted Luke about detailing my plane. We made plans to meet at the airport and he was right on time. He did an excellent job and I was very impressed with how hard he worked and all of the professional products he used. I would highly recommend Luke's mobile detailing.",
       author: "Carin Batham",
@@ -84,6 +65,11 @@ export default function Home() {
       text: "Luke did a fantastic job on my BMW X1. It looks better than when I bought it. He works hard, is courteous and shows up on time. Just make sure you know what you are scheduling. Ask questions such as what is included and what is extra. This was my first time so I did not know what to ask. Steam cleaning the engine is extra as is polishing yellowing headlights. But that said I definitely got my moneys worth. Thank you Luke",
       author: "Richard Blomberg",
       initials: "RB"
+    },
+    {
+      text: "moto mom truck transformation! Between goldfish crackers, muddy boots, and track weekends my truck was looking rough! Luke showed up and worked his magic and now it's so clean I almost don't want to let the kids back in.😂😂😂 Fast, friendly, and seriously impressive work. I highly recommend Luke.",
+      author: "Jondea Erisman",
+      initials: "JE"
     }
   ];
 
@@ -370,7 +356,16 @@ export default function Home() {
             <div className="mt-auto mb-8 md:mb-12 flex flex-col items-center">
               <div className="hero-badge">
                 <div className="flex items-center gap-1">
-                  <span id="view-count">100.0M +</span>
+                  <span id="view-count">
+                    <CountUp
+                      from={0}
+                      to={53}
+                      separator=","
+                      direction="up"
+                      duration={1}
+                      className="count-up-text"
+                    />.0M +
+                  </span>
                   <span className="text-white">Views</span>
                 </div>
                 <span className="text-xs" style={{ fontSize: '0.583rem' }}>Across All Platforms</span>
@@ -384,6 +379,28 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+          </div>
+          {/* Bouncing Arrow */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+            <a href="#before-after" className="flex flex-col items-center animate-bounce cursor-pointer">
+              <svg 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-8 w-8 drop-shadow-lg"
+              >
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path 
+                    fillRule="evenodd" 
+                    clipRule="evenodd" 
+                    d="M12 3C12.5523 3 13 3.44772 13 4V17.5858L18.2929 12.2929C18.6834 11.9024 19.3166 11.9024 19.7071 12.2929C20.0976 12.6834 20.0976 13.3166 19.7071 13.7071L12.7071 20.7071C12.3166 21.0976 11.6834 21.0976 11.2929 20.7071L4.29289 13.7071C3.90237 13.3166 3.90237 12.6834 4.29289 12.2929C4.68342 11.9024 5.31658 11.9024 5.70711 12.2929L11 17.5858V4C11 3.44772 11.4477 3 12 3Z" 
+                    fill="#FF0000"
+                  />
+                </g>
+              </svg>
+            </a>
           </div>
         </div>
       </section>
@@ -757,9 +774,9 @@ export default function Home() {
             </div>
 
             {/* Testimonials on the right */}
-            <div className="md:w-1/2 flex flex-col">
+            <div className="md:w-1/2 flex flex-col mt-12 md:mt-24">
               {/* Testimonials Container */}
-              <div className="relative flex-1 min-h-[400px] md:min-h-[500px] mb-4 overflow-hidden">
+              <div className="relative flex-1 min-h-[300px] md:min-h-[350px] mb-4 overflow-hidden">
                 {testimonials.map((testimonial, index) => (
                   <div
                     key={index}
