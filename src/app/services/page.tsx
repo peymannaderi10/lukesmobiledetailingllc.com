@@ -35,12 +35,6 @@ export default function ServicesPage() {
       "@type": "Service",
       "name": "The Signature Detail Package",
       "description": "Complete interior and exterior detail including deep vacuum, steam cleaning, paint decontamination, and 6-8 month sealant.",
-      "offers": {
-        "@type": "Offer",
-        "price": "260.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -56,12 +50,6 @@ export default function ServicesPage() {
       "@type": "Service",
       "name": "The Diamond Detail Package",
       "description": "Premium interior and exterior detailing with heated extraction, leather conditioning, clay bar treatment, ceramic wax, and light polish.",
-      "offers": {
-        "@type": "Offer",
-        "price": "495.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Premium Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -77,12 +65,6 @@ export default function ServicesPage() {
       "@type": "Service",
       "name": "The Basic Detail Package",
       "description": "Essential interior and exterior detail with vacuum, wipe down of surfaces, foam wash, and tire shine.",
-      "offers": {
-        "@type": "Offer",
-        "price": "190.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Basic Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -98,12 +80,6 @@ export default function ServicesPage() {
       "@type": "Service",
       "name": "The Full Interior Package",
       "description": "Comprehensive interior detailing with deep vacuum, steam cleaning of surfaces, UV protectant application, and air freshener.",
-      "offers": {
-        "@type": "Offer",
-        "price": "200.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Interior Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -119,12 +95,6 @@ export default function ServicesPage() {
       "@type": "Service",
       "name": "The Full Exterior Package",
       "description": "Complete exterior detailing with foam wash, paint decontamination, wheel cleaning, window cleaning, and 6-8 month sealant.",
-      "offers": {
-        "@type": "Offer",
-        "price": "135.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Exterior Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -364,7 +334,6 @@ export default function ServicesPage() {
               </div>
               <div className="bg-primary text-white p-6">
                 <h2 className="text-2xl font-bold mb-2">The Signature</h2>
-                <p className="text-3xl font-bold">$260</p>
                 <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -484,7 +453,6 @@ export default function ServicesPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-[#34eba1] p-6">
                 <h2 className="text-2xl font-bold mb-2 text-white">The Diamond</h2>
-                <p className="text-3xl font-bold text-white">$495</p>
                 <p className="text-sm mt-2 text-white">Interior & Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -620,7 +588,6 @@ export default function ServicesPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-secondary text-white p-6">
                 <h2 className="text-2xl font-bold mb-2">The Basic</h2>
-                <p className="text-3xl font-bold">$190</p>
                 <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -716,7 +683,6 @@ export default function ServicesPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-[#1e3a8a] text-white p-6">
                 <h2 className="text-2xl font-bold mb-2 text-white">The Full Interior</h2>
-                <p className="text-3xl font-bold text-white">$200</p>
                 <p className="text-sm mt-2 text-white">Interior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -769,7 +735,6 @@ export default function ServicesPage() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 flex flex-col">
               <div className="bg-[#fcc603] text-white p-6">
                 <h2 className="text-2xl font-bold mb-2 text-white ">The Full Exterior</h2>
-                <p className="text-3xl font-bold text-white">$135</p>
                 <p className="text-sm mt-2 text-white">Exterior Detail</p>
               </div>
               <div className="p-6 flex-1 flex flex-col">
@@ -835,7 +800,7 @@ export default function ServicesPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Additional Services</h2>
             <p className="text-lg text-gray-800 max-w-3xl mx-auto">
-              These specialized services can be added to any package for an additional cost.
+              These specialized services can be added to any package.
               Just let us know what extras you'd like when you book.
             </p>
           </div>
@@ -845,42 +810,36 @@ export default function ServicesPage() {
               <CloudIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Odor Removal</h3>
               <p className="mb-2 text-gray-800">Complete odor elimination using professional-grade products and equipment.</p>
-              <p className="text-primary font-bold">From $49</p>
-            </div>
+              </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <BeakerIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Pet Hair Removal</h3>
               <p className="mb-2 text-gray-800">Specialized tools to completely remove stubborn pet hair from your vehicle.</p>
-              <p className="text-primary font-bold">From $39</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <LightBulbIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Headlight Restoration</h3>
               <p className="mb-2 text-gray-800">Remove oxidation and restore clarity to foggy headlights.</p>
-              <p className="text-primary font-bold">From $79</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <ShieldCheckIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Ceramic Coating</h3>
               <p className="mb-2 text-gray-800">Long-lasting paint protection that adds gloss and repels water and contaminants.</p>
-              <p className="text-primary font-bold">From $199</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <BeakerIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Stain Removal</h3>
               <p className="mb-2 text-gray-800">Deep cleaning to remove tough stains from carpets, upholstery, and other surfaces.</p>
-              <p className="text-primary font-bold">From $49</p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <ShieldCheckIcon className="h-10 w-10 text-primary mb-4" />
               <h3 className="text-xl font-bold mb-2">Paint Protection Film</h3>
               <p className="mb-2 text-gray-800">Invisible film to protect high-impact areas from rock chips and scratches.</p>
-              <p className="text-primary font-bold">From $299</p>
             </div>
           </div>
         </div>

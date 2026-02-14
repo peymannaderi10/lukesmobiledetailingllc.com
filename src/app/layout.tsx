@@ -130,7 +130,6 @@ export default function RootLayout({
                 "https://www.instagram.com/lukesmobiledetailingllc/",
                 "https://tiktok.com/@lukesmobiledetailing"
               ],
-              "priceRange": "$$",
               "description": "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more."
             })
           }}

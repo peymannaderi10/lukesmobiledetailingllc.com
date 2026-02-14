@@ -100,12 +100,6 @@ export default function Home() {
       "@type": "Service",
       "name": "The Signature Detail Package",
       "description": "Complete interior and exterior detail including deep vacuum, steam cleaning, paint decontamination, and 6-8 month sealant.",
-      "offers": {
-        "@type": "Offer",
-        "price": "255.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -117,12 +111,6 @@ export default function Home() {
       "@type": "Service",
       "name": "The Diamond Detail Package",
       "description": "Premium interior and exterior detailing with heated extraction, leather conditioning, clay bar treatment, ceramic wax, and light polish.",
-      "offers": {
-        "@type": "Offer",
-        "price": "495.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Premium Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -134,12 +122,6 @@ export default function Home() {
       "@type": "Service",
       "name": "The Basic Detail Package",
       "description": "Essential interior and exterior detail with vacuum, wipe down of surfaces, foam wash, and tire shine.",
-      "offers": {
-        "@type": "Offer",
-        "price": "185.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Basic Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -151,12 +133,6 @@ export default function Home() {
       "@type": "Service",
       "name": "The Full Interior Package",
       "description": "Comprehensive interior detailing with deep vacuum, steam cleaning of surfaces, UV protectant application, and air freshener.",
-      "offers": {
-        "@type": "Offer",
-        "price": "195.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Interior Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -168,12 +144,6 @@ export default function Home() {
       "@type": "Service",
       "name": "The Full Exterior Package",
       "description": "Complete exterior detailing with foam wash, paint decontamination, wheel cleaning, window cleaning, and 6-8 month sealant.",
-      "offers": {
-        "@type": "Offer",
-        "price": "130.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
       "serviceType": "Exterior Car Detailing",
       "provider": {
         "@type": "LocalBusiness",
@@ -255,7 +225,6 @@ export default function Home() {
             "logo": "https://lukesmobiledetailingllc.com/Images/webPhotos/logoblack.png",
             "image": "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
             "telephone": "+15306503631",
-            "priceRange": "$$",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Yuba City",
@@ -471,7 +440,6 @@ export default function Home() {
               </div>
               <div className="bg-primary text-white p-6">
                 <h3 className="text-2xl font-bold mb-2">The Signature</h3>
-                <p className="text-3xl font-bold">$255</p>
                 <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
               <div className="p-6">
@@ -548,7 +516,6 @@ export default function Home() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="bg-[#34eba1] p-6">
                 <h3 className="text-2xl font-bold mb-2 text-white">The Diamond</h3>
-                <p className="text-3xl font-bold text-white">$495</p>
                 <p className="text-sm mt-2 text-white">Interior & Exterior Detail</p>
               </div>
               <div className="p-6">
@@ -625,7 +592,6 @@ export default function Home() {
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="bg-secondary text-white p-6">
                 <h3 className="text-2xl font-bold mb-2">The Basic</h3>
-                <p className="text-3xl font-bold">$185</p>
                 <p className="text-sm mt-2">Interior & Exterior Detail</p>
               </div>
               <div className="p-6">
