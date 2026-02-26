@@ -6,6 +6,102 @@ export const SERVICES = {
   fullexterior: { name: 'The Full Exterior', description: 'Exterior Detail Only',       baseDuration: 2.0 },
 } as const;
 
+/** What's included per service - shown in booking step 2 and homepage package cards */
+export const SERVICE_INCLUDES: Record<keyof typeof SERVICES, {
+  interior?: string[];
+  exterior?: string[];
+  items?: string[]; // for single-focus services (fullinterior, fullexterior)
+}> = {
+  signature: {
+    interior: [
+      'Full interior deep vacuum',
+      'Wipe down of all surfaces',
+      'Steam cleaning of cracks & crevices vinyl',
+      'Inside screens windows',
+      'Application of P&S interior UV protectant',
+      'Final touch up\'s & vacuum',
+      'Air freshener',
+    ],
+    exterior: [
+      'Full vehicle pre rinse',
+      'Foam wash',
+      'Wheels & wheel wells',
+      'Tires',
+      'Paint decontamination',
+      'Full dry down & light polish',
+      'Windows',
+      'Tire shine',
+      '6-8 month sealant',
+    ],
+  },
+  diamond: {
+    interior: [
+      'Full interior deep vacuum',
+      'Wipe down of all surfaces',
+      'Heated shampoo extraction of seats and carpets',
+      'Steam cleaning of cracks & crevices vinyl',
+      'Inside screens windows',
+      'Application of P&S interior UV protectant',
+      'Leather and vinyl conditioning',
+      'Final touch up\'s & vacuum',
+      'Air freshener',
+    ],
+    exterior: [
+      'Full vehicle pre rinse',
+      'Foam wash',
+      'Wheels & wheel wells',
+      'Tires',
+      'Paint decontamination',
+      'Undercarriage wash',
+      'Clay bar treatment',
+      'Machine applied ceramic infused wax',
+      'Full dry down & light polish',
+      'Windows',
+      'Tire shine',
+    ],
+  },
+  basic: {
+    interior: [
+      'Full interior vacuum',
+      'Wipe down of all surfaces',
+      'Inside screens windows',
+      'Air freshener',
+    ],
+    exterior: [
+      'Foam wash',
+      'Wheels cleaned',
+      'Tires',
+      'Full dry down',
+      'Windows',
+      'Tire shine',
+    ],
+  },
+  fullinterior: {
+    items: [
+      'Full interior deep vacuum',
+      'Wipe down of all surfaces',
+      'Steam cleaning of cup holders, vinyl, air vents & floor mats',
+      'Inside screens windows',
+      'Application of P&S interior UV protectant',
+      'Final touch up\'s & double vacuum',
+      'Air freshener & business card to finish it off!',
+    ],
+  },
+  fullexterior: {
+    items: [
+      'Rinse of entire car/truck',
+      'Foam wash',
+      'Wheels & tires',
+      'Bug/road debris removed',
+      'Paint decontamination',
+      'Drying of entire vehicle',
+      'Windows cleaned',
+      'Steam cleaning of wheel wells & rims',
+      '6-8 month sealant',
+    ],
+  },
+};
+
 export type ServiceKey = keyof typeof SERVICES;
 
 export const VEHICLES = {

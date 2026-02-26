@@ -245,7 +245,7 @@ export default function ContactPage() {
               Book Now
             </Link>
             <Link 
-              href="/services" 
+              href="/book" 
               className="border border-white/20 text-white px-10 py-4 font-bold uppercase text-xs tracking-widest hover:bg-white/5 transition-all transform hover:-translate-y-0.5"
             >
               View Services

@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { SERVICES, SERVICE_INCLUDES } from "@/lib/pricing";
+import type { ServiceKey } from "@/lib/pricing";
 import Script from "next/script";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
@@ -22,19 +23,21 @@ const reviewsRow2 = [
   { text: "Moto mom truck transformation! Luke showed up and worked his magic and now it's so clean I almost don't want to let the kids back in. Seriously impressive.", author: "Jondea Erisman" },
 ];
 
+const SERVICE_CONFIG: { key: ServiceKey; badge: string }[] = [
+  { key: "signature", badge: "Most Popular" },
+  { key: "diamond", badge: "Showroom Ready" },
+  { key: "basic", badge: "Maintenance" },
+];
+
 export default function Home() {
-  const router = useRouter();
-  const [heroVehicle, setHeroVehicle] = useState("");
-  const [heroService, setHeroService] = useState("");
-
-  const handleHeroSubmit = () => {
-    const params = new URLSearchParams();
-    if (heroService) params.set("service", heroService);
-    if (heroVehicle.trim()) params.set("vehicle", heroVehicle.trim());
-    const qs = params.toString();
-    router.push(`/book${qs ? `?${qs}` : ""}`);
+  const [activeTab, setActiveTab] = useState<Record<string, "interior" | "exterior">>({
+    signature: "interior",
+    diamond: "interior",
+    basic: "interior",
+  });
+  const handleTabChange = (pkg: string, tab: "interior" | "exterior") => {
+    setActiveTab((prev) => ({ ...prev, [pkg]: tab }));
   };
-
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
 
@@ -169,16 +172,39 @@ export default function Home() {
             <div className="inline-flex items-center gap-3 mb-6">
               <div className="h-px w-12 bg-primary" />
               <span className="text-primary font-bold tracking-[0.3em] uppercase text-xs">
-                Premium Mobile Detailing
+                Quality Mobile Detailing
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-8xl font-display font-black text-white leading-[0.9] mb-6 sm:mb-8 italic tracking-tighter drop-shadow-2xl">
-              AUTOMOTIVE <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">
-                EXCELLENCE
-              </span>
-            </h1>
+            <div className="inline-block mb-6 sm:mb-8">
+              <h1 className="text-4xl sm:text-5xl lg:text-8xl font-display font-black text-white leading-[0.9] mb-3 sm:mb-4 italic tracking-tighter drop-shadow-2xl">
+                SERVICING
+              </h1>
+              <div className="overflow-hidden w-4/6">
+                <div className="city-marquee-track inline-flex items-center gap-4 text-lg sm:text-xl lg:text-2xl text-gray-400 font-body tracking-wide whitespace-nowrap">
+                  {(() => {
+                    const cities = [
+                      "Yuba City",
+                      "Marysville",
+                      "Live Oak",
+                      "Olivehurst",
+                      "Linda",
+                      "Gridley",
+                      "Sutter",
+                      "Plumas Lake",
+                      "Meridian",
+                      "Wheatland",
+                    ];
+                    const row = cities.flatMap((c) => [c, "·"]).slice(0, -1);
+                    return [...row, ...row].map((item, i) => (
+                      <span key={i} className="inline-block shrink-0">
+                        {item}
+                      </span>
+                    ));
+                  })()}
+                </div>
+              </div>
+            </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 mb-8 sm:mb-10">
               <div>
@@ -205,83 +231,33 @@ export default function Home() {
             <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-full z-0" />
             <div className="glassmorphism p-6 sm:p-8 w-full shadow-2xl relative z-10 rounded-sm border-t border-white/20">
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/20 to-transparent rounded-tr-sm" />
-              <h3 className="text-3xl font-display font-bold text-white mb-2 italic">
+              <h3 className="text-3xl font-display font-bold text-white mb-3 italic">
                 Book Your Detail
               </h3>
-              <p className="text-gray-400 text-xs uppercase tracking-widest mb-6 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                Limited Slots Available This Week
-              </p>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 block font-body not-italic">
-                    Vehicle Info
-                  </label>
-                  <input
-                    className="w-full bg-black/40 border border-white/10 text-white placeholder-gray-600 focus:ring-primary focus:border-primary p-4 text-sm rounded-none transition-colors hover:border-white/20"
-                    placeholder="e.g. 2023 Porsche 911 GT3"
-                    type="text"
-                    value={heroVehicle}
-                    onChange={(e) => setHeroVehicle(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 block font-body not-italic">
-                    Service Tier
-                  </label>
-                  <div className="relative">
-                    <select
-                      value={heroService}
-                      onChange={(e) => setHeroService(e.target.value)}
-                      className="w-full bg-black/40 border border-white/10 text-white focus:ring-primary focus:border-primary p-4 text-sm rounded-none appearance-none cursor-pointer hover:border-white/20 transition-colors"
-                    >
-                      <option className="bg-zinc-900" value="">
-                        Select Package
-                      </option>
-                      <option className="bg-zinc-900" value="signature">
-                        The Signature — Interior &amp; Exterior
-                      </option>
-                      <option className="bg-zinc-900" value="diamond">
-                        The Diamond — Interior &amp; Exterior
-                      </option>
-                      <option className="bg-zinc-900" value="basic">
-                        The Basic — Interior &amp; Exterior
-                      </option>
-                      <option className="bg-zinc-900" value="fullinterior">
-                        The Full Interior — Interior Only
-                      </option>
-                      <option className="bg-zinc-900" value="fullexterior">
-                        The Full Exterior — Exterior Only
-                      </option>
-                    </select>
-                    <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-                      <span className="material-symbols-outlined">
-                        expand_more
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleHeroSubmit}
-                  className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-5 uppercase tracking-[0.2em] text-xs transition-all shadow-[0_4px_20px_rgba(210,31,60,0.4)] mt-4 flex justify-center items-center gap-2 group cursor-pointer"
-                >
-                  Get Estimate{" "}
-                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
-                    arrow_forward
+              <div className="mb-6 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+                  <span className="text-white/90 text-xs font-semibold uppercase tracking-widest">
+                    Limited Slots Available This Week
                   </span>
-                </button>
-                <p className="text-center text-[10px] text-gray-500 mt-4">
+                </div>
+                <p className="text-gray-500 text-[11px] tracking-wide font-body">
                   No payment required for estimate.
                 </p>
               </div>
+              <Link
+                href="/book"
+                className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-4 uppercase tracking-[0.2em] text-xs transition-all duration-300 shadow-[0_4px_20px_rgba(210,31,60,0.35)] hover:shadow-[0_6px_28px_rgba(210,31,60,0.5)] flex justify-center items-center gap-2 group hover:-translate-y-0.5"
+              >
+                View Services
+              </Link>
             </div>
           </div>
         </div>
       </header>
 
-      {/* ===== SERVICES ===== */}
-      <section className="py-24 bg-[#0A0A0A] relative overflow-hidden" id="services">
+      {/* ===== SERVICES (temporarily hidden – uncomment to restore) ===== */}
+      {/* <section className="py-24 bg-[#0A0A0A] relative overflow-hidden" id="services">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-zinc-900/30 -skew-x-12 transform origin-top-right translate-x-32" />
         <div className="container mx-auto px-6 lg:px-8 mb-16 relative z-10 flex flex-col lg:flex-row items-end justify-between gap-8">
           <div>
@@ -301,136 +277,127 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 relative z-10">
-          {/* Signature */}
-          <div className="group bg-zinc-900/50 border border-white/5 hover:border-primary/50 transition-all duration-500 relative overflow-hidden flex flex-col h-full">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0" />
-            <div className="absolute top-0 right-0 p-6 opacity-10 font-display font-black text-8xl text-white group-hover:text-primary transition-colors duration-500 select-none">
-              01
-            </div>
-            <div className="relative z-10 p-8 flex flex-col h-full">
-              <div className="mb-6">
-                <div className="bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest py-1.5 px-3 inline-block mb-4 rounded-full font-body not-italic">
-                  Most Popular
-                </div>
-                <h3 className="text-3xl font-display italic text-white mb-2 group-hover:text-primary transition-colors">
-                  The Signature
-                </h3>
-              </div>
-              <div className="w-full h-px bg-white/10 mb-6 group-hover:bg-primary/30 transition-colors" />
-              <ul className="space-y-4 text-sm font-light text-gray-300 mb-8 flex-grow">
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
-                  <span>Deep interior vacuum &amp; steam clean</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
-                  <span>Leather conditioning &amp; UV protection</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
-                  <span>Foam cannon wash &amp; silica sealant</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
-                  <span>Wheel face &amp; barrel cleaning</span>
-                </li>
-              </ul>
-              <Link
-                href="/book?service=signature"
-                className="w-full border border-white/20 bg-transparent text-white py-4 font-bold uppercase tracking-widest text-xs hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-[0_0_15px_rgba(210,31,60,0.3)]"
-              >
-                Select Package{" "}
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
+          {SERVICE_CONFIG.map(({ key, badge }, idx) => {
+            const svc = SERVICES[key];
+            const includes = SERVICE_INCLUDES[key];
+            const hasTabs = includes.interior != null && includes.exterior != null;
+            const isDiamond = key === "diamond";
+            const isBasic = key === "basic";
 
-          {/* Diamond */}
-          <div className="group bg-white text-black relative overflow-hidden transform md:-translate-y-4 shadow-2xl flex flex-col h-full border-t-4 border-primary">
-            <div className="absolute top-0 right-0 p-6 opacity-5 font-display font-black text-8xl text-black select-none">
-              02
-            </div>
-            <div className="relative z-10 p-8 flex flex-col h-full">
-              <div className="mb-6">
-                <div className="bg-black text-white text-[10px] font-bold uppercase tracking-widest py-1.5 px-3 inline-block mb-4 rounded-full font-body not-italic">
-                  Showroom Ready
-                </div>
-                <h3 className="text-3xl font-display italic text-black mb-2">
-                  The Diamond
-                </h3>
-              </div>
-              <div className="w-full h-px bg-black/10 mb-6" />
-              <ul className="space-y-4 text-sm font-medium text-gray-800 mb-8 flex-grow">
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
-                  <span>Clay Bar decontamination treatment</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
-                  <span>1-Step paint correction (Swirl removal)</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
-                  <span>6-Month ceramic sealant application</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
-                  <span>Engine bay detail &amp; dressing</span>
-                </li>
-              </ul>
-              <Link
-                href="/book?service=diamond"
-                className="w-full bg-primary text-white py-4 font-bold uppercase tracking-widest text-xs hover:bg-primary-dark transition-all duration-300 flex justify-center items-center gap-2 shadow-lg hover:shadow-xl"
-              >
-                Select Package{" "}
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
+            const CheckItem = ({ children }: { children: React.ReactNode }) => (
+              <li className="flex items-start">
+                <span className="material-symbols-outlined text-primary text-xl flex-shrink-0 mr-3 mt-0.5">check_circle</span>
+                <span className={isDiamond ? "text-gray-800" : "text-gray-200"}>{children}</span>
+              </li>
+            );
+            const DurationItem = ({ children }: { children: React.ReactNode }) => (
+              <li className={`flex items-start border-t pt-3 mt-3 ${isDiamond ? "border-black/10" : "border-white/10"}`}>
+                <span className="material-symbols-outlined text-gray-500 text-xl flex-shrink-0 mr-3 mt-0.5">schedule</span>
+                <span className={isDiamond ? "text-gray-600" : "text-gray-300"}>{children}</span>
+              </li>
+            );
+            const CheckItemDark = ({ children }: { children: React.ReactNode }) => (
+              <li className="flex items-start">
+                <span className="material-symbols-outlined text-primary text-xl flex-shrink-0 mr-3 mt-0.5">check_circle</span>
+                <span className={isDiamond ? "text-gray-800" : "text-gray-200"}>{children}</span>
+              </li>
+            );
 
-          {/* Standard */}
-          <div className="group bg-zinc-900/50 border border-white/5 hover:border-gray-500/50 transition-all duration-500 relative overflow-hidden flex flex-col h-full">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0" />
-            <div className="absolute top-0 right-0 p-6 opacity-10 font-display font-black text-8xl text-white select-none">
-              03
-            </div>
-            <div className="relative z-10 p-8 flex flex-col h-full">
-              <div className="mb-6">
-                <div className="bg-gray-800 text-gray-300 text-[10px] font-bold uppercase tracking-widest py-1.5 px-3 inline-block mb-4 rounded-full font-body not-italic">
-                  Maintenance
+            const cardClasses = isDiamond
+              ? "group bg-white text-black relative overflow-hidden transform md:-translate-y-4 shadow-2xl flex flex-col h-full border-t-4 border-primary"
+              : isBasic
+              ? "group bg-zinc-900/50 border border-white/5 hover:border-gray-500/50 transition-all duration-500 relative overflow-hidden flex flex-col h-full"
+              : "group bg-zinc-900/50 border border-white/5 hover:border-primary/50 transition-all duration-500 relative overflow-hidden flex flex-col h-full";
+            const numOpacity = isDiamond ? "opacity-5" : "opacity-10";
+            const numColor = isDiamond ? "text-black" : "text-white";
+
+            return (
+              <div key={key} className={cardClasses}>
+                {!isDiamond && <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0" />}
+                <div className={`absolute top-0 right-0 p-6 ${numOpacity} font-display font-black text-8xl ${numColor} select-none`}>
+                  {String(idx + 1).padStart(2, "0")}
                 </div>
-                <h3 className="text-3xl font-display italic text-white mb-2">
-                  The Standard
-                </h3>
+                <div className="relative z-10 p-5 sm:p-8 flex flex-col h-full">
+                  <div className="mb-6">
+                    {badge && (
+                      <div className={`text-[10px] font-bold uppercase tracking-widest py-1.5 px-3 inline-block mb-4 rounded-full font-body not-italic ${
+                        isDiamond ? "bg-black text-white" : isBasic ? "bg-gray-800 text-gray-300" : "bg-primary/10 border border-primary/20 text-primary"
+                      }`}>
+                        {badge}
+                      </div>
+                    )}
+                    <h3 className={`text-3xl font-display italic mb-2 ${isDiamond ? "text-black" : "text-white group-hover:text-primary transition-colors"}`}>
+                      {svc.name}
+                    </h3>
+                    <p className="text-xs uppercase tracking-widest text-gray-500">{svc.description}</p>
+                  </div>
+                  <div className={`w-full h-px mb-6 ${isDiamond ? "bg-black/10" : "bg-white/10 group-hover:bg-primary/30 transition-colors"}`} />
+                  {hasTabs ? (
+                    <>
+                      <div className={`flex border-b mb-4 ${isDiamond ? "border-black/10" : "border-white/10"}`}>
+                        <button
+                          type="button"
+                          onClick={() => handleTabChange(key, "interior")}
+                          className={`py-2 px-4 font-bold text-xs uppercase tracking-widest transition-colors ${activeTab[key] === "interior" ? "border-b-2 border-primary text-primary" : isDiamond ? "text-gray-400 hover:text-gray-600" : "text-gray-500 hover:text-gray-300"}`}
+                        >
+                          Interior
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleTabChange(key, "exterior")}
+                          className={`py-2 px-4 font-bold text-xs uppercase tracking-widest transition-colors ${activeTab[key] === "exterior" ? "border-b-2 border-primary text-primary" : isDiamond ? "text-gray-400 hover:text-gray-600" : "text-gray-500 hover:text-gray-300"}`}
+                        >
+                          Exterior
+                        </button>
+                      </div>
+                      <div className="flex-1">
+                        <div className={activeTab[key] === "interior" ? "block" : "hidden"}>
+                          <ul className="space-y-3 mb-2">
+                            {includes.interior!.slice(0, 4).map((item, i) => (
+                              isDiamond ? <CheckItemDark key={i}>{item}</CheckItemDark> : <CheckItem key={i}>{item}</CheckItem>
+                            ))}
+                            <li key="more" className="flex items-start">
+                              <span className="material-symbols-outlined text-primary text-xl flex-shrink-0 mr-3 mt-0.5">check_circle</span>
+                              <Link href="/services" className="text-primary hover:text-primary-dark hover:underline transition-colors">
+                                See full list on services page
+                              </Link>
+                            </li>
+                          </ul>
+                          <ul><DurationItem>Duration: {svc.baseDuration} hours</DurationItem></ul>
+                        </div>
+                        <div className={activeTab[key] === "exterior" ? "block" : "hidden"}>
+                          <ul className="space-y-3 mb-2">
+                            {includes.exterior!.slice(0, 4).map((item, i) => (
+                              isDiamond ? <CheckItemDark key={i}>{item}</CheckItemDark> : <CheckItem key={i}>{item}</CheckItem>
+                            ))}
+                            <li key="more" className="flex items-start">
+                              <span className="material-symbols-outlined text-primary text-xl flex-shrink-0 mr-3 mt-0.5">check_circle</span>
+                              <Link href="/services" className="text-primary hover:text-primary-dark hover:underline transition-colors">
+                                See full list on services page
+                              </Link>
+                            </li>
+                          </ul>
+                          <ul><DurationItem>Duration: {svc.baseDuration} hours</DurationItem></ul>
+                        </div>
+                      </div>
+                    </>
+                  ) : null}
+                  <Link
+                    href={`/book?service=${key}`}
+                    className={`w-full py-4 font-bold uppercase tracking-widest text-xs transition-all duration-300 flex justify-center items-center gap-2 mt-4 ${
+                      isDiamond
+                        ? "bg-primary text-white hover:bg-primary-dark shadow-lg hover:shadow-xl"
+                        : isBasic
+                        ? "border border-white/20 bg-transparent text-white hover:bg-white hover:text-black"
+                        : "border border-white/20 bg-transparent text-white hover:bg-primary hover:border-primary hover:text-white"
+                    }`}
+                  >
+                    Select Package <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </Link>
+                </div>
               </div>
-              <div className="w-full h-px bg-white/10 mb-6 group-hover:bg-gray-500/30 transition-colors" />
-              <ul className="space-y-4 text-sm font-light text-gray-300 mb-8 flex-grow">
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
-                  <span>Interior vacuum &amp; surface wipe down</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
-                  <span>Safe hand wash &amp; microfiber dry</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
-                  <span>Non-sling tire dressing</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
-                  <span>Streak-free glass cleaning</span>
-                </li>
-              </ul>
-              <Link
-                href="/book?service=basic"
-                className="w-full border border-white/20 bg-transparent text-white py-4 font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2"
-              >
-                Select Package{" "}
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
+            );
+          })}
         </div>
 
         <div className="container mx-auto px-6 lg:px-8 relative z-10 mt-10 text-center">
@@ -438,7 +405,7 @@ export default function Home() {
             View more services <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </Link>
         </div>
-      </section>
+      </section> */}
 
       {/* ===== BEFORE & AFTER ===== */}
       <section

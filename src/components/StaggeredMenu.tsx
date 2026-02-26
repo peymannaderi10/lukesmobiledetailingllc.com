@@ -423,17 +423,22 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </div>
 
         <header
-          className={`staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between py-4 lg:py-5 px-6 lg:px-12 pointer-events-none z-20 transition-all duration-300 ${
+          className={`staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between py-2.5 lg:py-3 px-6 lg:px-12 pointer-events-none z-20 transition-all duration-300 ${
             scrolled && !open ? "sm-navbar-scrolled" : "bg-transparent"
           }`}
           aria-label="Main navigation header"
         >
           <Link
             href="/"
-            className="sm-logo flex items-center select-none pointer-events-auto text-xl lg:text-2xl font-display font-black tracking-tighter italic text-white hover:opacity-90 transition-opacity"
+            className="sm-logo relative inline-flex flex-col items-start select-none pointer-events-auto hover:opacity-90 transition-opacity"
             aria-label="Luke's Mobile Detailing"
           >
-            LUKE&apos;S <span className="text-primary">MOBILE DETAILING</span>
+            <span className="sm-logo-lukes font-display font-black tracking-tighter italic text-white text-2xl lg:text-3xl xl:text-4xl leading-none">
+              LUKE&apos;S
+            </span>
+            <span className="text-primary font-display font-black tracking-tighter italic text-base lg:text-lg xl:text-xl leading-tight -mt-3 lg:-mt-4 ml-4 lg:ml-6">
+              MOBILE DETAILING
+            </span>
           </Link>
 
           <div className="flex items-center gap-4 pointer-events-auto">
@@ -594,8 +599,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           pointer-events: auto;
         }
         .sm-scope .sm-logo {
-          display: flex;
-          align-items: center;
+          display: inline-flex;
+          flex-direction: column;
+          align-items: flex-start;
           user-select: none;
         }
         .sm-scope .sm-toggle {
@@ -777,7 +783,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           .sm-scope .sm-prelayers {
             width: 100%;
           }
-          .sm-scope .staggered-menu-wrapper[data-open] .sm-logo {
+          .sm-scope .staggered-menu-wrapper[data-open] .sm-logo .sm-logo-lukes {
             color: #000;
           }
           .sm-scope .staggered-menu-wrapper[data-open] .sm-logo .text-primary {

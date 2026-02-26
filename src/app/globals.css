@@ -80,6 +80,15 @@ body {
   }
 }
 
+/* City marquee - content moves left to right */
+@keyframes city-marquee {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.city-marquee-track {
+  animation: city-marquee 25s linear infinite;
+}
+
 /* Custom scrollbar for dark theme */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;

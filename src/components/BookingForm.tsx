@@ -10,6 +10,7 @@ import {
   CONDITIONS,
   ADDONS,
   calculateQuote,
+  SERVICE_INCLUDES,
 } from "@/lib/pricing";
 import type {
   ServiceKey,
@@ -37,7 +38,7 @@ interface BookingResult {
 
 type ViewMode = "week" | "month";
 
-const TOTAL_STEPS = 5; // Add-ons step (renderStep4) temporarily skipped - may add back later
+const TOTAL_STEPS = 6;
 
 const SERVICE_IMAGES: Record<string, string> = {
   signature: "/Images/webPhotos/mobileServiceCard.jpg",
@@ -383,7 +384,7 @@ export default function BookingForm() {
   }, [step, serviceKey, fetchRangeQuiet]);
 
   useEffect(() => {
-    if (step !== 4 || !serviceKey || viewMode !== "week") return;
+    if (step !== 6 || !serviceKey || viewMode !== "week") return;
     const start = fmtDateKey(weekStart);
     const end = fmtDateKey(addDays(weekStart, 5));
     fetchRange(start, end);
@@ -398,9 +399,9 @@ export default function BookingForm() {
   const canContinue = useMemo(() => {
     switch (step) {
       case 1: return !!serviceKey;
-      case 2: return !!vehicleKey;
-      case 3: return skipConditionStep ? true : !!conditionKey;
-      case 4: return !!selectedSlot;
+      case 2: return true;
+      case 3: return !!vehicleKey;
+      case 4: return skipConditionStep ? true : !!conditionKey;
       case 5:
         return !!(
           firstName.trim() &&
@@ -415,14 +416,15 @@ export default function BookingForm() {
           state.trim() &&
           zip.trim()
         );
+      case 6: return !!selectedSlot;
       default: return false;
     }
   }, [step, serviceKey, vehicleKey, conditionKey, selectedSlot, firstName, lastName, email, phone, carInfo, carColor, streetAddress, city, state, zip, skipConditionStep]);
 
   const goNext = () => {
     if (step < TOTAL_STEPS && canContinue) {
-      if (step === 2 && skipConditionStep) {
-        setStep(4);
+      if (step === 3 && skipConditionStep) {
+        setStep(5);
       } else {
         setStep(step + 1);
       }
@@ -431,8 +433,8 @@ export default function BookingForm() {
 
   const goBack = () => {
     if (step > 1) {
-      if (step === 4 && skipConditionStep) {
-        setStep(2);
+      if (step === 5 && skipConditionStep) {
+        setStep(3);
       } else {
         setStep(step - 1);
       }
@@ -613,11 +615,11 @@ export default function BookingForm() {
   /* ================================================================ */
 
   const stepLabels = skipConditionStep
-    ? ["Service", "Vehicle", "Date", "Info"]
-    : ["Service", "Vehicle", "Condition", "Date", "Info"];
-  const displayTotal = skipConditionStep ? 4 : 5;
-  const displayStep = skipConditionStep && step >= 4 ? step - 1 : step;
-  const stepToLabelIndex = skipConditionStep && step >= 4 ? step - 2 : step - 1;
+    ? ["Service", "What's Included", "Vehicle", "Info", "Date"]
+    : ["Service", "What's Included", "Vehicle", "Condition", "Info", "Date"];
+  const displayTotal = skipConditionStep ? 5 : 6;
+  const displayStep = skipConditionStep && step >= 5 ? step - 1 : step;
+  const stepToLabelIndex = skipConditionStep && step >= 5 ? step - 2 : step - 1;
 
   /* ================================================================ */
   /*  INPUT CLASS                                                       */
@@ -695,6 +697,83 @@ export default function BookingForm() {
             );
           })}
         </div>
+      </div>
+    );
+  }
+
+  function renderWhatsIncluded() {
+    if (!serviceKey) return null;
+    const includes = SERVICE_INCLUDES[serviceKey];
+    const hasBoth = includes.interior != null && includes.exterior != null;
+    const svcName = SERVICES[serviceKey].name;
+    const duration = SERVICES[serviceKey].baseDuration;
+
+    const ItemRow = ({ item }: { item: string }) => (
+      <li className="flex items-start gap-3 text-gray-300 text-sm sm:text-base not-italic py-1.5">
+        <span className="material-symbols-outlined text-primary text-lg shrink-0 mt-0.5">check_circle</span>
+        <span>{item}</span>
+      </li>
+    );
+
+    const SectionCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
+      <div className="card-glass border border-white/10 rounded-sm overflow-hidden flex flex-col h-full">
+        <div className="px-5 py-4 sm:px-6 sm:py-5 border-b border-white/10 bg-white/[0.02]">
+          <h3 className="text-primary font-bold uppercase tracking-widest text-xs sm:text-sm not-italic">
+            {title}
+          </h3>
+        </div>
+        <ul className="px-5 py-4 sm:px-6 sm:py-5 space-y-0 flex-1">
+          {children}
+        </ul>
+      </div>
+    );
+
+    return (
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-8 sm:mb-10">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-display font-bold text-white italic mb-2 sm:mb-3">
+                {svcName} — What&apos;s Included
+              </h2>
+              <p className="text-gray-400 text-sm sm:text-base max-w-xl not-italic">
+                Everything included in your detail.
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest not-italic shrink-0">
+              <span className="material-symbols-outlined text-base">schedule</span>
+              ~{duration} hours
+            </div>
+          </div>
+        </div>
+
+        {hasBoth ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+            <SectionCard title="Interior">
+              {includes.interior!.map((item, i) => (
+                <ItemRow key={i} item={item} />
+              ))}
+            </SectionCard>
+            <SectionCard title="Exterior">
+              {includes.exterior!.map((item, i) => (
+                <ItemRow key={i} item={item} />
+              ))}
+            </SectionCard>
+          </div>
+        ) : (
+          <div className="card-glass border border-white/10 rounded-sm overflow-hidden">
+            <div className="px-5 py-4 sm:px-6 sm:py-5 border-b border-white/10 bg-white/[0.02]">
+              <h3 className="text-primary font-bold uppercase tracking-widest text-xs sm:text-sm not-italic">
+                {serviceKey === "fullinterior" ? "Interior" : "Exterior"}
+              </h3>
+            </div>
+            <ul className="px-5 py-4 sm:px-6 sm:py-5 space-y-0">
+              {(includes.items ?? []).map((item, i) => (
+                <ItemRow key={i} item={item} />
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     );
   }
@@ -1134,7 +1213,7 @@ export default function BookingForm() {
             </span>
           </h2>
           <p className="text-gray-400 text-sm leading-relaxed max-w-lg border-l border-white/10 pl-4 not-italic">
-            We need a few details to confirm your appointment.
+            Enter your details and review your estimate before selecting a date.
           </p>
         </div>
 
@@ -1373,16 +1452,14 @@ export default function BookingForm() {
 
                   <button
                     type="button"
-                    onClick={handleSubmit}
-                    disabled={isSubmitting}
+                    onClick={goNext}
+                    disabled={!canContinue}
                     className={`w-full bg-primary hover:bg-primary-dark text-white font-bold py-5 uppercase tracking-[0.2em] text-xs transition-all shadow-[0_4px_20px_rgba(210,31,60,0.4)] flex justify-center items-center gap-2 group hover:shadow-[0_0_30px_rgba(210,31,60,0.6)] transform hover:-translate-y-1 ${
-                      isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                      !canContinue ? "opacity-50 cursor-not-allowed" : ""
                     }`}
                   >
-                    {isSubmitting ? "Submitting..." : "Confirm Booking"}
-                    {!isSubmitting && (
-                      <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">check</span>
-                    )}
+                    Next Step
+                    <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                   </button>
                   <p className="text-center text-[10px] text-gray-500 mt-4 not-italic">
                     By booking, you agree to our Terms of Service.
@@ -1419,7 +1496,7 @@ export default function BookingForm() {
         {/* Desktop: all step labels */}
         <div className="hidden md:flex justify-between items-center mb-4 text-xs font-bold uppercase tracking-widest text-gray-500">
           {stepLabels.map((label, i) => {
-            const stepForLabel = skipConditionStep && i >= 2 ? i + 2 : i + 1;
+            const stepForLabel = skipConditionStep && i >= 3 ? i + 2 : i + 1;
             const active = stepForLabel === step;
             const completed = stepForLabel < step;
             return (
@@ -1451,40 +1528,42 @@ export default function BookingForm() {
       {/* Step Content */}
       <div className="mb-6">
         {step === 1 && renderStep1()}
-        {step === 2 && renderStep2()}
-        {step === 3 && renderStep3()}
-        {step === 4 && renderStep5()}
+        {step === 2 && renderWhatsIncluded()}
+        {step === 3 && renderStep2()}
+        {step === 4 && renderStep3()}
         {step === 5 && renderStep6()}
+        {step === 6 && renderStep5()}
       </div>
 
-      {/* Sticky Bottom Bar - steps 1-4 only; step 5 (Info) uses sidebar Confirm */}
-      {step < TOTAL_STEPS && (
-      <div className="fixed bottom-0 left-0 w-full z-40 bg-[#0f0f0f] border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] px-6 py-4 lg:py-6">
-        <div className="container mx-auto max-w-6xl flex items-center justify-between">
-          <div className="hidden lg:block min-w-0">
-            {step >= 3 && serviceKey && vehicleKey && (
-              <>
-                <span className="text-[10px] uppercase tracking-widest text-gray-500 block mb-1 not-italic">Selected Package</span>
-                <span className="text-sm font-bold text-white not-italic truncate block">
-                  {SERVICES[serviceKey].name} ({VEHICLES[vehicleKey].name})
-                </span>
-              </>
-            )}
-          </div>
+      {/* Sticky Bottom Bar - hidden on step 5 (Info); Info step has Next/Back on page */}
+      {step <= TOTAL_STEPS && step !== 5 && (
+      <div className="fixed bottom-0 left-0 w-full z-40">
+        <div className="bg-[#0f0f0f] border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] px-6 py-4 lg:py-6">
+          <div className="container mx-auto max-w-6xl flex items-center justify-between">
+            <div className="min-w-0">
+              {step >= 4 && serviceKey && vehicleKey && (
+                <div className="hidden lg:block">
+                  <span className="text-[10px] uppercase tracking-widest text-gray-500 block mb-1 not-italic">Selected Package</span>
+                  <span className="text-sm font-bold text-white not-italic truncate block">
+                    {SERVICES[serviceKey].name} ({VEHICLES[vehicleKey].name})
+                  </span>
+                </div>
+              )}
+            </div>
 
-          <div className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto justify-between lg:justify-end">
-            {step > 1 ? (
-              <button
-                type="button"
-                onClick={goBack}
-                className="flex items-center gap-2 text-gray-400 hover:text-white text-sm font-bold uppercase tracking-widest transition-colors not-italic py-2 -ml-1"
-              >
-                <span className="material-symbols-outlined text-xl">arrow_back</span>
-                Back
-              </button>
-            ) : (
-              <div />
-            )}
+            <div className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto justify-between lg:justify-end">
+              {step > 1 ? (
+                <button
+                  type="button"
+                  onClick={goBack}
+                  className="flex items-center gap-2 text-gray-400 hover:text-white text-sm font-bold uppercase tracking-widest transition-colors not-italic py-2 -ml-1"
+                >
+                  <span className="material-symbols-outlined text-xl">arrow_back</span>
+                  Back
+                </button>
+              ) : (
+                <div />
+              )}
             {step < TOTAL_STEPS ? (
               <button
                 type="button"
@@ -1511,11 +1590,14 @@ export default function BookingForm() {
             )}
           </div>
         </div>
+        </div>
       </div>
       )}
 
-      {/* Spacer so content isn't hidden behind fixed bar (steps 1-5 only) */}
-      {step < TOTAL_STEPS && <div className="h-20 lg:h-24" />}
+      {/* Spacer so content isn't hidden behind fixed bar (not needed on step 5) */}
+      {step <= TOTAL_STEPS && step !== 5 && (
+        <div className="h-20 lg:h-24" />
+      )}
     </div>
   );
 }
