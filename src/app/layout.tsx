@@ -1,36 +1,40 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Lexend } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SocialSidebar from "@/components/SocialSidebar";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["300", "400", "600", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const lexend = Lexend({
+  variable: "--font-lexend",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-}
+};
 
 export const metadata: Metadata = {
   title: "Luke's Mobile Detailing | Professional Car Detailing Services",
-  description: "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more. Book online today.",
-  keywords: "car detailing, mobile detailing, auto detailing, car wash, luke's mobile detailing",
+  description:
+    "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more. Book online today.",
+  keywords:
+    "car detailing, mobile detailing, auto detailing, car wash, luke's mobile detailing",
   openGraph: {
     title: "Luke's Mobile Detailing | Professional Car Detailing Services",
-    description: "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more. Book online today.",
+    description:
+      "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more. Book online today.",
     url: "https://lukesmobiledetailingllc.com",
     siteName: "Luke's Mobile Detailing",
     images: [
@@ -47,32 +51,35 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Luke's Mobile Detailing | Professional Car Detailing Services",
-    description: "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more. Book online today.",
-    images: ["https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg"],
+    description:
+      "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more. Book online today.",
+    images: [
+      "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
+    ],
   },
   alternates: {
     canonical: "https://lukesmobiledetailingllc.com",
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
     other: [
       {
-        rel: 'manifest',
-        url: '/site.webmanifest'
-      }
-    ]
+        rel: "manifest",
+        url: "/site.webmanifest",
+      },
+    ],
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'default',
-    title: "Luke's Mobile Detailing"
+    statusBarStyle: "default",
+    title: "Luke's Mobile Detailing",
   },
 };
 
@@ -84,15 +91,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <head>
-        {/* iOS Safari specific tags that can't be defined in metadata */}
         <meta name="format-detection" content="telephone=no" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col overflow-x-hidden`}
+        className={`${inter.variable} ${lexend.variable} bg-black text-gray-100 font-body antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-white`}
         style={{ isolation: "isolate" }}
       >
         <Script
@@ -102,41 +115,48 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "Luke's Mobile Detailing",
-              "image": "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
-              "url": "https://lukesmobiledetailingllc.com",
-              "telephone": "+15306503631",
-              "address": {
+              name: "Luke's Mobile Detailing",
+              image:
+                "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
+              url: "https://lukesmobiledetailingllc.com",
+              telephone: "+15306503631",
+              address: {
                 "@type": "PostalAddress",
-                "addressLocality": "Yuba City",
-                "addressRegion": "CA",
-                "addressCountry": "US"
+                addressLocality: "Yuba City",
+                addressRegion: "CA",
+                addressCountry: "US",
               },
-              "geo": {
+              geo: {
                 "@type": "GeoCoordinates",
-                "latitude": 39.1404,
-                "longitude": -121.6169
+                latitude: 39.1404,
+                longitude: -121.6169,
               },
-              "openingHoursSpecification": [
+              openingHoursSpecification: [
                 {
                   "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                  "opens": "07:00",
-                  "closes": "20:00"
-                }
+                  dayOfWeek: [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                  ],
+                  opens: "07:00",
+                  closes: "20:00",
+                },
               ],
-              "sameAs": [
+              sameAs: [
                 "https://www.facebook.com/lukemobiledetailing/",
                 "https://www.instagram.com/lukesmobiledetailingllc/",
-                "https://tiktok.com/@lukesmobiledetailing"
+                "https://tiktok.com/@lukesmobiledetailing",
               ],
-              "priceRange": "$$",
-              "description": "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more."
-            })
+              description:
+                "Professional mobile car detailing services that come to you. Interior and exterior detailing, washing, and more.",
+            }),
           }}
         />
         <Navbar />
-        <SocialSidebar />
         <main className="flex-grow">{children}</main>
         <Footer />
         <Analytics />

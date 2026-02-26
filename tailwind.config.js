@@ -9,14 +9,17 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#FF0000", // Red
-          light: "#FF3333",
-          dark: "#CC0000",
+          DEFAULT: "#D21F3C",
+          light: "#E8364F",
+          dark: "#A0182E",
         },
         secondary: {
-          DEFAULT: "#000000", // Black
-          light: "#333333",
+          DEFAULT: "#D21F3C",
+          light: "#E8364F",
         },
+        "background-dark": "#0A0A0A",
+        "accent-dark": "#171717",
+        "surface-dark": "#121212",
         white: "#FFFFFF",
         gray: {
           100: "#F5F5F5",
@@ -31,10 +34,13 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'Arial', 'sans-serif'],
-        mono: ['var(--font-geist-mono)', 'monospace'],
-        'anchor-jack': ['Anchor Jack', 'sans-serif'],
-        'didot': ['Baskervville', 'Georgia', 'serif'],
+        display: ["var(--font-lexend)", "Lexend", "sans-serif"],
+        body: ["var(--font-inter)", "Inter", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "Arial", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
+      },
+      borderRadius: {
+        DEFAULT: "0.125rem",
       },
       fontWeight: {
         normal: 400,
@@ -44,9 +50,9 @@ module.exports = {
         extrabold: 800,
       },
       transitionDuration: {
-        '600': '600ms',
+        600: "600ms",
       },
     },
   },
   plugins: [],
-}; 
+};

@@ -151,10 +151,9 @@ export default function SimpleBeforeAfterSlider({
       <div className="slider-line" ref={sliderLineRef}></div>
 
       <div className="slider-handle" ref={sliderHandleRef}>
-        <div className="slider-arrows">
-          <div className="arrow-left text-primary font-bold">❮</div>
-          <div className="arrow-right text-primary font-bold">❯</div>
-        </div>
+        <span className="material-symbols-outlined text-primary text-xl" style={{ animationDuration: '2s' }}>
+          compare_arrows
+        </span>
       </div>
 
       <div className="slider-labels">

@@ -36,7 +36,7 @@ import React, {
     <div
       ref={ref}
       {...rest}
-      className={`absolute top-1/2 left-1/2 rounded-xl border border-red-500 bg-white [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${customClass ?? ''} ${rest.className ?? ''}`.trim()}
+      className={`absolute top-1/2 left-1/2 rounded-sm border border-white/10 bg-zinc-900 [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${customClass ?? ''} ${rest.className ?? ''}`.trim()}
     />
   ));
   Card.displayName = 'Card';

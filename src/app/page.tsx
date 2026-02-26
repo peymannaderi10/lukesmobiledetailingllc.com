@@ -2,982 +2,706 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  CheckCircleIcon,
-  SparklesIcon,
-  ClockIcon,
-  MapPinIcon,
-  TruckIcon,
-  StarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon
-} from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Script from "next/script";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import ServiceAreaMap from "@/components/ServiceAreaMap";
-import CountUp from "@/components/CountUp";
+
+const reviewsRow1 = [
+  { text: "I contacted Luke about detailing my plane. He was right on time, did an excellent job, and I was very impressed with how hard he worked and all the professional products he used.", author: "Carin Batham" },
+  { text: "First time getting my car detailed by Luke. He showed up on time with a 100 gallon water tank and his own generator. Extremely professional and clean.", author: "Shahan Ali" },
+  { text: "I couldn't be happier! Luke showed up right on time and was ready to work. His pricing is very fair, especially considering the amazing quality of his work.", author: "Mark Hernandez" },
+  { text: "I booked the Signature Detail Wash for my BMW, and I'm seriously impressed. Every inch of my car was spotless. Punctual, professional, and came fully prepared.", author: "Omar Gonzalez" },
+];
+
+const reviewsRow2 = [
+  { text: "Luke did an incredible job on four different vehicles for our household. I was blown away by the attention to detail. His prices are incredibly reasonable.", author: "Glory Albin" },
+  { text: "My truck has never looked this spotless. Luke truly exceeded my expectations. Every inch of the interior and exterior was cleaned to perfection.", author: "Daniela Corona" },
+  { text: "Luke did a fantastic job on my BMW X1. It looks better than when I bought it. He works hard, is courteous and shows up on time.", author: "Richard Blomberg" },
+  { text: "Moto mom truck transformation! Luke showed up and worked his magic and now it's so clean I almost don't want to let the kids back in. Seriously impressive.", author: "Jondea Erisman" },
+];
 
 export default function Home() {
-  // Track active tab for each package
-  const [activeTab, setActiveTab] = useState({
-    signature: "interior",
-    diamond: "interior",
-    basic: "interior"
-  });
+  const router = useRouter();
+  const [heroVehicle, setHeroVehicle] = useState("");
+  const [heroService, setHeroService] = useState("");
 
-  // Track active testimonial
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-
-  // Testimonials data
-  const testimonials = [
-    {
-      text: "I contacted Luke about detailing my plane. We made plans to meet at the airport and he was right on time. He did an excellent job and I was very impressed with how hard he worked and all of the professional products he used. I would highly recommend Luke's mobile detailing.",
-      author: "Carin Batham",
-      initials: "CB"
-    },
-    {
-      text: "First time getting my car detailed by Luke and he showed up on time with a 100 gallon water tank and his own generator to power all his equipment, he was extremely professional and clean, I'm definitely gonna recommend him to my friends and will be using his services in the future!",
-      author: "Shahan Ali",
-      initials: "SA"
-    },
-    {
-      text: "I couldn't be happier with the service from Luke's Mobile Detailing! Luke showed up right on time and was ready to work. His pricing is very fair, especially considering the amazing quality of his work. He's a hard worker who clearly takes pride in what he does. The before and after pictures were incredible — they really show just how much attention to detail Luke puts into every vehicle. My car looked brand new when he was done! I highly recommend Luke's Mobile Detailing to anyone looking for a top-notch, reliable, and professional service. Will definitely be using him again!",
-      author: "Mark Hernandez",
-      initials: "MH"
-    },
-    {
-      text: "I booked the Signature Detail Wash for my BMW, and I'm seriously impressed. The mobile detailing service was punctual, professional, and came fully prepared. What really blew me away was the precision and care—every inch of my car was spotless, from the rims to the interior vents. The attention to details was unmatched. My BMW looks like it just rolled off the showroom floor. Highly recommend this service to anyone who wants their car looking its absolute best!",
-      author: "Omar Gonzalez",
-      initials: "OG"
-    },
-    {
-      text: "Luke did an incredible job on four different vehicles for our household. I was blown away by the attention to detail, and the amount of work that he puts into detailing each car. I really appreciated that Luke showed up for the job on time and worked diligently all day to complete the four cars! His prices are incredibly reasonable, especially considering the extra convenience of him coming to my home. I will be calling on Luke again soon to keep my cars looking great!",
-      author: "Glory Albin",
-      initials: "GA"
-    },
-    {
-      text: "I had an amazing experience with Luke's Mobile Detailing! My truck has never looked this spotless it use to be a work truck so you can imagine the dirt and grime it had accumulated. Luke truly exceeded my expectations. Every inch of the interior and exterior was cleaned to perfection, and he clearly takes pride in his work. The convenience of having him come to me made it even better. If you are looking for professional highly recommend Luke's mobile detailing!",
-      author: "Daniela Corona",
-      initials: "DC"
-    },
-    {
-      text: "Luke did a fantastic job on my BMW X1. It looks better than when I bought it. He works hard, is courteous and shows up on time. Just make sure you know what you are scheduling. Ask questions such as what is included and what is extra. This was my first time so I did not know what to ask. Steam cleaning the engine is extra as is polishing yellowing headlights. But that said I definitely got my moneys worth. Thank you Luke",
-      author: "Richard Blomberg",
-      initials: "RB"
-    },
-    {
-      text: "moto mom truck transformation! Between goldfish crackers, muddy boots, and track weekends my truck was looking rough! Luke showed up and worked his magic and now it's so clean I almost don't want to let the kids back in.😂😂😂 Fast, friendly, and seriously impressive work. I highly recommend Luke.",
-      author: "Jondea Erisman",
-      initials: "JE"
-    }
-  ];
-
-  // Testimonial navigation functions
-  const nextTestimonial = () => {
-    setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+  const handleHeroSubmit = () => {
+    const params = new URLSearchParams();
+    if (heroService) params.set("service", heroService);
+    if (heroVehicle.trim()) params.set("vehicle", heroVehicle.trim());
+    const qs = params.toString();
+    router.push(`/book${qs ? `?${qs}` : ""}`);
   };
 
-  const prevTestimonial = () => {
-    setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
 
-  const goToTestimonial = (index: number) => {
-    setActiveTestimonial(index);
-  };
+  useEffect(() => {
+    const row1 = row1Ref.current;
+    const row2 = row2Ref.current;
+    if (!row1 || !row2) return;
 
-  // Function to handle tab changes
-  const handleTabChange = (packageName: string, tabName: string) => {
-    setActiveTab(prev => ({
-      ...prev,
-      [packageName]: tabName
-    }));
-  };
+    let raf: number;
+    let pos1 = 0;
+    let pos2 = 0;
+    const speed = 0.2;
 
-  // Services data for Schema.org
+    const animate = () => {
+      pos1 -= speed;
+      pos2 += speed;
+
+      const w1 = row1.scrollWidth / 2;
+      const w2 = row2.scrollWidth / 2;
+
+      if (Math.abs(pos1) >= w1) pos1 = 0;
+      if (pos2 >= w2) pos2 = 0;
+
+      row1.style.transform = `translateX(${pos1}px)`;
+      row2.style.transform = `translateX(${-w2 + pos2}px)`;
+
+      raf = requestAnimationFrame(animate);
+    };
+
+    raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   const servicesData = [
     {
       "@type": "Service",
-      "name": "The Signature Detail Package",
-      "description": "Complete interior and exterior detail including deep vacuum, steam cleaning, paint decontamination, and 6-8 month sealant.",
-      "offers": {
-        "@type": "Offer",
-        "price": "255.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "serviceType": "Car Detailing",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "Luke's Mobile Detailing"
-      },
-      "estimatedDuration": "PT4H"
+      name: "The Signature Detail",
+      description: "Full interior and exterior detail with steam cleaning, leather conditioning, foam cannon wash, and silica sealant.",
+      provider: { "@type": "LocalBusiness", name: "Luke's Mobile Detailing" },
+      areaServed: { "@type": "City", name: "Yuba City" },
+      offers: { "@type": "Offer", price: "255", priceCurrency: "USD" },
     },
     {
       "@type": "Service",
-      "name": "The Diamond Detail Package",
-      "description": "Premium interior and exterior detailing with heated extraction, leather conditioning, clay bar treatment, ceramic wax, and light polish.",
-      "offers": {
-        "@type": "Offer",
-        "price": "495.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "serviceType": "Premium Car Detailing",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "Luke's Mobile Detailing"
-      },
-      "estimatedDuration": "PT5H30M"
+      name: "The Diamond Detail",
+      description: "Premium detail including clay bar treatment, 1-step paint correction, 6-month ceramic sealant, and engine bay detail.",
+      provider: { "@type": "LocalBusiness", name: "Luke's Mobile Detailing" },
+      areaServed: { "@type": "City", name: "Yuba City" },
+      offers: { "@type": "Offer", price: "495", priceCurrency: "USD" },
     },
     {
       "@type": "Service",
-      "name": "The Basic Detail Package",
-      "description": "Essential interior and exterior detail with vacuum, wipe down of surfaces, foam wash, and tire shine.",
-      "offers": {
-        "@type": "Offer",
-        "price": "185.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "serviceType": "Basic Car Detailing",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "Luke's Mobile Detailing"
-      },
-      "estimatedDuration": "PT2H30M"
+      name: "The Standard Detail",
+      description: "Essential maintenance including interior vacuum, surface wipe down, hand wash, and tire dressing.",
+      provider: { "@type": "LocalBusiness", name: "Luke's Mobile Detailing" },
+      areaServed: { "@type": "City", name: "Yuba City" },
+      offers: { "@type": "Offer", price: "185", priceCurrency: "USD" },
     },
-    {
-      "@type": "Service",
-      "name": "The Full Interior Package",
-      "description": "Comprehensive interior detailing with deep vacuum, steam cleaning of surfaces, UV protectant application, and air freshener.",
-      "offers": {
-        "@type": "Offer",
-        "price": "195.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "serviceType": "Interior Car Detailing",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "Luke's Mobile Detailing"
-      },
-      "estimatedDuration": "PT3H"
-    },
-    {
-      "@type": "Service",
-      "name": "The Full Exterior Package",
-      "description": "Complete exterior detailing with foam wash, paint decontamination, wheel cleaning, window cleaning, and 6-8 month sealant.",
-      "offers": {
-        "@type": "Offer",
-        "price": "130.00",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
-      },
-      "serviceType": "Exterior Car Detailing",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "Luke's Mobile Detailing"
-      },
-      "estimatedDuration": "PT2H"
-    }
-  ];
-
-  // FAQ data for Schema.org
-  const faqData = [
-    {
-      "@type": "Question",
-      "name": "Do you come to my location?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes! We are a mobile detailing service that comes to your home, office, or any location convenient for you in Yuba City, Marysville, and surrounding areas."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How long does a detail take?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Service times vary by package. The Basic package takes 1-2 hours, the Signature package takes 2-3 hours, and the Diamond package takes 4-6 hours depending on vehicle size and condition."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What forms of payment do you accept?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We accept all major credit cards, cash, and electronic payment methods including Square, Venmo, and more."
-      }
-    }
   ];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Schema.org JSON-LD */}
+    <div className="bg-black text-gray-100 font-body">
       <Script
-        id="schema-services"
+        id="services-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ItemList",
-            "itemListElement": servicesData.map((service, index) => ({
+            itemListElement: servicesData.map((service, index) => ({
               "@type": "ListItem",
-              "position": index + 1,
-              "item": service
-            }))
-          })
+              position: index + 1,
+              item: service,
+            })),
+          }),
         }}
       />
-
       <Script
-        id="schema-faqs"
+        id="faq-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            "mainEntity": faqData
-          })
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "What areas does Luke's Mobile Detailing serve?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "We serve Yuba City, Marysville, Live Oak, Olivehurst, Linda, Gridley, Sutter, Plumas Lake, and surrounding areas in Northern California.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Do I need to provide water or electricity?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "No! We bring our own 100-gallon water tank and generator. We are fully self-contained.",
+                },
+              },
+            ],
+          }),
         }}
       />
 
-      <Script
-        id="schema-business"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "AutoDetailingBusiness",
-            "name": "Luke's Mobile Detailing",
-            "description": "Professional mobile car detailing services that come to you in Yuba City, Marysville and surrounding areas.",
-            "url": "https://lukesmobiledetailingllc.com",
-            "logo": "https://lukesmobiledetailingllc.com/Images/webPhotos/logoblack.png",
-            "image": "https://lukesmobiledetailingllc.com/Images/webPhotos/Banner.jpg",
-            "telephone": "+15306503631",
-            "priceRange": "$$",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Yuba City",
-              "addressRegion": "CA",
-              "addressCountry": "US"
-            },
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": "39.1404",
-              "longitude": "-121.6169"
-            },
-            "openingHoursSpecification": [
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                "opens": "07:00",
-                "closes": "20:00"
-              }
-            ],
-            "sameAs": [
-              "https://www.facebook.com/lukemobiledetailing/",
-              "https://www.instagram.com/lukesmobiledetailingllc/",
-              "https://tiktok.com/@lukesmobiledetailing"
-            ],
-            "areaServed": [
-              {
-                "@type": "City",
-                "name": "Yuba City"
-              },
-              {
-                "@type": "City",
-                "name": "Marysville"
-              },
-              {
-                "@type": "City",
-                "name": "Live Oak"
-              },
-              {
-                "@type": "City",
-                "name": "Olivehurst"
-              },
-              {
-                "@type": "City",
-                "name": "Linda"
-              },
-              {
-                "@type": "City",
-                "name": "Gridley"
-              }
-            ]
-          })
-        }}
-      />
-
-      {/* Hero Section */}
-      <section className="relative text-white min-h-[750px] md:min-h-[900px]">
+      {/* ===== HERO ===== */}
+      <header className="relative w-full min-h-screen flex items-center bg-black overflow-hidden">
         <div className="absolute inset-0 z-0">
-          {/* Mobile Image */}
-          <Image 
-            src="/Images/webPhotos/hero2.jpg" 
-            alt="Professional car detailing" 
+          <Image
+            src="/Images/webPhotos/Banner.jpg"
+            alt="Professional car detailing"
             fill
             priority
-            className="object-cover object-center md:hidden"
-            style={{ objectPosition: "center 45%" }}
-          />
-          {/* Desktop Image */}
-          <Image 
-            src="/Images/webPhotos/Banner.jpg" 
-            alt="Professional car detailing" 
-            fill
-            priority
-            className="object-cover object-center hidden md:block"
+            className="object-cover opacity-60 scale-105 hidden md:block"
             style={{ objectPosition: "center 55%" }}
           />
-          <div className="absolute inset-0 bg-black opacity-50" />
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-48 md:h-56 z-[1]" 
-            style={{
-              background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.3) 60%, rgba(255,255,255,0.5) 70%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0.85) 88%, rgba(255,255,255,0.95) 95%, rgba(255,255,255,1) 100%)'
-            }}
+          <Image
+            src="/Images/webPhotos/hero2.jpg"
+            alt="Professional car detailing"
+            fill
+            priority
+            className="object-cover opacity-60 scale-105 md:hidden"
+            style={{ objectPosition: "center 45%" }}
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent z-10" />
         </div>
-        <div className="container-custom relative z-10 pt-28 md:pt-36 pb-28 md:pb-40 flex flex-col min-h-[750px] md:min-h-[900px]">
-          <div className="max-w-3xl mx-auto text-center flex-1 flex flex-col" style={{ marginTop: "-2rem" }}>
-            <div className="mb-2" style={{ visibility: "hidden" }}>
-              <p className="text-xl md:text-2xl font-semibold font-didot italic">WE COME TO YOU!</p>
+
+        <div className="relative z-20 container mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center h-full pt-28 pb-20 lg:pt-20">
+          {/* Left Content */}
+          <div className="lg:col-span-7 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <div className="h-px w-12 bg-primary" />
+              <span className="text-primary font-bold tracking-[0.3em] uppercase text-xs">
+                Premium Mobile Detailing
+              </span>
             </div>
-            <h1 className="text-3xl md:text-6xl font-bold mb-6" style={{ visibility: "hidden" }}>
-              Protect Your Investment
+
+            <h1 className="text-4xl sm:text-5xl lg:text-8xl font-display font-black text-white leading-[0.9] mb-6 sm:mb-8 italic tracking-tighter drop-shadow-2xl">
+              AUTOMOTIVE <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">
+                EXCELLENCE
+              </span>
             </h1>
-            <div className="mt-auto mb-8 md:mb-12 flex flex-col items-center">
-              <div className="hero-badge">
-                <div className="flex items-center gap-1">
-                  <span id="view-count">
-                    <CountUp
-                      from={0}
-                      to={53}
-                      separator=","
-                      direction="up"
-                      duration={1}
-                      className="count-up-text"
-                    />.0M +
-                  </span>
-                  <span className="text-white">Views</span>
-                </div>
-                <span className="text-xs" style={{ fontSize: '0.583rem' }}>Across All Platforms</span>
-              </div>
-              {/* Social Media Icons */}
-              <div className="flex items-center justify-center gap-6 mb-6 md:mb-8">
-                <a
-                  href="https://www.facebook.com/lukemobiledetailing/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-red-600 hover:text-red-700 transition-colors duration-300"
-                  aria-label="Facebook"
-                >
-                  <svg
-                    className="w-5 h-5 md:w-6 md:h-6"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                  </svg>
-                </a>
-                <a
-                  href="https://www.instagram.com/lukesmobiledetailingllc/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-red-600 hover:text-red-700 transition-colors duration-300"
-                  aria-label="Instagram"
-                >
-                  <svg
-                    className="w-5 h-5 md:w-6 md:h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    viewBox="0 0 24 24"
-                  >
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                  </svg>
-                </a>
-                <a
-                  href="https://tiktok.com/@lukesmobiledetailing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-red-600 hover:text-red-700 transition-colors duration-300"
-                  aria-label="TikTok"
-                >
-                  <svg
-                    className="w-5 h-5 md:w-6 md:h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                  </svg>
-                </a>
-              </div>
-              <div className="hero-buttons-container flex gap-4 justify-center items-center">
-                <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary text-center">
-                  Book Your Detail
-                </Link>
-                <Link href="#before-after" className="btn-outline text-center">
-                  Before and After
-                </Link>
+
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 mb-8 sm:mb-10">
+              <div>
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">53.0M <span className="text-primary">+</span></span>
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 mt-1">Views Across All Platforms</p>
               </div>
             </div>
+
+            <div className="flex items-center gap-3">
+              <a href="https://www.facebook.com/lukemobiledetailing/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors duration-300" aria-label="Facebook">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" /></svg>
+              </a>
+              <a href="https://www.instagram.com/lukesmobiledetailingllc/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors duration-300" aria-label="Instagram">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" /></svg>
+              </a>
+              <a href="https://tiktok.com/@lukesmobiledetailing" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors duration-300" aria-label="TikTok">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+              </a>
+            </div>
           </div>
-          {/* Bouncing Arrow */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-            <a href="#before-after" className="flex flex-col items-center animate-bounce cursor-pointer">
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-8 w-8 drop-shadow-lg"
-              >
-                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                <g id="SVGRepo_iconCarrier">
-                  <path 
-                    fillRule="evenodd" 
-                    clipRule="evenodd" 
-                    d="M12 3C12.5523 3 13 3.44772 13 4V17.5858L18.2929 12.2929C18.6834 11.9024 19.3166 11.9024 19.7071 12.2929C20.0976 12.6834 20.0976 13.3166 19.7071 13.7071L12.7071 20.7071C12.3166 21.0976 11.6834 21.0976 11.2929 20.7071L4.29289 13.7071C3.90237 13.3166 3.90237 12.6834 4.29289 12.2929C4.68342 11.9024 5.31658 11.9024 5.70711 12.2929L11 17.5858V4C11 3.44772 11.4477 3 12 3Z" 
-                    fill="#FF0000"
+
+          {/* Right: Quick Booking Form */}
+          <div className="lg:col-span-5 relative">
+            <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-full z-0" />
+            <div className="glassmorphism p-6 sm:p-8 w-full shadow-2xl relative z-10 rounded-sm border-t border-white/20">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-primary/20 to-transparent rounded-tr-sm" />
+              <h3 className="text-3xl font-display font-bold text-white mb-2 italic">
+                Book Your Detail
+              </h3>
+              <p className="text-gray-400 text-xs uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                Limited Slots Available This Week
+              </p>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 block font-body not-italic">
+                    Vehicle Info
+                  </label>
+                  <input
+                    className="w-full bg-black/40 border border-white/10 text-white placeholder-gray-600 focus:ring-primary focus:border-primary p-4 text-sm rounded-none transition-colors hover:border-white/20"
+                    placeholder="e.g. 2023 Porsche 911 GT3"
+                    type="text"
+                    value={heroVehicle}
+                    onChange={(e) => setHeroVehicle(e.target.value)}
                   />
-                </g>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-6 md:py-12 bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* The Signature Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
-              <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg font-medium text-sm">
-                MOST POPULAR
-              </div>
-              <div className="bg-primary text-white p-6">
-                <h3 className="text-2xl font-bold mb-2">The Signature</h3>
-                <p className="text-3xl font-bold">$255</p>
-                <p className="text-sm mt-2">Interior & Exterior Detail</p>
-              </div>
-              <div className="p-6">
-                {/* Tab Navigation */}
-                <div className="flex border-b border-gray-200 mb-4">
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.signature === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("signature", "interior")}
-                  >
-                    Interior
-                  </button>
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.signature === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("signature", "exterior")}
-                  >
-                    Exterior
-                  </button>
                 </div>
-                
-                {/* Interior Features */}
-                <div className={activeTab.signature === "interior" ? "block" : "hidden"}>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Full interior deep vacuum</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Wipe down of all surfaces</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Steam cleaning of cracks & crevices</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                      <span className="text-gray-700">See full details on services page</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                {/* Exterior Features */}
-                <div className={activeTab.signature === "exterior" ? "block" : "hidden"}>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Full vehicle pre rinse</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Paint decontamination</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">6-8 month sealant</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                      <span className="text-gray-700">See full details on services page</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <Link 
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/GRM2YZAKP4ONQJTU7CRS4DGI" 
-                  className="btn-primary w-full mt-6 text-center block"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </div>
-            
-            {/* The Diamond Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-[#34eba1] p-6">
-                <h3 className="text-2xl font-bold mb-2 text-white">The Diamond</h3>
-                <p className="text-3xl font-bold text-white">$495</p>
-                <p className="text-sm mt-2 text-white">Interior & Exterior Detail</p>
-              </div>
-              <div className="p-6">
-                {/* Tab Navigation */}
-                <div className="flex border-b border-gray-200 mb-4">
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.diamond === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("diamond", "interior")}
-                  >
-                    Interior
-                  </button>
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.diamond === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("diamond", "exterior")}
-                  >
-                    Exterior
-                  </button>
-                </div>
-                
-                {/* Interior Features */}
-                <div className={activeTab.diamond === "interior" ? "block" : "hidden"}>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Full interior deep vacuum</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Heated shampoo extraction</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Leather & vinyl conditioning</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                      <span className="text-gray-700">See full details on services page</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                {/* Exterior Features */}
-                <div className={activeTab.diamond === "exterior" ? "block" : "hidden"}>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Clay bar treatment</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Machine applied ceramic wax</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Light polish & undercarriage wash</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                      <span className="text-gray-700">See full details on services page</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <Link 
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/NXJA3PDFZXDV3GT4K2JTKDPX" 
-                  className="btn-primary w-full mt-6 text-center block"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </div>
-            
-            {/* The Basic Package */}
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-secondary text-white p-6">
-                <h3 className="text-2xl font-bold mb-2">The Basic</h3>
-                <p className="text-3xl font-bold">$185</p>
-                <p className="text-sm mt-2">Interior & Exterior Detail</p>
-              </div>
-              <div className="p-6">
-                {/* Tab Navigation */}
-                <div className="flex border-b border-gray-200 mb-4">
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "interior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("basic", "interior")}
-                  >
-                    Interior
-                  </button>
-                  <button 
-                    className={`py-2 px-4 font-medium text-sm ${activeTab.basic === "exterior" ? "border-b-2 border-primary text-primary" : "text-gray-500"}`}
-                    onClick={() => handleTabChange("basic", "exterior")}
-                  >
-                    Exterior
-                  </button>
-                </div>
-                
-                {/* Interior Features */}
-                <div className={activeTab.basic === "interior" ? "block" : "hidden"}>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Full interior vacuum</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Wipe down of all surfaces</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Air freshener</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                      <span className="text-gray-700">See full details on services page</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                {/* Exterior Features */}
-                <div className={activeTab.basic === "exterior" ? "block" : "hidden"}>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Foam wash</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Wheels & tires cleaned</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircleIcon className="h-6 w-6 text-primary flex-shrink-0 mr-2" />
-                      <span className="text-gray-800">Tire shine</span>
-                    </li>
-                    <li className="flex items-start">
-                      <ClockIcon className="h-6 w-6 text-gray-400 flex-shrink-0 mr-2" />
-                      <span className="text-gray-700">See full details on services page</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <Link 
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/WDQ62TG7WUZJ7D6J3N7KY6IO" 
-                  className="btn-primary w-full mt-6 text-center block"
-                >
-                  Book Now
-                </Link>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link href="/services" className="btn-outline">
-              View All Services
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Before & After Section */}
-      <section id="before-after" className="pt-12 md:pt-20 pb-6 md:pb-8 bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">See the Difference</h2>
-          </div>
-
-          <div className="before-after-container max-w-4xl mx-auto">
-            {/* Navigation buttons for before/after pairs */}
-            <div className="before-after-nav flex justify-center mb-8">
-              <button className="before-after-btn active" data-pair="0">1</button>
-              <button className="before-after-btn" data-pair="1">2</button>
-              <button className="before-after-btn" data-pair="2">3</button>
-            </div>
-
-            {/* Timer bar */}
-            <div className="before-after-timer-bar-wrapper mb-6">
-              <div className="before-after-timer-bar" id="before-after-timer-bar"></div>
-            </div>
-
-            <div className="before-after-wrapper relative">
-              <img className="before-image absolute top-0 left-0 w-full h-full object-cover" id="before-image" src="/Images/beforeAndAfter/passengerBefore.jpg" alt="Before Detailing - Passenger Interior" />
-              <img className="after-image absolute top-0 left-0 w-full h-full object-cover" id="after-image" src="/Images/beforeAndAfter/passengerAfter.jpg" alt="After Detailing - Passenger Interior" />
-
-              <div className="slider-line"></div>
-
-              <div className="slider-handle absolute top-1/2 transform -translate-y-1/2 cursor-grab bg-white border-2 border-primary rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
-                <div className="slider-arrows flex">
-                  <div className="arrow-left text-primary font-bold">❮</div>
-                  <div className="arrow-right text-primary font-bold">❯</div>
-                </div>
-              </div>
-
-              <div className="slider-labels absolute top-4 left-0 w-full flex justify-between px-4">
-                <span className="before-label bg-black bg-opacity-70 text-white px-3 py-1 rounded text-sm font-bold uppercase">Before</span>
-                <span className="after-label bg-black bg-opacity-70 text-white px-3 py-1 rounded text-sm font-bold uppercase">After</span>
-              </div>
-            </div>
-
-            <div className="drag-instruction text-center mt-6 text-gray-600">
-              Drag slider to compare
-            </div>
-          </div>
-        </div>
-        <BeforeAfterSlider />
-      </section>
-
-      {/* Features */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Why Choose Us?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="relative overflow-hidden rounded-lg shadow-md h-80">
-              <Image 
-                src="/Images/webPhotos/mobileServiceCard.jpg" 
-                alt="Mobile Service" 
-                fill 
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6 text-center">
-                <TruckIcon className="w-12 h-12 text-white mb-4" />
-                <h3 className="text-xl font-bold mb-2 text-white">Mobile Service</h3>
-                <p className="text-white">We come to your home, office, or any location convenient for you.</p>
-              </div>
-            </div>
-            <div className="relative overflow-hidden rounded-lg shadow-md h-80">
-              <Image 
-                src="/Images/webPhotos/PremiumProductsCard.jpg" 
-                alt="Premium Products" 
-                fill 
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6 text-center">
-                <SparklesIcon className="w-12 h-12 text-white mb-4" />
-                <h3 className="text-xl font-bold mb-2 text-white">Premium Products</h3>
-                <p className="text-white">We use high-quality, eco-friendly products for a superior finish.</p>
-              </div>
-            </div>
-            <div className="relative overflow-hidden rounded-lg shadow-md h-80">
-              <Image 
-                src="/Images/webPhotos/SatisfactionGuaranteedCard.jpg" 
-                alt="Satisfaction Guaranteed" 
-                fill 
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6 text-center">
-                <CheckCircleIcon className="w-12 h-12 text-white mb-4" />
-                <h3 className="text-xl font-bold mb-2 text-white">Satisfaction Guaranteed</h3>
-                <p className="text-white">Your satisfaction is our priority. We don't leave until you're happy.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Customers Say</h2>
-            <p className="text-lg text-gray-800 max-w-3xl mx-auto">
-              Don't just take our word for it. Here's what our satisfied customers have to say about our services.
-            </p>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-8 items-stretch">
-            {/* Image on the left */}
-            <div className="md:w-1/2 relative rounded-lg overflow-hidden shadow-md h-auto">
-              <div className="w-full h-[300px] md:h-full relative">
-                <Image 
-                  src="/Images/webPhotos/banner2.jpeg" 
-                  alt="Professional detailing service" 
-                  fill
-                  className="object-cover rounded-lg"
-                />
-              </div>
-            </div>
-
-            {/* Testimonials on the right */}
-            <div className="md:w-1/2 flex flex-col mt-4 md:mt-24">
-              {/* Testimonials Container */}
-              <div className="relative flex-1 min-h-[300px] md:min-h-[350px] mb-4 overflow-hidden">
-                {testimonials.map((testimonial, index) => (
-                  <div
-                    key={index}
-                    className={`absolute inset-0 transition-all duration-600 ease-in-out ${
-                      index === activeTestimonial
-                        ? "opacity-100 translate-x-0 z-10 visible"
-                        : index < activeTestimonial
-                        ? "opacity-0 -translate-x-full z-0 invisible"
-                        : "opacity-0 translate-x-full z-0 invisible"
-                    }`}
-                  >
-                    <div className="bg-gray-100 p-6 rounded-lg shadow-sm h-full flex flex-col border-b-4 border-primary">
-                      <p className="text-gray-800 mb-4 flex-1">
-                        "{testimonial.text}"
-                      </p>
-                      <div className="mt-auto flex items-center justify-between">
-                        <div className="flex text-primary">
-                          {[...Array(5)].map((_, i) => (
-                            <StarIcon key={i} className="h-5 w-5 fill-current" />
-                          ))}
-                        </div>
-                        <div className="text-right">
-                          <h4 className="font-bold">{testimonial.author}</h4>
-                        </div>
-                      </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 block font-body not-italic">
+                    Service Tier
+                  </label>
+                  <div className="relative">
+                    <select
+                      value={heroService}
+                      onChange={(e) => setHeroService(e.target.value)}
+                      className="w-full bg-black/40 border border-white/10 text-white focus:ring-primary focus:border-primary p-4 text-sm rounded-none appearance-none cursor-pointer hover:border-white/20 transition-colors"
+                    >
+                      <option className="bg-zinc-900" value="">
+                        Select Package
+                      </option>
+                      <option className="bg-zinc-900" value="signature">
+                        The Signature — Interior &amp; Exterior
+                      </option>
+                      <option className="bg-zinc-900" value="diamond">
+                        The Diamond — Interior &amp; Exterior
+                      </option>
+                      <option className="bg-zinc-900" value="basic">
+                        The Basic — Interior &amp; Exterior
+                      </option>
+                      <option className="bg-zinc-900" value="fullinterior">
+                        The Full Interior — Interior Only
+                      </option>
+                      <option className="bg-zinc-900" value="fullexterior">
+                        The Full Exterior — Exterior Only
+                      </option>
+                    </select>
+                    <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
+                      <span className="material-symbols-outlined">
+                        expand_more
+                      </span>
                     </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleHeroSubmit}
+                  className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-5 uppercase tracking-[0.2em] text-xs transition-all shadow-[0_4px_20px_rgba(210,31,60,0.4)] mt-4 flex justify-center items-center gap-2 group cursor-pointer"
+                >
+                  Get Estimate{" "}
+                  <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">
+                    arrow_forward
+                  </span>
+                </button>
+                <p className="text-center text-[10px] text-gray-500 mt-4">
+                  No payment required for estimate.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ===== SERVICES ===== */}
+      <section className="py-24 bg-[#0A0A0A] relative overflow-hidden" id="services">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-zinc-900/30 -skew-x-12 transform origin-top-right translate-x-32" />
+        <div className="container mx-auto px-6 lg:px-8 mb-16 relative z-10 flex flex-col lg:flex-row items-end justify-between gap-8">
+          <div>
+            <span className="text-primary font-bold tracking-[0.3em] uppercase text-xs mb-4 block flex items-center gap-2">
+              <span className="w-8 h-px bg-primary" /> Curated Services
+            </span>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white italic leading-none">
+              PRECISION <br />
+              PACKAGES
+            </h2>
+          </div>
+          <p className="text-gray-400 max-w-md text-sm leading-relaxed mb-2">
+            Tailored solutions for every vehicle. From daily drivers to
+            concours-ready classics, we provide the level of care your machine
+            deserves.
+          </p>
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 relative z-10">
+          {/* Signature */}
+          <div className="group bg-zinc-900/50 border border-white/5 hover:border-primary/50 transition-all duration-500 relative overflow-hidden flex flex-col h-full">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0" />
+            <div className="absolute top-0 right-0 p-6 opacity-10 font-display font-black text-8xl text-white group-hover:text-primary transition-colors duration-500 select-none">
+              01
+            </div>
+            <div className="relative z-10 p-8 flex flex-col h-full">
+              <div className="mb-6">
+                <div className="bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest py-1.5 px-3 inline-block mb-4 rounded-full font-body not-italic">
+                  Most Popular
+                </div>
+                <h3 className="text-3xl font-display italic text-white mb-2 group-hover:text-primary transition-colors">
+                  The Signature
+                </h3>
+              </div>
+              <div className="w-full h-px bg-white/10 mb-6 group-hover:bg-primary/30 transition-colors" />
+              <ul className="space-y-4 text-sm font-light text-gray-300 mb-8 flex-grow">
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
+                  <span>Deep interior vacuum &amp; steam clean</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
+                  <span>Leather conditioning &amp; UV protection</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
+                  <span>Foam cannon wash &amp; silica sealant</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">check_circle</span>
+                  <span>Wheel face &amp; barrel cleaning</span>
+                </li>
+              </ul>
+              <Link
+                href="/book?service=signature"
+                className="w-full border border-white/20 bg-transparent text-white py-4 font-bold uppercase tracking-widest text-xs hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 flex justify-center items-center gap-2 group-hover:shadow-[0_0_15px_rgba(210,31,60,0.3)]"
+              >
+                Select Package{" "}
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Diamond */}
+          <div className="group bg-white text-black relative overflow-hidden transform md:-translate-y-4 shadow-2xl flex flex-col h-full border-t-4 border-primary">
+            <div className="absolute top-0 right-0 p-6 opacity-5 font-display font-black text-8xl text-black select-none">
+              02
+            </div>
+            <div className="relative z-10 p-8 flex flex-col h-full">
+              <div className="mb-6">
+                <div className="bg-black text-white text-[10px] font-bold uppercase tracking-widest py-1.5 px-3 inline-block mb-4 rounded-full font-body not-italic">
+                  Showroom Ready
+                </div>
+                <h3 className="text-3xl font-display italic text-black mb-2">
+                  The Diamond
+                </h3>
+              </div>
+              <div className="w-full h-px bg-black/10 mb-6" />
+              <ul className="space-y-4 text-sm font-medium text-gray-800 mb-8 flex-grow">
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
+                  <span>Clay Bar decontamination treatment</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
+                  <span>1-Step paint correction (Swirl removal)</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
+                  <span>6-Month ceramic sealant application</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-primary text-lg shrink-0">verified</span>
+                  <span>Engine bay detail &amp; dressing</span>
+                </li>
+              </ul>
+              <Link
+                href="/book?service=diamond"
+                className="w-full bg-primary text-white py-4 font-bold uppercase tracking-widest text-xs hover:bg-primary-dark transition-all duration-300 flex justify-center items-center gap-2 shadow-lg hover:shadow-xl"
+              >
+                Select Package{" "}
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Standard */}
+          <div className="group bg-zinc-900/50 border border-white/5 hover:border-gray-500/50 transition-all duration-500 relative overflow-hidden flex flex-col h-full">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-0" />
+            <div className="absolute top-0 right-0 p-6 opacity-10 font-display font-black text-8xl text-white select-none">
+              03
+            </div>
+            <div className="relative z-10 p-8 flex flex-col h-full">
+              <div className="mb-6">
+                <div className="bg-gray-800 text-gray-300 text-[10px] font-bold uppercase tracking-widest py-1.5 px-3 inline-block mb-4 rounded-full font-body not-italic">
+                  Maintenance
+                </div>
+                <h3 className="text-3xl font-display italic text-white mb-2">
+                  The Standard
+                </h3>
+              </div>
+              <div className="w-full h-px bg-white/10 mb-6 group-hover:bg-gray-500/30 transition-colors" />
+              <ul className="space-y-4 text-sm font-light text-gray-300 mb-8 flex-grow">
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
+                  <span>Interior vacuum &amp; surface wipe down</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
+                  <span>Safe hand wash &amp; microfiber dry</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
+                  <span>Non-sling tire dressing</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="material-symbols-outlined text-gray-500 text-lg shrink-0">check_circle</span>
+                  <span>Streak-free glass cleaning</span>
+                </li>
+              </ul>
+              <Link
+                href="/book?service=basic"
+                className="w-full border border-white/20 bg-transparent text-white py-4 font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-black transition-all duration-300 flex justify-center items-center gap-2"
+              >
+                Select Package{" "}
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-6 lg:px-8 relative z-10 mt-10 text-center">
+          <Link href="/services" className="text-primary text-sm font-medium hover:underline transition-all inline-flex items-center gap-1">
+            View more services <span className="material-symbols-outlined text-sm">arrow_forward</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* ===== BEFORE & AFTER ===== */}
+      <section
+        className="py-32 bg-[#111] text-center overflow-hidden border-t border-white/5 relative"
+        id="difference"
+      >
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-[#111] to-[#111] opacity-60" />
+        </div>
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+          <h2 className="text-[4rem] sm:text-[8rem] lg:text-[14rem] font-display font-black text-white/5 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0 whitespace-nowrap select-none pointer-events-none">
+            RESTORE
+          </h2>
+          <div className="relative z-10 mb-12">
+            <span className="text-primary font-bold tracking-[0.3em] uppercase text-xs mb-2 block font-body not-italic">
+              The Difference
+            </span>
+            <h3 className="text-4xl lg:text-5xl font-display font-bold text-white mt-1">
+              Before &amp; After
+            </h3>
+          </div>
+          <BeforeAfterSlider />
+        </div>
+      </section>
+
+      {/* ===== FEATURES / THE PROCESS ===== */}
+      <section className="py-32 bg-[#0A0A0A]" id="process">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Image */}
+            <div className="relative w-full aspect-[4/5] group">
+              <div className="hidden sm:block absolute top-[-20px] left-[-20px] w-1/2 h-1/2 border-t-2 border-l-2 border-primary/50 z-0" />
+              <div className="hidden sm:block absolute bottom-[-20px] right-[-20px] w-1/2 h-1/2 border-b-2 border-r-2 border-primary/50 z-0" />
+              <div className="absolute inset-0 bg-gray-900 z-10 overflow-hidden shadow-2xl">
+                <Image
+                  src="/Images/webPhotos/mobileServiceCard.jpg"
+                  alt="Detailer polishing a car"
+                  fill
+                  className="object-cover opacity-90 grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+                <div className="absolute bottom-0 left-0 p-8 w-full">
+                  <div className="flex items-end gap-3 border-b border-white/20 pb-4 mb-4">
+                    <span className="text-5xl font-display font-black text-white italic leading-none">
+                      LUKE&apos;S
+                    </span>
+                    <span className="text-primary font-bold tracking-widest text-xs mb-1 bg-white/10 px-2 py-1 rounded-sm backdrop-blur-sm font-body not-italic">
+                      GUARANTEE
+                    </span>
+                  </div>
+                  <p className="text-gray-300 text-sm font-light">
+                    Certified professionals. Insured service. Unmatched results.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Features */}
+            <div className="flex flex-col pl-0 lg:pl-12">
+              <div className="w-20 h-1.5 bg-primary mb-8" />
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-6 sm:mb-8 leading-tight">
+                NOT JUST A WASH. <br />
+                <span className="italic text-gray-500 font-serif">
+                  ENGINEERED CARE.
+                </span>
+              </h2>
+              <p className="text-gray-400 mb-8 sm:mb-10 text-base sm:text-lg leading-relaxed font-light border-l border-white/10 pl-6">
+                Your vehicle is a complex machine. Luke&apos;s Mobile Detailing
+                employs advanced chemistry and professional-grade tools to safely
+                lift dirt and protect your investment without inducing swirls.
+              </p>
+              <div className="space-y-8">
+                <div className="flex gap-6 items-start group">
+                  <div className="text-primary shrink-0 transition-colors duration-300">
+                    <span className="material-symbols-outlined text-5xl">
+                      location_on
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors font-body not-italic">
+                      We Come to You
+                    </h4>
+                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+                      Home, office, or anywhere that works for you. No drop-off,
+                      no wait—we bring the detail to your doorstep.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-6 items-start group">
+                  <div className="text-primary shrink-0 transition-colors duration-300">
+                    <span className="material-symbols-outlined text-5xl">
+                      auto_awesome
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors font-body not-italic">
+                      Premium Products
+                    </h4>
+                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+                      Professional-grade formulas and eco-conscious choices for
+                      a superior finish that lasts.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-6 items-start group">
+                  <div className="text-primary shrink-0 transition-colors duration-300">
+                    <span className="material-symbols-outlined text-5xl">
+                      verified
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors font-body not-italic">
+                      Satisfaction Guaranteed
+                    </h4>
+                    <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
+                      We don&apos;t consider the job done until you do. Your
+                      approval is what matters most.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== TESTIMONIALS ===== */}
+      <section className="relative bg-[#0A0A0A] overflow-hidden py-0">
+        <div className="relative">
+          {/* Scrolling rows */}
+          <div className="py-12 space-y-8">
+            {/* Row 1 - scrolls left */}
+            <div className="overflow-hidden">
+              <div ref={row1Ref} className="flex gap-8 w-max">
+                {[...reviewsRow1, ...reviewsRow1].map((review, i) => (
+                  <div key={`r1-${i}`} className="w-[300px] sm:w-[400px] flex-shrink-0 bg-zinc-900/80 border border-white/10 rounded-sm p-5 sm:p-7">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="text-white text-sm font-bold">{review.author}</p>
+                        <p className="text-gray-500 text-[11px] mt-0.5">Posted on Google</p>
+                      </div>
+                      <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    </div>
+                    <div className="flex gap-0.5 mb-4">
+                      {[...Array(5)].map((_, s) => (
+                        <span key={s} className="material-symbols-outlined text-amber-400 text-base">star</span>
+                      ))}
+                    </div>
+                    <p className="text-gray-200 text-[15px] leading-relaxed">{review.text}</p>
                   </div>
                 ))}
               </div>
+            </div>
 
-              {/* Navigation Controls */}
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <button
-                  onClick={prevTestimonial}
-                  className="w-10 h-10 rounded-full bg-gray-100 border-2 border-gray-300 text-gray-700 hover:border-primary hover:bg-primary hover:text-white active:bg-primary active:text-white flex items-center justify-center transition-all duration-300"
-                  aria-label="Previous testimonial"
-                >
-                  <ChevronLeftIcon className="h-5 w-5 text-current" />
-                </button>
-                
-                <div className="flex gap-2">
-                  {testimonials.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => goToTestimonial(index)}
-                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                        index === activeTestimonial
-                          ? "bg-primary w-6"
-                          : "bg-gray-300 hover:bg-gray-400"
-                      }`}
-                      aria-label={`Go to testimonial ${index + 1}`}
-                    />
-                  ))}
-                </div>
-                
-                <button
-                  onClick={nextTestimonial}
-                  className="w-10 h-10 rounded-full bg-gray-100 border-2 border-gray-300 text-gray-700 hover:border-primary hover:bg-primary hover:text-white active:bg-primary active:text-white flex items-center justify-center transition-all duration-300"
-                  aria-label="Next testimonial"
-                >
-                  <ChevronRightIcon className="h-5 w-5 text-current" />
-                </button>
+            {/* Row 2 - scrolls right */}
+            <div className="overflow-hidden">
+              <div ref={row2Ref} className="flex gap-8 w-max">
+                {[...reviewsRow2, ...reviewsRow2].map((review, i) => (
+                  <div key={`r2-${i}`} className="w-[300px] sm:w-[400px] flex-shrink-0 bg-zinc-900/80 border border-white/10 rounded-sm p-5 sm:p-7">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="text-white text-sm font-bold">{review.author}</p>
+                        <p className="text-gray-500 text-[11px] mt-0.5">Posted on Google</p>
+                      </div>
+                      <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                    </div>
+                    <div className="flex gap-0.5 mb-4">
+                      {[...Array(5)].map((_, s) => (
+                        <span key={s} className="material-symbols-outlined text-amber-400 text-base">star</span>
+                      ))}
+                    </div>
+                    <p className="text-gray-200 text-[15px] leading-relaxed">{review.text}</p>
+                  </div>
+                ))}
               </div>
+            </div>
+          </div>
 
-              {/* Link to all reviews */}
-              <div className="text-center mt-4">
-                <Link href="/reviews" className="btn-outline">
-                  View All Reviews
-                </Link>
-              </div>
+          {/* Left/right edge fades */}
+          <div className="absolute inset-y-0 left-0 w-60 md:w-96 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/70 to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-60 md:w-96 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/70 to-transparent z-10 pointer-events-none" />
+
+          {/* Center overlay */}
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+            <div className="absolute inset-0 bg-[#0A0A0A]/40" />
+            <div className="relative text-center px-6 pointer-events-auto">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white tracking-tight uppercase leading-tight mb-8 max-w-3xl drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+                Real Results From <span className="text-primary">Real Customers</span>
+              </h2>
+              <Link
+                href="/reviews"
+                className="bg-primary text-white px-10 py-4 font-bold uppercase text-xs tracking-widest hover:bg-primary-dark transition-all shadow-[0_0_20px_rgba(210,31,60,0.3)] hover:shadow-[0_0_30px_rgba(210,31,60,0.5)] transform hover:-translate-y-0.5 inline-block"
+              >
+                View All Reviews
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Service Area */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container-custom">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center md:text-left">Our Service Area</h2>
-          
-          {/* Map - appears right after title on mobile */}
-          <div className="mb-6 md:hidden bg-white rounded-lg p-4 h-80 overflow-hidden shadow-sm">
+      {/* ===== SERVICE AREA ===== */}
+      <section
+        className="relative bg-[#050505] min-h-[600px] flex items-center border-t border-white/5"
+        id="locations"
+      >
+        <div className="absolute inset-0 z-0">
+          <div className="hidden lg:block w-full h-full">
             <ServiceAreaMap />
           </div>
-
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="md:w-1/2">
-              <p className="text-lg text-gray-800 mb-6">
-                We provide our mobile detailing services throughout Yuba City, Marysville, and surrounding areas in California.
-              </p>
-              <ul className="grid grid-cols-2 gap-2">
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Yuba City</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Marysville</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Live Oak</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Olivehurst</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Linda</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Gridley</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Sutter</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Plumas Lake</span>
-                </li>
-                <li className="flex items-center text-black">
-                  <MapPinIcon className="h-5 w-5 text-primary mr-2" />
-                  <span>Meridian</span>
-                </li>
-              </ul>
-              <p className="mt-6 text-gray-700">
-                Not sure if we service your area? <Link href="/contact" className="text-primary hover:underline">Contact us</Link> to find out!
-              </p>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/90 to-transparent" />
+        </div>
+        <div className="container mx-auto px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 py-20">
+          <div className="bg-black/80 backdrop-blur-xl p-6 sm:p-10 border-l-4 border-primary text-white shadow-2xl max-w-lg">
+            <div className="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 font-body not-italic">
+              Serving Northern California
             </div>
-            <div className="hidden md:block md:w-1/2 bg-white rounded-lg p-4 h-80 overflow-hidden shadow-sm">
+            <h2 className="text-4xl font-display font-bold mb-6">
+              Service Area
+            </h2>
+            <p className="text-gray-400 mb-8 text-sm leading-relaxed border-b border-white/10 pb-6">
+              We primarily service the greater Yuba-Sutter region. Travel fees
+              may apply for locations outside our primary radius.
+            </p>
+            <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-8">
+              {[
+                "Yuba City",
+                "Marysville",
+                "Sutter",
+                "Plumas Lake",
+                "Live Oak",
+                "Wheatland",
+                "Olivehurst",
+                "Gridley",
+              ].map((city, i) => (
+                <div
+                  key={city}
+                  className="flex items-center gap-3 text-sm text-gray-300 font-medium group cursor-default"
+                >
+                  <span
+                    className={`w-2 h-2 rounded-full group-hover:scale-150 transition-transform ${
+                      i < 4 ? "bg-primary" : "bg-gray-600 group-hover:bg-primary"
+                    }`}
+                  />
+                  {city}
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile map */}
+            <div className="lg:hidden mb-6 h-48 overflow-hidden rounded-sm border border-white/10">
               <ServiceAreaMap />
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Call to Action */}
-      <section className="py-12 md:py-20 bg-primary text-white">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Vehicle?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Book your mobile detailing service today and experience the difference.
-          </p>
-          <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD " className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
-            Book Now
-          </Link>
+            <Link
+              href="/contact"
+              className="w-full bg-white text-black font-bold uppercase tracking-widest text-xs py-4 hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-2 group"
+            >
+              Check My Location{" "}
+              <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
+                arrow_outward
+              </span>
+            </Link>
+          </div>
         </div>
       </section>
     </div>
