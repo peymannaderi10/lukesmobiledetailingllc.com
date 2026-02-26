@@ -60,7 +60,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
   useEffect(() => {
     if (open) {
-      const t = setTimeout(() => setShowOpenLogo(true), 500);
+      const t = setTimeout(() => setShowOpenLogo(true), 250);
       return () => clearTimeout(t);
     } else {
       setShowOpenLogo(false);
