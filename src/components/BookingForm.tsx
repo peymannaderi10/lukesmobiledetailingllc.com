@@ -50,7 +50,6 @@ const SERVICE_IMAGES: Record<string, string> = {
 
 const VEHICLE_ICONS: Record<string, string> = {
   sedan: "directions_car",
-  hatchback: "airport_shuttle",
   suv: "directions_bus",
   truck: "local_shipping",
   xl: "rv_hookup",
@@ -790,7 +789,7 @@ export default function BookingForm() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8 mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-12">
           {(
             Object.entries(VEHICLES) as [VehicleKey, (typeof VEHICLES)[VehicleKey]][]
           ).map(([key, v]) => {
@@ -820,11 +819,10 @@ export default function BookingForm() {
                 </h3>
                 <div className="w-8 h-0.5 bg-primary/50 mb-4" />
                 <p className="text-sm text-gray-400 leading-relaxed font-light not-italic">
-                  {key === "sedan" && "Cars, coupes, sports cars"}
-                  {key === "hatchback" && "Wagons, hatchbacks"}
-                  {key === "suv" && "Crossovers, mid-size SUVs"}
-                  {key === "truck" && "Pickups, trucks"}
-                  {key === "xl" && "Full-size SUVs, vans"}
+                  {key === "sedan" && "Cars, coupes, hatchbacks"}
+                  {key === "suv" && "SUVs, compact pickups"}
+                  {key === "truck" && "Midsize pickups"}
+                  {key === "xl" && "Heavy duty pickups, vans"}
                 </p>
               </button>
             );

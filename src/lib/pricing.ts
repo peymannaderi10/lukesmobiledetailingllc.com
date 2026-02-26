@@ -105,11 +105,10 @@ export const SERVICE_INCLUDES: Record<keyof typeof SERVICES, {
 export type ServiceKey = keyof typeof SERVICES;
 
 export const VEHICLES = {
-  sedan:     { name: 'Sedan / Coupe',      multiplier: 1.00 },
-  hatchback: { name: 'Hatchback / Wagon',  multiplier: 1.00 },
-  suv:       { name: 'SUV / Crossover',    multiplier: 1.15 },
-  truck:     { name: 'Pickup Truck',       multiplier: 1.20 },
-  xl:        { name: 'XL SUV / Van',       multiplier: 1.35 },
+  sedan: { name: 'Sedan / Coupe' },
+  suv:   { name: 'SUV / Compact Pick Up' },
+  truck: { name: 'Midsize Pick Up' },
+  xl:    { name: 'Heavy Duty Pick Up / Van' },
 } as const;
 
 export type VehicleKey = keyof typeof VEHICLES;
@@ -122,8 +121,8 @@ export const CONDITIONS = {
 
 export type ConditionKey = keyof typeof CONDITIONS;
 
-/** Price matrix: service -> vehicle -> condition -> price. hatchback uses sedan prices. */
-const PRICE_MATRIX: Record<ServiceKey, Record<Exclude<VehicleKey, 'hatchback'>, Record<ConditionKey, number>>> = {
+/** Price matrix: service -> vehicle -> condition -> price. Basic has no filthy tier; dirty used as fallback. */
+const PRICE_MATRIX: Record<ServiceKey, Record<VehicleKey, Partial<Record<ConditionKey, number>>>> = {
   signature: {
     sedan: { clean: 230, dirty: 260, filthy: 330 },
     suv:   { clean: 245, dirty: 275, filthy: 345 },
@@ -149,10 +148,10 @@ const PRICE_MATRIX: Record<ServiceKey, Record<Exclude<VehicleKey, 'hatchback'>, 
     xl:    { clean: 135, dirty: 175, filthy: 195 },
   },
   basic: {
-    sedan: { clean: 150, dirty: 195, filthy: 195 },
-    suv:   { clean: 155, dirty: 225, filthy: 225 },
-    truck: { clean: 165, dirty: 235, filthy: 235 },
-    xl:    { clean: 195, dirty: 275, filthy: 275 },
+    sedan: { clean: 150, dirty: 195 },
+    suv:   { clean: 155, dirty: 225 },
+    truck: { clean: 165, dirty: 235 },
+    xl:    { clean: 195, dirty: 275 },
   },
 };
 
@@ -173,8 +172,8 @@ export const ADDONS = {
 export type AddonKey = keyof typeof ADDONS;
 
 function getBasePrice(serviceKey: ServiceKey, vehicleKey: VehicleKey, conditionKey: ConditionKey): number {
-  const vehicle = vehicleKey === 'hatchback' ? 'sedan' : vehicleKey;
-  return PRICE_MATRIX[serviceKey][vehicle][conditionKey];
+  const matrix = PRICE_MATRIX[serviceKey][vehicleKey];
+  return (matrix[conditionKey] ?? matrix.dirty ?? matrix.clean ?? 0) as number;
 }
 
 export function calculateQuote(params: {
@@ -185,7 +184,6 @@ export function calculateQuote(params: {
 }) {
   const service = SERVICES[params.serviceKey];
   const basePrice = getBasePrice(params.serviceKey, params.vehicleKey, params.conditionKey);
-  const vMult = VEHICLES[params.vehicleKey].multiplier;
   const addons = params.addonKeys.map(k => ADDONS[k]);
 
   const addonTotal = addons.reduce((sum, a) => sum + a.price, 0);
@@ -193,7 +191,7 @@ export function calculateQuote(params: {
 
   return {
     totalPrice: basePrice + addonTotal,
-    durationHours: +(service.baseDuration * vMult + addonDur).toFixed(1),
+    durationHours: +(service.baseDuration + addonDur).toFixed(1),
     breakdown: {
       base: basePrice,
       vehicleAdj: 0,
