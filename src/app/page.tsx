@@ -208,7 +208,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 mb-8 sm:mb-10">
               <div>
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">53.0M <span className="text-primary">+</span></span>
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">55.4M <span className="text-primary">+</span></span>
                 <p className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 mt-1">Views Across All Platforms</p>
               </div>
             </div>
