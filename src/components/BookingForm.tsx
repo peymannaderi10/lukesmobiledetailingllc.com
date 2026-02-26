@@ -37,7 +37,7 @@ interface BookingResult {
 
 type ViewMode = "week" | "month";
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 5; // Add-ons step (renderStep4) temporarily skipped - may add back later
 
 const SERVICE_IMAGES: Record<string, string> = {
   signature: "/Images/webPhotos/mobileServiceCard.jpg",
@@ -291,8 +291,10 @@ export default function BookingForm() {
   }, [serviceKey]);
 
   const quote = useMemo(() => {
-    if (!serviceKey || !vehicleKey || !conditionKey) return null;
-    return calculateQuote({ serviceKey, vehicleKey, conditionKey, addonKeys });
+    if (!serviceKey || !vehicleKey) return null;
+    if (serviceKey !== "basic" && !conditionKey) return null;
+    const effectiveCondition: ConditionKey = serviceKey === "basic" ? "clean" : conditionKey!;
+    return calculateQuote({ serviceKey, vehicleKey, conditionKey: effectiveCondition, addonKeys });
   }, [serviceKey, vehicleKey, conditionKey, addonKeys]);
 
   const parseSlots = useCallback(
@@ -381,7 +383,7 @@ export default function BookingForm() {
   }, [step, serviceKey, fetchRangeQuiet]);
 
   useEffect(() => {
-    if (step !== 5 || !serviceKey || viewMode !== "week") return;
+    if (step !== 4 || !serviceKey || viewMode !== "week") return;
     const start = fmtDateKey(weekStart);
     const end = fmtDateKey(addDays(weekStart, 5));
     fetchRange(start, end);
@@ -392,14 +394,14 @@ export default function BookingForm() {
     [selectedDate, slotsByDate]
   );
 
+  const skipConditionStep = serviceKey === "basic";
   const canContinue = useMemo(() => {
     switch (step) {
       case 1: return !!serviceKey;
       case 2: return !!vehicleKey;
-      case 3: return !!conditionKey;
-      case 4: return true;
-      case 5: return !!selectedSlot;
-      case 6:
+      case 3: return skipConditionStep ? true : !!conditionKey;
+      case 4: return !!selectedSlot;
+      case 5:
         return !!(
           firstName.trim() &&
           lastName.trim() &&
@@ -415,17 +417,25 @@ export default function BookingForm() {
         );
       default: return false;
     }
-  }, [step, serviceKey, vehicleKey, conditionKey, selectedSlot, firstName, lastName, email, phone, carInfo, carColor, streetAddress, city, state, zip]);
+  }, [step, serviceKey, vehicleKey, conditionKey, selectedSlot, firstName, lastName, email, phone, carInfo, carColor, streetAddress, city, state, zip, skipConditionStep]);
 
   const goNext = () => {
     if (step < TOTAL_STEPS && canContinue) {
-      setStep(step + 1);
+      if (step === 2 && skipConditionStep) {
+        setStep(4);
+      } else {
+        setStep(step + 1);
+      }
     }
   };
 
   const goBack = () => {
     if (step > 1) {
-      setStep(step - 1);
+      if (step === 4 && skipConditionStep) {
+        setStep(2);
+      } else {
+        setStep(step - 1);
+      }
       setFieldErrors({});
     }
   };
@@ -476,7 +486,7 @@ export default function BookingForm() {
           phone: phone.trim(),
           serviceKey,
           vehicleKey,
-          conditionKey,
+          conditionKey: serviceKey === "basic" ? "clean" : conditionKey!,
           addonKeys,
           carInfo: carInfo.trim(),
           carColor: carColor.trim(),
@@ -602,7 +612,12 @@ export default function BookingForm() {
   /*  Step Labels                                                       */
   /* ================================================================ */
 
-  const stepLabels = ["Service", "Vehicle", "Condition", "Add-ons", "Date", "Info"];
+  const stepLabels = skipConditionStep
+    ? ["Service", "Vehicle", "Date", "Info"]
+    : ["Service", "Vehicle", "Condition", "Date", "Info"];
+  const displayTotal = skipConditionStep ? 4 : 5;
+  const displayStep = skipConditionStep && step >= 4 ? step - 1 : step;
+  const stepToLabelIndex = skipConditionStep && step >= 4 ? step - 2 : step - 1;
 
   /* ================================================================ */
   /*  INPUT CLASS                                                       */
@@ -1302,9 +1317,11 @@ export default function BookingForm() {
                 <div className="mb-6 pb-6 border-b border-white/5">
                   <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 block not-italic">Vehicle</span>
                   <span className="text-white text-sm font-medium not-italic">{VEHICLES[vehicleKey!].name}</span>
-                  <div className="mt-2 text-xs text-gray-500 not-italic">
-                    Condition: <span className="text-white">{CONDITIONS[conditionKey!].name}</span>
-                  </div>
+                  {serviceKey !== "basic" && conditionKey && (
+                    <div className="mt-2 text-xs text-gray-500 not-italic">
+                      Condition: <span className="text-white">{CONDITIONS[conditionKey].name}</span>
+                    </div>
+                  )}
                 </div>
 
                 {(streetAddress || city || state || zip) && (
@@ -1396,18 +1413,18 @@ export default function BookingForm() {
         {/* Mobile: only current step title */}
         <div className="md:hidden mb-3">
           <span className="text-primary font-bold uppercase tracking-widest text-sm not-italic">
-            {stepLabels[step - 1]}
+            {stepLabels[stepToLabelIndex]}
           </span>
         </div>
         {/* Desktop: all step labels */}
         <div className="hidden md:flex justify-between items-center mb-4 text-xs font-bold uppercase tracking-widest text-gray-500">
           {stepLabels.map((label, i) => {
-            const s = i + 1;
-            const active = s === step;
-            const completed = s < step;
+            const stepForLabel = skipConditionStep && i >= 2 ? i + 2 : i + 1;
+            const active = stepForLabel === step;
+            const completed = stepForLabel < step;
             return (
               <span
-                key={s}
+                key={stepForLabel}
                 className={active ? "text-primary" : completed ? "text-white" : ""}
               >
                 {label}
@@ -1418,7 +1435,7 @@ export default function BookingForm() {
         <div className="w-full bg-zinc-800 h-1 rounded-full overflow-hidden">
           <div
             className="bg-primary h-full rounded-full shadow-[0_0_10px_rgba(210,31,60,0.5)] transition-all duration-500"
-            style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+            style={{ width: `${(displayStep / displayTotal) * 100}%` }}
           />
         </div>
         <div className="hidden md:flex justify-between mt-2">
@@ -1426,7 +1443,7 @@ export default function BookingForm() {
             Step 1
           </span>
           <span className="text-[10px] text-primary font-bold uppercase tracking-widest not-italic">
-            Step {step} of {TOTAL_STEPS}
+            Step {displayStep} of {displayTotal}
           </span>
         </div>
       </div>
@@ -1436,12 +1453,11 @@ export default function BookingForm() {
         {step === 1 && renderStep1()}
         {step === 2 && renderStep2()}
         {step === 3 && renderStep3()}
-        {step === 4 && renderStep4()}
-        {step === 5 && renderStep5()}
-        {step === 6 && renderStep6()}
+        {step === 4 && renderStep5()}
+        {step === 5 && renderStep6()}
       </div>
 
-      {/* Sticky Bottom Bar - steps 1-5 only; step 6 uses sidebar Confirm */}
+      {/* Sticky Bottom Bar - steps 1-4 only; step 5 (Info) uses sidebar Confirm */}
       {step < TOTAL_STEPS && (
       <div className="fixed bottom-0 left-0 w-full z-40 bg-[#0f0f0f] border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] px-6 py-4 lg:py-6">
         <div className="container mx-auto max-w-6xl flex items-center justify-between">

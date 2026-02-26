@@ -34,9 +34,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ["Playfair Display", "serif"],
-        body: ["Inter", "sans-serif"],
-        sans: ["Inter", "Arial", "sans-serif"],
+        display: ["var(--font-lexend)", "Lexend", "sans-serif"],
+        body: ["var(--font-inter)", "Inter", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "Arial", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       borderRadius: {

@@ -1,9 +1,9 @@
 export const SERVICES = {
-  signature:    { name: 'The Signature',     description: 'Interior & Exterior Detail', basePrice: 260, baseDuration: 4.0 },
-  diamond:      { name: 'The Diamond',       description: 'Interior & Exterior Detail', basePrice: 495, baseDuration: 5.5 },
-  basic:        { name: 'The Basic',         description: 'Interior & Exterior Detail', basePrice: 190, baseDuration: 2.5 },
-  fullinterior: { name: 'The Full Interior', description: 'Interior Detail Only',       basePrice: 200, baseDuration: 3.0 },
-  fullexterior: { name: 'The Full Exterior', description: 'Exterior Detail Only',       basePrice: 135, baseDuration: 2.0 },
+  signature:    { name: 'The Signature',     description: 'Interior & Exterior Detail', baseDuration: 4.0 },
+  diamond:      { name: 'The Diamond',       description: 'Interior & Exterior Detail', baseDuration: 5.5 },
+  basic:        { name: 'The Basic',         description: 'Interior & Exterior Detail', baseDuration: 2.5 },
+  fullinterior: { name: 'The Full Interior', description: 'Interior Detail Only',       baseDuration: 3.0 },
+  fullexterior: { name: 'The Full Exterior', description: 'Exterior Detail Only',       baseDuration: 2.0 },
 } as const;
 
 export type ServiceKey = keyof typeof SERVICES;
@@ -19,12 +19,46 @@ export const VEHICLES = {
 export type VehicleKey = keyof typeof VEHICLES;
 
 export const CONDITIONS = {
-  clean:  { name: 'Clean',          description: 'Regularly maintained, light everyday dirt',          multiplier: 1.00 },
-  dirty:  { name: 'Somewhat Dirty', description: "Noticeable buildup, hasn't been cleaned in a while", multiplier: 1.20 },
-  filthy: { name: 'Filthy',         description: 'Heavy dirt, odors, stains, or long-term neglect',    multiplier: 1.45 },
+  clean:  { name: 'Clean',          description: 'Regularly maintained, light everyday dirt' },
+  dirty:  { name: 'Somewhat Dirty', description: "Noticeable buildup, hasn't been cleaned in a while" },
+  filthy: { name: 'Filthy',         description: 'Heavy dirt, odors, stains, or long-term neglect' },
 } as const;
 
 export type ConditionKey = keyof typeof CONDITIONS;
+
+/** Price matrix: service -> vehicle -> condition -> price. hatchback uses sedan prices. */
+const PRICE_MATRIX: Record<ServiceKey, Record<Exclude<VehicleKey, 'hatchback'>, Record<ConditionKey, number>>> = {
+  signature: {
+    sedan: { clean: 230, dirty: 260, filthy: 330 },
+    suv:   { clean: 245, dirty: 275, filthy: 345 },
+    truck: { clean: 250, dirty: 290, filthy: 380 },
+    xl:    { clean: 250, dirty: 295, filthy: 395 },
+  },
+  diamond: {
+    sedan: { clean: 395, dirty: 450, filthy: 550 },
+    suv:   { clean: 395, dirty: 470, filthy: 570 },
+    truck: { clean: 395, dirty: 480, filthy: 580 },
+    xl:    { clean: 425, dirty: 495, filthy: 595 },
+  },
+  fullinterior: {
+    sedan: { clean: 185, dirty: 225, filthy: 295 },
+    suv:   { clean: 195, dirty: 235, filthy: 295 },
+    truck: { clean: 195, dirty: 250, filthy: 325 },
+    xl:    { clean: 235, dirty: 260, filthy: 395 },
+  },
+  fullexterior: {
+    sedan: { clean: 90,  dirty: 115, filthy: 165 },
+    suv:   { clean: 95,  dirty: 120, filthy: 170 },
+    truck: { clean: 95,  dirty: 135, filthy: 185 },
+    xl:    { clean: 135, dirty: 175, filthy: 195 },
+  },
+  basic: {
+    sedan: { clean: 150, dirty: 195, filthy: 195 },
+    suv:   { clean: 155, dirty: 225, filthy: 225 },
+    truck: { clean: 165, dirty: 235, filthy: 235 },
+    xl:    { clean: 195, dirty: 275, filthy: 275 },
+  },
+};
 
 export const ADDONS = {
   pethair:       { label: 'Pet Hair Removal',              price: 50,  duration: 0.5 },
@@ -42,6 +76,11 @@ export const ADDONS = {
 
 export type AddonKey = keyof typeof ADDONS;
 
+function getBasePrice(serviceKey: ServiceKey, vehicleKey: VehicleKey, conditionKey: ConditionKey): number {
+  const vehicle = vehicleKey === 'hatchback' ? 'sedan' : vehicleKey;
+  return PRICE_MATRIX[serviceKey][vehicle][conditionKey];
+}
+
 export function calculateQuote(params: {
   serviceKey: ServiceKey;
   vehicleKey: VehicleKey;
@@ -49,22 +88,20 @@ export function calculateQuote(params: {
   addonKeys: AddonKey[];
 }) {
   const service = SERVICES[params.serviceKey];
-  const vMult   = VEHICLES[params.vehicleKey].multiplier;
-  const cMult   = CONDITIONS[params.conditionKey].multiplier;
-  const addons  = params.addonKeys.map(k => ADDONS[k]);
+  const basePrice = getBasePrice(params.serviceKey, params.vehicleKey, params.conditionKey);
+  const vMult = VEHICLES[params.vehicleKey].multiplier;
+  const addons = params.addonKeys.map(k => ADDONS[k]);
 
-  const vehicleAdj   = Math.round(service.basePrice * vMult);
-  const conditionAdj = Math.round(vehicleAdj * cMult);
-  const addonTotal   = addons.reduce((sum, a) => sum + a.price, 0);
-  const addonDur     = addons.reduce((sum, a) => sum + a.duration, 0);
+  const addonTotal = addons.reduce((sum, a) => sum + a.price, 0);
+  const addonDur = addons.reduce((sum, a) => sum + a.duration, 0);
 
   return {
-    totalPrice:    conditionAdj + addonTotal,
+    totalPrice: basePrice + addonTotal,
     durationHours: +(service.baseDuration * vMult + addonDur).toFixed(1),
     breakdown: {
-      base:         service.basePrice,
-      vehicleAdj:   vehicleAdj - service.basePrice,
-      conditionAdj: conditionAdj - vehicleAdj,
+      base: basePrice,
+      vehicleAdj: 0,
+      conditionAdj: 0,
       addonTotal,
     },
   };

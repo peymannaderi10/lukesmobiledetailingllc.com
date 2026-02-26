@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Lexend } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,11 +12,10 @@ const inter = Inter({
   weight: ["300", "400", "600", "800"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const lexend = Lexend({
+  variable: "--font-lexend",
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  style: ["normal", "italic"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
@@ -106,7 +105,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${playfair.variable} bg-black text-gray-100 font-body antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-white`}
+        className={`${inter.variable} ${lexend.variable} bg-black text-gray-100 font-body antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-white`}
         style={{ isolation: "isolate" }}
       >
         <Script
