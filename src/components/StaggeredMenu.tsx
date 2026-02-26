@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { gsap } from "gsap";
 
 export interface StaggeredMenuItem {
@@ -22,6 +23,7 @@ export interface StaggeredMenuProps {
   displayItemNumbering?: boolean;
   className?: string;
   logoUrl?: string;
+  openLogoUrl?: string;
   menuButtonColor?: string;
   openMenuButtonColor?: string;
   accentColor?: string;
@@ -41,6 +43,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displayItemNumbering = true,
   className,
   logoUrl = "/logo.svg",
+  openLogoUrl,
   menuButtonColor = "#fff",
   openMenuButtonColor = "#fff",
   changeMenuColorOnOpen = true,
@@ -51,8 +54,18 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   onMenuClose,
 }: StaggeredMenuProps) => {
   const [open, setOpen] = useState(false);
+  const [showOpenLogo, setShowOpenLogo] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const openRef = useRef(false);
+
+  useEffect(() => {
+    if (open) {
+      const t = setTimeout(() => setShowOpenLogo(true), 500);
+      return () => clearTimeout(t);
+    } else {
+      setShowOpenLogo(false);
+    }
+  }, [open]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -423,22 +436,24 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </div>
 
         <header
-          className={`staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between py-2.5 lg:py-3 px-6 lg:px-12 pointer-events-none z-20 transition-all duration-300 ${
+          className={`staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between py-1.5 lg:py-2 px-6 lg:px-12 pointer-events-none z-20 transition-all duration-300 ${
             scrolled && !open ? "sm-navbar-scrolled" : "bg-transparent"
           }`}
           aria-label="Main navigation header"
         >
           <Link
             href="/"
-            className="sm-logo relative inline-flex flex-col items-start select-none pointer-events-auto hover:opacity-90 transition-opacity"
+            className="sm-logo relative inline-flex items-center select-none pointer-events-auto hover:opacity-90 transition-opacity h-12 lg:h-14"
             aria-label="Luke's Mobile Detailing"
           >
-            <span className="sm-logo-lukes font-display font-black tracking-tighter italic text-white text-2xl lg:text-3xl xl:text-4xl leading-none">
-              LUKE&apos;S
-            </span>
-            <span className="text-primary font-display font-black tracking-tighter italic text-base lg:text-lg xl:text-xl leading-tight -mt-3 lg:-mt-4 ml-4 lg:ml-6">
-              MOBILE DETAILING
-            </span>
+            <Image
+              src={showOpenLogo && openLogoUrl ? openLogoUrl : logoUrl}
+              alt="Luke's Mobile Detailing"
+              width={160}
+              height={48}
+              className="h-10 w-auto lg:h-12 object-contain object-left"
+              priority
+            />
           </Link>
 
           <div className="flex items-center gap-4 pointer-events-auto">
@@ -600,8 +615,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         }
         .sm-scope .sm-logo {
           display: inline-flex;
-          flex-direction: column;
-          align-items: flex-start;
+          align-items: center;
           user-select: none;
         }
         .sm-scope .sm-toggle {
@@ -782,12 +796,6 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           }
           .sm-scope .sm-prelayers {
             width: 100%;
-          }
-          .sm-scope .staggered-menu-wrapper[data-open] .sm-logo .sm-logo-lukes {
-            color: #000;
-          }
-          .sm-scope .staggered-menu-wrapper[data-open] .sm-logo .text-primary {
-            color: #D21F3C;
           }
         }
       `}</style>

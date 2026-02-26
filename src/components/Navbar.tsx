@@ -21,6 +21,8 @@ export default function Navbar() {
   return (
     <StaggeredMenu
       position="right"
+      logoUrl="/Images/webPhotos/lukenewLogo-removebg-preview.png"
+      openLogoUrl="/Images/webPhotos/lukenewLogo-inverted-removebg-preview.png"
       items={menuItems}
       socialItems={socialItems}
       displaySocials
