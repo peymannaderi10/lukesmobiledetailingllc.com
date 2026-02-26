@@ -110,12 +110,12 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <a
-              href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD"
+            <Link
+              href="/book"
               className="btn-primary btn-nav-book"
             >
               Book Now
-            </a>
+            </Link>
           </div>
 
           <div
@@ -138,13 +138,13 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <a
-              href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD"
+            <Link
+              href="/book"
               className="btn-primary btn-nav-book"
               onClick={() => setMobileMenuOpen(false)}
             >
               Book Now
-            </a>
+            </Link>
           </div>
         </div>
       </nav>

@@ -392,7 +392,7 @@ export default function Home() {
                 </a>
               </div>
               <div className="hero-buttons-container flex gap-4 justify-center items-center">
-                <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn-primary text-center">
+                <Link href="/book" className="btn-primary text-center">
                   Book Your Detail
                 </Link>
                 <Link href="#before-after" className="btn-outline text-center">
@@ -504,7 +504,7 @@ export default function Home() {
                 </div>
                 
                 <Link 
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/GRM2YZAKP4ONQJTU7CRS4DGI" 
+                  href="/book?service=signature" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now
@@ -580,7 +580,7 @@ export default function Home() {
                 </div>
                 
                 <Link 
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/NXJA3PDFZXDV3GT4K2JTKDPX" 
+                  href="/book?service=diamond" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now
@@ -656,11 +656,12 @@ export default function Home() {
                 </div>
                 
                 <Link 
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/WDQ62TG7WUZJ7D6J3N7KY6IO" 
+                  href="/book?service=basic" 
                   className="btn-primary w-full mt-6 text-center block"
                 >
                   Book Now
                 </Link>
+                
               </div>
             </div>
           </div>
@@ -941,7 +942,7 @@ export default function Home() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Book your mobile detailing service today and experience the difference.
           </p>
-          <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD " className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
+          <Link href="/book" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
             Book Now
           </Link>
         </div>

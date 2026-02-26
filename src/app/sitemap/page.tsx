@@ -16,7 +16,7 @@ export default function Sitemap() {
         { name: 'Gallery', href: '/gallery' },
         { name: 'Reviews', href: '/reviews' },
         { name: 'Contact', href: '/contact' },
-        { name: 'Book an Appointment', href: 'https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD' },
+        { name: 'Book an Appointment', href: '/book' },
       ]
     },
     {

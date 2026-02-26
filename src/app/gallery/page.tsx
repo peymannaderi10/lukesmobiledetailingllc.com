@@ -137,7 +137,7 @@ export default function GalleryPage() {
           <p className="text-base sm:text-lg mb-8 max-w-2xl mx-auto">
             Book your mobile detailing service today and experience the same amazing results.
           </p>
-          <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-6 sm:px-8 py-3 shadow-lg">
+          <Link href="/book" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-6 sm:px-8 py-3 shadow-lg">
             Book Now
           </Link>
         </div>

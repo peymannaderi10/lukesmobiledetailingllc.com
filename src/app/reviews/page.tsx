@@ -173,7 +173,7 @@ export default function ReviewsPage() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Experience the same exceptional results our customers rave about. Book your detailing service today!
           </p>
-          <Link href="https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
+          <Link href="/book" className="btn bg-white text-primary hover:bg-gray-100 font-bold px-8 py-3 shadow-lg">
             Book Now
           </Link>
         </div>

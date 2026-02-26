@@ -10,7 +10,7 @@ const navigation = {
   mainCol2: [
     { name: "Reviews", href: "/reviews" },
     { name: "Contact", href: "/contact" },
-    { name: "Booking", href: "https://app.squareup.com/appointments/buyer/widget/hs7hvrxqk38fag/L51SWV5N7VVBD" },
+    { name: "Booking", href: "/book" },
     { name: "Accessibility", href: "/accessibility" },
   ],
   social: [

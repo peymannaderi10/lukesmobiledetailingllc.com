@@ -441,7 +441,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/GRM2YZAKP4ONQJTU7CRS4DGI"
+                  href="/book?service=signature"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -576,7 +576,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/NXJA3PDFZXDV3GT4K2JTKDPX"
+                  href="/book?service=diamond"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -671,7 +671,7 @@ export default function ServicesPage() {
                 </div>
                 
                 <Link
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/WDQ62TG7WUZJ7D6J3N7KY6IO"
+                  href="/book?service=basic"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -723,7 +723,7 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 <Link
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/LC6EIKAV6UUDRBMESJF7XOZW"
+                  href="/book?service=fullinterior"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
@@ -783,7 +783,7 @@ export default function ServicesPage() {
                   </ul>
                 </div>
                 <Link
-                  href="https://book.squareup.com/appointments/hs7hvrxqk38fag/location/L51SWV5N7VVBD/services/C2LHAU4BATIYKDYHNBMDZSOA"
+                  href="/book?service=fullexterior"
                   className="btn-primary w-full text-center block mt-4"
                 >
                   Book Now
