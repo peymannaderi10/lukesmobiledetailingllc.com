@@ -645,9 +645,7 @@ export default function Home() {
                   className="flex items-center gap-3 text-sm text-gray-300 font-medium group cursor-default"
                 >
                   <span
-                    className={`w-2 h-2 rounded-full group-hover:scale-150 transition-transform ${
-                      i < 4 ? "bg-primary" : "bg-gray-600 group-hover:bg-primary"
-                    }`}
+                    className="w-2 h-2 rounded-full bg-primary group-hover:scale-150 transition-transform"
                   />
                   {city}
                 </div>
