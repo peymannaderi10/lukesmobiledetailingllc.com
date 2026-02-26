@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function BookingPage() {
   return (
-    <div className="min-h-screen bg-gray-50 pt-28 md:pt-36 pb-16 text-gray-900">
+    <div className="min-h-screen bg-black pt-28 md:pt-32 pb-16 text-gray-100">
       <Suspense
         fallback={
-          <div className="container-custom max-w-4xl text-center py-20">
+          <div className="container mx-auto max-w-4xl text-center py-20">
             <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4" />
             <p className="text-gray-500">Loading booking form&hellip;</p>
           </div>

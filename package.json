@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "fetch-square-services": "node scripts/fetch-square-services.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.788.0",

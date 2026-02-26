@@ -27,14 +27,17 @@ export const CONDITIONS = {
 export type ConditionKey = keyof typeof CONDITIONS;
 
 export const ADDONS = {
-  pethair:     { label: 'Pet Hair Removal',      price: 50,  duration: 0.5 },
-  odor:        { label: 'Odor Elimination',       price: 60,  duration: 0.5 },
-  enginebay:   { label: 'Engine Bay Clean',       price: 80,  duration: 1.0 },
-  headlights:  { label: 'Headlight Restoration',  price: 45,  duration: 0.5 },
-  claybar:     { label: 'Clay Bar Treatment',     price: 70,  duration: 1.0 },
-  trunkdetail: { label: 'Trunk Detail',           price: 40,  duration: 0.5 },
-  ceramic:     { label: 'Ceramic Coating (1 yr)', price: 200, duration: 2.0 },
-  scratch:     { label: 'Light Scratch Removal',  price: 90,  duration: 1.0 },
+  pethair:       { label: 'Pet Hair Removal',              price: 50,  duration: 0.5 },
+  odor:          { label: 'Odor Elimination',              price: 60,  duration: 0.5 },
+  enginebay:     { label: 'Engine Bay Clean',              price: 80,  duration: 1.0 },
+  headlights:    { label: 'Headlight Restoration',         price: 45,  duration: 0.5 },
+  scratch:       { label: 'Light Scratch Removal',        price: 90,  duration: 1.0 },
+  carpetshampoo: { label: 'Carpet Shampooing',             price: 75,  duration: 1.5 },
+  leather:       { label: 'Leather Restoration',            price: 75,  duration: 1.5 },
+  dentrepair:    { label: 'Dent Repair',                   price: 75,  duration: 1.5 },
+  fullwax:       { label: 'Full Wax & Light Polish',       price: 55,  duration: 0.5 },
+  ceramicwindows: { label: '3 Year Ceramic Coating (Windows)', price: 150, duration: 2.5 },
+  undercarriage: { label: 'Undercarriage + Engine Bay + Wash', price: 100, duration: 2.5 },
 } as const;
 
 export type AddonKey = keyof typeof ADDONS;

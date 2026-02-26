@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       firstName, lastName, email, phone,
       serviceKey, vehicleKey, conditionKey, addonKeys,
       carInfo, carColor, startAt, serviceVariationVersion,
-      teamMemberId, serviceAddress,
+      teamMemberId, serviceAddress, serviceNotes,
     } = body;
 
     if (!serviceKey || !vehicleKey || !conditionKey || !startAt || !serviceVariationVersion || !teamMemberId) {
@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
       `QUOTED PRICE: $${quote.totalPrice}`,
       `EST. DURATION: ${quote.durationHours} hrs`,
       `SERVICE ADDRESS: ${serviceAddress || 'Not provided'}`,
+      ...(serviceNotes?.trim() ? [`SPECIAL INSTRUCTIONS: ${serviceNotes.trim()}`] : []),
     ].join('\n');
 
     const bookingResponse = await square.bookings.create({
