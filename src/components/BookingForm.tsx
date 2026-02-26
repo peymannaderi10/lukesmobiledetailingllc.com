@@ -539,7 +539,7 @@ export default function BookingForm() {
         <div className="relative z-20 w-full max-w-3xl">
           <div className="glassmorphism p-10 md:p-16 rounded-sm border-t border-white/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 border border-primary/30 text-primary mb-8">
+            <div className="inline-flex items-center justify-center text-primary mb-8">
               <span className="material-symbols-outlined text-4xl">check_circle</span>
             </div>
 
