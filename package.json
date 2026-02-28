@@ -1,6 +1,6 @@
 {
   "name": "lukes-mobile-detailing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -30,6 +30,7 @@
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",
     "react-hot-toast": "^2.5.2",
+    "resend": "^6.9.2",
     "square": "^44.0.0",
     "stripe": "^18.0.0",
     "uuid": "^11.1.0"
