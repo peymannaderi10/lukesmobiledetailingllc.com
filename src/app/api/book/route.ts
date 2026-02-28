@@ -40,54 +40,46 @@ function buildBookingEmailHtml(params: {
     timeZone: 'America/Los_Angeles',
   });
   const row = (label: string, value: string) => `
-    <tr><td bgcolor="#121212" style="padding:16px 0;border-bottom:1px solid #262626;">
-      <span class="row-label" style="font-size:11px;color:#9E9E9E !important;text-transform:uppercase;letter-spacing:0.05em;">${label}</span><br>
-      <span class="row-value" style="font-size:15px;color:#E0E0E0 !important;word-break:break-word;">${value}</span>
+    <tr><td style="padding:10px 0;border-bottom:1px solid #262626;background-color:#121212;" bgcolor="#121212">
+      <span style="font-size:11px;color:#9E9E9E;text-transform:uppercase;letter-spacing:0.05em;background-color:transparent;">${label}</span><br>
+      <span style="font-size:15px;color:#E0E0E0;background-color:transparent;-webkit-text-size-adjust:100%;">${value}</span>
     </td></tr>`;
   return `
 <!DOCTYPE html>
-<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
+<html lang="en" style="color-scheme:dark;">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 <meta name="color-scheme" content="dark">
 <meta name="supported-color-schemes" content="dark">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<style>
-:root{color-scheme:dark;}
-body,table,td{background-color:#0A0A0A !important;}
-img{max-width:100%;height:auto;}
-table{border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0;}
-@media only screen and (max-width: 600px){
-  .wrapper{width:100% !important;min-width:0 !important;}
-  .wrap{padding:12px 8px !important;}
-  .card{padding:0 !important;width:100% !important;max-width:100% !important;}
-  .header-pad{padding:20px 16px !important;}
-  .card-pad{padding:20px 16px !important;}
-  .footer-pad{padding:20px 16px !important;}
-  h1{font-size:18px !important;line-height:1.3 !important;}
-  .intro{font-size:16px !important;}
-  .row-label{font-size:12px !important;}
-  .row-value{font-size:16px !important;}
-  .badge-wrap{display:block !important;text-align:left !important;margin-top:12px !important;width:100% !important;}
-  .footer-link{display:inline-block !important;padding:14px 20px !important;min-height:44px !important;line-height:16px !important;box-sizing:border-box !important;}
+<title>New Booking</title>
+<style type="text/css">
+@media (max-width:480px){
+  .pad-outer{padding:12px 8px !important;}
+  .pad-inner{padding:20px 16px !important;}
+  .pad-header{padding:20px 16px !important;}
+  .pad-footer{padding:16px !important;}
+  .title-font{font-size:18px !important;}
 }
+body{-webkit-text-size-adjust:100%;}
+.badge-nowrap{white-space:nowrap !important;}
 </style>
 </head>
-<body style="margin:0;padding:0;background-color:#0A0A0A !important;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-text-size-adjust:100%;" bgcolor="#0A0A0A">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0A0A0A !important;padding:24px 16px;" bgcolor="#0A0A0A" class="wrap">
+<body style="margin:0;padding:0;background-color:#0A0A0A !important;color:#E0E0E0 !important;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;" bgcolor="#0A0A0A">
+<div style="background-color:#0A0A0A !important;min-height:100vh;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0A0A0A !important;padding:24px 12px;" bgcolor="#0A0A0A" class="pad-outer">
 <tr><td align="center">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;width:100%;background-color:#121212 !important;border-radius:4px;border:1px solid #262626;" bgcolor="#121212" class="card wrapper">
-<tr><td bgcolor="#121212" style="padding:24px 24px;border-bottom:2px solid #D21F3C;" class="header-pad">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-<td style="vertical-align:top;"><h1 style="margin:0;font-family:'Lexend',Arial,sans-serif;font-size:20px;font-weight:700;color:#FFFFFF !important;">LUKE'S <span style="color:#D21F3C !important;">MOBILE DETAILING</span></h1>
-<p style="margin:8px 0 0 0;font-size:13px;color:#9E9E9E !important;">Your new booking</p></td>
-<td class="badge-wrap" align="right" style="vertical-align:top;"><span style="display:inline-block;background-color:#D21F3C;color:#FFFFFF !important;font-size:11px;font-weight:600;text-transform:uppercase;padding:10px 16px;border-radius:4px;">New Booking</span></td>
+<table role="presentation" width="100%" style="max-width:520px;background-color:#121212 !important;border-radius:4px;overflow:hidden;border:1px solid #262626;" cellpadding="0" cellspacing="0" bgcolor="#121212">
+<tr><td style="padding:24px 24px;border-bottom:2px solid #D21F3C;background-color:#121212 !important;" bgcolor="#121212" class="pad-header">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+<td style="background-color:transparent;"><h1 style="margin:0;font-size:20px;font-weight:700;color:#FFFFFF !important;background-color:transparent;line-height:1.3;" class="title-font">LUKE'S <span style="color:#D21F3C !important;">MOBILE DETAILING</span></h1>
+<p style="margin:6px 0 0 0;font-size:13px;color:#9E9E9E !important;background-color:transparent;">Your new booking</p></td>
+<td align="right" valign="top" style="background-color:transparent;white-space:nowrap;"><span style="display:inline-block;background-color:#D21F3C !important;color:#FFFFFF !important;font-size:11px;font-weight:600;text-transform:uppercase;padding:6px 12px;border-radius:2px;white-space:nowrap;" class="badge-nowrap">New Booking</span></td>
 </tr></table>
 </td></tr>
-<tr><td bgcolor="#121212" style="padding:24px 24px;background-color:#121212 !important;" class="card card-pad">
-<p class="intro" style="margin:0 0 20px 0;font-size:15px;color:#E0E0E0 !important;">Hey Luke, here's your latest booking.</p>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+<tr><td style="padding:24px 24px;background-color:#121212 !important;" bgcolor="#121212" class="pad-inner">
+<p style="margin:0 0 16px 0;font-size:15px;color:#E0E0E0 !important;background-color:transparent;">Hey Luke, here's your latest booking.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
 ${row('Date & Time', escapeHtml(startTime))}
 ${row('Customer', escapeHtml(`${params.firstName} ${params.lastName}`))}
 ${row('Email', escapeHtml(params.email))}
@@ -101,14 +93,15 @@ ${row('Quoted total', `$${params.totalPrice}`)}
 ${row('Est. duration', `${params.durationHours} hrs`)}
 ${row('Service address', escapeHtml(params.serviceAddress || 'Not provided'))}
 </table>
-${params.serviceNotes?.trim() ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;"><tr><td bgcolor="#171717" style="padding:16px;background-color:#171717 !important;border:1px solid #262626;border-radius:4px;">
-<p style="margin:0 0 8px 0;font-size:11px;color:#9E9E9E !important;text-transform:uppercase;">Special instructions</p>
-<p style="margin:0;font-size:14px;color:#E0E0E0 !important;line-height:1.6;white-space:pre-wrap;word-break:break-word;">${escapeHtml(params.serviceNotes.trim())}</p></td></tr></table>` : ''}
+${params.serviceNotes?.trim() ? `<div style="margin-top:20px;padding:16px;background-color:#171717 !important;border:1px solid #262626;border-radius:2px;" bgcolor="#171717">
+<p style="margin:0 0 8px 0;font-size:12px;color:#9E9E9E !important;background-color:transparent;text-transform:uppercase;">Special instructions</p>
+<p style="margin:0;font-size:15px;color:#E0E0E0 !important;background-color:transparent;line-height:1.5;white-space:pre-wrap;">${escapeHtml(params.serviceNotes.trim())}</p></div>` : ''}
 </td></tr>
-<tr><td bgcolor="#0A0A0A" style="padding:16px 24px;background-color:#0A0A0A !important;border-top:1px solid #262626;" class="footer-pad">
-<p style="margin:0;font-size:12px;color:#757575 !important;text-align:center;"><a href="https://lukesmobiledetailingllc.com" class="footer-link" style="color:#D21F3C !important;text-decoration:none;padding:8px 0;">lukesmobiledetailingllc.com</a></p>
+<tr><td style="padding:16px 24px;background-color:#0A0A0A !important;border-top:1px solid #262626;" bgcolor="#0A0A0A" class="pad-footer">
+<p style="margin:0;font-size:13px;color:#757575 !important;background-color:transparent;text-align:center;"><a href="https://lukesmobiledetailingllc.com" style="color:#D21F3C !important;text-decoration:none;">lukesmobiledetailingllc.com</a></p>
 </td></tr>
 </table></td></tr></table>
+</div>
 </body></html>`.trim();
 }
 
