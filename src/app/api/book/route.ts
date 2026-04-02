@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       addonKeys:    (addonKeys ?? []) as AddonKey[],
     });
 
-    // Find or create customer
+    // Find or create customer (search = read; create = write — comment create if Square blocks all writes).
     const searchResponse = await square.customers.search({
       query: {
         filter: {
@@ -172,7 +172,7 @@ export async function POST(request: NextRequest) {
       ...(serviceNotes?.trim() ? [`SPECIAL INSTRUCTIONS: ${serviceNotes.trim()}`] : []),
     ].join('\n');
 
-    // TEMP: skip Square booking create — uncomment below when ready.
+    // TEMP: Square read APIs still work; only this booking *write* is disabled until write access is back.
     // const bookingResponse = await square.bookings.create({
     //   idempotencyKey: randomUUID(),
     //   booking: {
@@ -188,7 +188,7 @@ export async function POST(request: NextRequest) {
     //     }],
     //   },
     // });
-    // Remove these two lines when re-enabling square.bookings.create above.
+    // Drop these voids when you uncomment square.bookings.create (customerId + note go to that call).
     void customerId;
     void note;
     const bookingResponse = {
