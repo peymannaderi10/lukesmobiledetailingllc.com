@@ -172,21 +172,32 @@ export async function POST(request: NextRequest) {
       ...(serviceNotes?.trim() ? [`SPECIAL INSTRUCTIONS: ${serviceNotes.trim()}`] : []),
     ].join('\n');
 
-    const bookingResponse = await square.bookings.create({
-      idempotencyKey: randomUUID(),
+    // TEMP: skip Square booking create — uncomment below when ready.
+    // const bookingResponse = await square.bookings.create({
+    //   idempotencyKey: randomUUID(),
+    //   booking: {
+    //     startAt,
+    //     locationId: process.env.SQUARE_LOCATION_ID,
+    //     customerId,
+    //     customerNote: note,
+    //     appointmentSegments: [{
+    //       teamMemberId,
+    //       serviceVariationId:      SERVICE_MAP[serviceKey],
+    //       serviceVariationVersion: BigInt(serviceVariationVersion),
+    //       durationMinutes:         Math.round(quote.durationHours * 60),
+    //     }],
+    //   },
+    // });
+    // Remove these two lines when re-enabling square.bookings.create above.
+    void customerId;
+    void note;
+    const bookingResponse = {
       booking: {
+        id: `pending-${randomUUID()}`,
         startAt,
-        locationId: process.env.SQUARE_LOCATION_ID,
-        customerId,
-        customerNote: note,
-        appointmentSegments: [{
-          teamMemberId,
-          serviceVariationId:      SERVICE_MAP[serviceKey],
-          serviceVariationVersion: BigInt(serviceVariationVersion),
-          durationMinutes:         Math.round(quote.durationHours * 60),
-        }],
+        status: 'PENDING' as const,
       },
-    });
+    };
 
     // Notify Luke via email (fire-and-forget, don't fail the response)
     const notifyEmail = process.env.BOOKING_NOTIFY_EMAIL;
