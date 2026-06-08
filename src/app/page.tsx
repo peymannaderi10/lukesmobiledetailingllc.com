@@ -40,6 +40,42 @@ export default function Home() {
   };
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+
+  // In-app browsers (Instagram, Facebook, TikTok) often ignore the autoPlay
+  // attribute and leave the video paused. Force playback once mounted, and
+  // retry on visibility change and the first user interaction.
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    const tryPlay = () => {
+      video.muted = true; // required for programmatic autoplay
+      const p = video.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+
+    tryPlay();
+
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") tryPlay();
+    };
+    const onInteract = () => {
+      tryPlay();
+      window.removeEventListener("touchstart", onInteract);
+      window.removeEventListener("click", onInteract);
+    };
+
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("touchstart", onInteract, { passive: true });
+    window.addEventListener("click", onInteract);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("touchstart", onInteract);
+      window.removeEventListener("click", onInteract);
+    };
+  }, []);
 
   useEffect(() => {
     const row1 = row1Ref.current;
@@ -156,6 +192,7 @@ export default function Home() {
             style={{ objectPosition: "center 55%" }}
           />
           <video
+            ref={heroVideoRef}
             autoPlay
             muted
             loop
