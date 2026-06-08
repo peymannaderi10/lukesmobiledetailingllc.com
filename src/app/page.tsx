@@ -147,22 +147,28 @@ export default function Home() {
       {/* ===== HERO ===== */}
       <header className="relative w-full min-h-screen flex items-center bg-black overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/Images/webPhotos/Banner.jpg"
-            alt="Professional car detailing"
-            fill
-            priority
-            className="object-cover opacity-60 scale-105 hidden md:block"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/Images/webPhotos/Banner.jpg"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105 hidden md:block"
             style={{ objectPosition: "center 55%" }}
-          />
-          <Image
-            src="/Images/webPhotos/hero2.jpg"
-            alt="Professional car detailing"
-            fill
-            priority
-            className="object-cover opacity-60 scale-105 md:hidden"
+          >
+            <source src="/Images/webPhotos/hero-mobile.webm" type="video/webm" />
+          </video>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/Images/webPhotos/hero2.jpg"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105 md:hidden"
             style={{ objectPosition: "center 45%" }}
-          />
+          >
+            <source src="/Images/webPhotos/hero-mobile.webm" type="video/webm" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent z-10" />
         </div>
 
