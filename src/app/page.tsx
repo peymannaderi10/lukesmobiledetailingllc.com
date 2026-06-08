@@ -152,8 +152,9 @@ export default function Home() {
             muted
             loop
             playsInline
+            preload="auto"
             poster="/Images/webPhotos/Banner.jpg"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105 hidden md:block"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105 hidden md:block bg-black"
             style={{ objectPosition: "center 55%" }}
           >
             <source src="/Images/webPhotos/hero-mobile.webm" type="video/webm" />
@@ -163,8 +164,9 @@ export default function Home() {
             muted
             loop
             playsInline
+            preload="auto"
             poster="/Images/webPhotos/hero2.jpg"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105 md:hidden"
+            className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105 md:hidden bg-black"
             style={{ objectPosition: "center 45%" }}
           >
             <source src="/Images/webPhotos/hero-mobile.webm" type="video/webm" />
