@@ -56,6 +56,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const [open, setOpen] = useState(false);
   const [showOpenLogo, setShowOpenLogo] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [initialized, setInitialized] = useState(false);
   const openRef = useRef(false);
 
   useEffect(() => {
@@ -123,6 +124,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
       if (toggleBtnRef.current) gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
+    // GSAP has now pushed the panel/prelayers offscreen — safe to reveal.
+    setInitialized(true);
     return () => ctx.revert();
   }, [menuButtonColor, position]);
 
@@ -412,6 +415,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         }
         data-position={position}
         data-open={open || undefined}
+        data-init={initialized || undefined}
       >
         <div
           ref={preLayersRef}
@@ -429,10 +433,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
               <div
                 key={i}
                 className="sm-prelayer absolute top-0 right-0 h-full w-full"
-                style={{
-                  background: c,
-                  transform: position === "left" ? "translateX(-100%)" : "translateX(100%)",
-                }}
+                style={{ background: c }}
               />
             ));
           })()}
@@ -506,10 +507,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           id="staggered-menu-panel"
           ref={panelRef}
           className="staggered-menu-panel absolute top-0 right-0 h-screen bg-white flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px] pointer-events-auto"
-          style={{
-            WebkitBackdropFilter: "blur(12px)",
-            transform: position === "left" ? "translateX(-100%)" : "translateX(100%)",
-          }}
+          style={{ WebkitBackdropFilter: "blur(12px)" }}
           aria-hidden={!open}
         >
           <div className="sm-panel-inner flex-1 flex flex-col gap-5">
@@ -598,6 +596,14 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           width: 100%;
           z-index: 50;
           pointer-events: none;
+        }
+        .sm-scope .staggered-menu-panel,
+        .sm-scope .sm-prelayers {
+          visibility: hidden;
+        }
+        .sm-scope [data-init] .staggered-menu-panel,
+        .sm-scope [data-init] .sm-prelayers {
+          visibility: visible;
         }
         .sm-scope .staggered-menu-header {
           position: absolute;
