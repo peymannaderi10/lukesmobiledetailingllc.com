@@ -147,18 +147,14 @@ export default function Home() {
       {/* ===== HERO ===== */}
       <header className="relative w-full min-h-screen flex items-center bg-black overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster="/Images/webPhotos/Banner.jpg"
-            className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105 hidden md:block bg-black"
+          <Image
+            src="/Images/webPhotos/Banner.jpg"
+            alt="Professional car detailing"
+            fill
+            priority
+            className="object-cover opacity-60 scale-105 hidden md:block"
             style={{ objectPosition: "center 55%" }}
-          >
-            <source src="/Images/webPhotos/hero-mobile.webm" type="video/webm" />
-          </video>
+          />
           <video
             autoPlay
             muted
